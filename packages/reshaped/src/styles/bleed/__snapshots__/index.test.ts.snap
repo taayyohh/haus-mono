@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Styles/Bleed > handles 0 value 1`] = `
+{
+  "classNames": [
+    "_root_f6b186",
+    "_--bleed-false_f6b186",
+  ],
+  "variables": {
+    "--rs-bleed-s": 0,
+  },
+}
+`;
+
+exports[`Styles/Bleed > handles positive value 1`] = `
+{
+  "classNames": [
+    "_root_f6b186",
+    "_--bleed_f6b186",
+  ],
+  "variables": {
+    "--rs-bleed-s": 4,
+  },
+}
+`;
+
+exports[`Styles/Bleed > handles responsive value 1`] = `
+{
+  "classNames": [
+    "_root_f6b186",
+    "_--bleed_f6b186",
+    "_--bleed-false--m_f6b186",
+    "_--bleed-true--l_f6b186",
+  ],
+  "variables": {
+    "--rs-bleed-l": 2,
+    "--rs-bleed-m": 0,
+    "--rs-bleed-s": 4,
+  },
+}
+`;
+
+exports[`Styles/Bleed > handles undefined value 1`] = `null`;

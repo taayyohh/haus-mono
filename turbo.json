@@ -5,6 +5,12 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
+    "dev": {
+      "dotEnv": [".env.development", ".env.local", ".env.production", ".env"],
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^build"]
+    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": []
@@ -12,14 +18,26 @@
     "lint": {
       "outputs": []
     },
-    "dev": {
-      "cache": false
-    },
     "start": {
       "cache": false
     },
     "clean": {
       "cache": false
     }
-  }
+  },
+  "globalEnv": [
+    "MONGODB_URI",
+    "JWT_SECRET",
+    "NEXT_PUBLIC_NFT_STORAGE_TOKEN",
+    "STRIPE_SECRET",
+    "NEXT_PUBLIC_STRIPE_PUBLIC",
+    "NEXT_PUBLIC_BASE_URL",
+    "MONGODB_URI_TEST",
+    "JWT_SECRET",
+    "NEXT_PUBLIC_NFT_STORAGE_TOKEN",
+    "STRIPE_TEST_SECRET",
+    "NEXT_PUBLIC_STRIPE_TEST_PUBLIC",
+    "NEXT_PUBLIC_BASE_URL_TEST",
+    "NODE_ENV"
+    ]
 }

@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Components/Modal > renders correctly when active 1`] = `":r2:-title"`;
+
+exports[`Components/Modal > renders correctly when active 2`] = `":r2:-subtitle"`;

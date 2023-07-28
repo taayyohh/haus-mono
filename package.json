@@ -1,5 +1,4 @@
 {
-  "repository": "https://github.com/vercel/examples.git",
   "license": "MIT",
   "private": true,
   "workspaces": [
@@ -9,13 +8,26 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:garden": "cd apps/garden-session && dotenv -e .env  -e ../../.env -c development -- turbo run dev",
+    "build:garden": "cd apps/garden-session && dotenv -e .env  -e ../../.env -c development -- turbo run build",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
   },
   "devDependencies": {
+    "dotenv-cli": "^7.2.1",
     "eslint": "^8.28.0",
     "eslint-config-turbo": "latest",
-    "turbo": "^1.8.3"
+    "turbo": "^1.8.3",
+    "lint-staged": "^13.0.3"
+  },
+  "lint-staged": {
+    "apps/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
   }
 }

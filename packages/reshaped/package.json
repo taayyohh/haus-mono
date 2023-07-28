@@ -1,0 +1,119 @@
+{
+	"name": "reshaped",
+	"private": true,
+	"author": "Dmitry Belyaev <blv.dmitry@gmail.com>",
+	"version": "2.1.0",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"bin": {
+		"reshaped": "./bin/cli.js"
+	},
+	"files": [
+		"dist/**"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./themes/": "./dist/themes/"
+	},
+	"scripts": {
+		"dev": "storybook dev -c tools/storybook -p 3001 --disable-telemetry",
+		"clean": "sh ./bin/clean.sh",
+		"build": "pnpm clean && pnpm build:stories && pnpm build:esm && pnpm build:cjs && pnpm build:css && pnpm build:bundle && resolve-tspaths",
+		"build:themes": "node bin/cli.js theming --config dist/cli/theming/reshaped.config.js --output src/themes --private",
+		"build:esm": "tsc -p tsconfig.esm.json",
+		"build:cjs": "tsc -p tsconfig.cjs.json",
+		"build:css": "postcss \"src/**/*.css\" --dir dist --base src --config tools/build && cp -rp src/themes/media.css dist/themes/media.css && mkdir themes && cp -r src/themes/media.css dist/themes/media.css",
+		"build:stories": "tsc -p tsconfig.stories.json",
+		"build:bundle": "vite build && mv dist/bundle.umd.js dist/bundle.js && cp dist/index.d.ts dist/bundle.d.ts",
+		"build:storybook": "storybook build -c tools/storybook -o dist/app --disable-telemetry",
+		"build:chromatic": "STORYBOOK_ENV=chromatic storybook build -c tools/storybook -o dist/storybook-static",
+		"chromatic": "chromatic -b build:chromatic --project-token=$(cat .chromatic)",
+		"test:vrt": "pnpm chromatic",
+		"test:unit": "vitest",
+		"test:size": "size-limit",
+		"lint": "pnpm lint:js && pnpm lint:css",
+		"lint:js": "eslint --ext .ts,.tsx src/**/*.ts src/**/*.tsx --quiet --fix",
+		"lint:css": "stylelint 'src/**/*.css'"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"browserslist": [
+		"defaults and not IE 11"
+	],
+	"devDependencies": {
+		"@size-limit/preset-big-lib": "8.2.6",
+		"@storybook/addon-a11y": "7.0.25",
+		"@storybook/react": "7.0.25",
+		"@storybook/react-vite": "7.0.25",
+		"@testing-library/jest-dom": "5.16.5",
+		"@testing-library/react": "14.0.0",
+		"@testing-library/user-event": "14.4.3",
+		"@types/events": "3.0.0",
+		"@types/jest": "29.5.2",
+		"@types/node": "20.3.3",
+		"@types/react": "18.2.14",
+		"@types/react-dom": "18.2.6",
+		"@types/testing-library__jest-dom": "^5.14.5",
+		"@typescript-eslint/eslint-plugin": "5.61.0",
+		"@typescript-eslint/parser": "5.61.0",
+		"@vitejs/plugin-react": "4.0.1",
+		"chromatic": "6.19.9",
+		"eslint": "8.44.0",
+		"eslint-config-airbnb-typescript": "17.0.0",
+		"eslint-config-prettier": "8.8.0",
+		"eslint-plugin-import": "2.27.5",
+		"eslint-plugin-jsx-a11y": "6.7.1",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-react": "7.32.2",
+		"eslint-plugin-react-hooks": "4.6.0",
+		"identity-obj-proxy": "3.0.0",
+		"jest-matchmedia-mock": "^1.1.0",
+		"jsdom": "^22.1.0",
+		"lefthook": "1.4.3",
+		"postcss": "8.4.24",
+		"postcss-cli": "10.1.0",
+		"postcss-each": "1.1.0",
+		"postcss-import": "15.1.0",
+		"postcss-nested": "6.0.1",
+		"prettier": "2.8.8",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"resolve-tspaths": "0.8.14",
+		"size-limit": "8.2.6",
+		"storybook": "7.0.25",
+		"stylelint": "15.10.0",
+		"stylelint-config-prettier": "9.0.5",
+		"stylelint-config-standard": "34.0.0",
+		"typescript": "5.1.6",
+		"vite": "4.3.9",
+		"vite-tsconfig-paths": "4.2.0",
+		"vitest": "^0.33.0"
+	},
+	"peerDependencies": {
+		"postcss": "^8.0.0",
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0"
+	},
+	"dependencies": {
+		"autoprefixer": "10.4.14",
+		"chalk": "4.1.2",
+		"commander": "11.0.0",
+		"cssnano": "6.0.1",
+		"postcss-custom-media": "8.0.2"
+	},
+	"size-limit": [
+		{
+			"name": "JS",
+			"path": "dist/bundle.js",
+			"webpack": false
+		},
+		{
+			"name": "CSS",
+			"path": "dist/bundle.css",
+			"webpack": false
+		}
+	]
+}

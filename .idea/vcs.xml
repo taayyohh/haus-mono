@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/garden-session" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/store" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/store/store" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/stored/store" vcs="Git" />
+  </component>
+</project>
