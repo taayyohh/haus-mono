@@ -69,16 +69,19 @@ export default function MintBatchButton({
       const saleStrategyAddress = token?.salesStrategies[0]?.fixedPrice?.configAddress
       if (!saleStrategyAddress) return
 
-      const prepareConfig = getZora1155PrepareConfig(
-        saleStrategyAddress,
-        collection?.address as `0x${string}`,
-        wallet?.address as `0x${string}`,
-        Number(token.tokenId),
-        collection?.mintFeePerQuantity as string,
-        ''
-      )
+      let prepareConfig
+      if (wallet?.address !== undefined && collection) {
+        prepareConfig = getZora1155PrepareConfig(
+          saleStrategyAddress,
+          collection?.address as `0x${string}`,
+          wallet?.address as `0x${string}`,
+          Number(token.tokenId),
+          collection?.mintFeePerQuantity as string,
+          ''
+        )
+      }
 
-      if (!prepareConfig.abi || !prepareConfig.args) return
+      if (!prepareConfig?.abi || !prepareConfig?.args) return
 
       // @ts-ignore
       const calldata = encodeFunctionData({
@@ -132,7 +135,6 @@ export default function MintBatchButton({
     enabled: !!wallet?.address,
     // gas: estimatedGas,
   })
-
 
   const {
     write: mintBatch,
