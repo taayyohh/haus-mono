@@ -1,0 +1,30 @@
+fragment Token on ZoraCreateToken {
+  id
+  tokenId
+  address
+  uri
+  maxSupply
+  totalMinted
+  rendererContract
+  contract {
+    id
+    owner
+    creator
+    contractVersion
+    metadata {
+      ...Metadata
+    }
+  }
+  metadata {
+    ...Metadata
+  }
+  permissions {
+    user
+  }
+  salesStrategies {
+    ...SalesStrategy
+  }
+  royalties {
+    ...Royalties
+  }
+}

@@ -1,0 +1,17 @@
+query zoraCreateTokens(
+  $collectionAddress: String!
+  $perPage: Int!
+  $offset: Int!
+  $orderBy: ZoraCreateToken_orderBy!
+  $orderDirection: OrderDirection!
+) {
+  zoraCreateTokens(
+    where: { contract: $collectionAddress, tokenId_gt: 0 }
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $perPage
+    skip: $offset
+  ) {
+    ...ZoraCreateToken
+  }
+}

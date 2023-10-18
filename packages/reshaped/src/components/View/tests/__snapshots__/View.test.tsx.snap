@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Utilities/View > applies className and attributes to View.Item 1`] = `"padding: 20px;"`;

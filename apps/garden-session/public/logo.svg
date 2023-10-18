@@ -1,0 +1,14 @@
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <!-- Gradient Definitions -->
+    <defs>
+        <linearGradient id="shimmerGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#E0E0E0" />
+            <stop offset="50%" stop-color="#FFFFFF" />
+            <stop offset="100%" stop-color="#E0E0E0" />
+        </linearGradient>
+    </defs>
+
+    <!-- Logo with Gradient -->
+    <path d="M2 0C2 0 0 2 0 4.5C0 7 2 9 2 9C2 9 4 7 4 4.5C4 2 2 0 2 0Z" fill="url(#shimmerGradient)"/>
+    <!-- Add more path data for the rest of the letters here... -->
+</svg>

@@ -1,0 +1,37 @@
+query zoraCreateActive1155Tokens($address: String, $now: BigInt, $limit: Int) {
+  zoraCreateTokens(
+    where: {
+      contract: $address
+      tokenId_gt: 0
+      salesStrategies_: { type: "FIXED_PRICE" }
+    }
+    orderBy: createdAtBlock
+    orderDirection: asc
+    first: $limit
+  ) {
+    contract {
+      id
+      contractVersion
+    }
+    totalMinted
+    maxSupply
+    totalSupply
+    tokenId
+    metadata {
+      name
+      image
+    }
+    salesStrategies(where: { fixedPrice_: { saleStart_lt: $now, saleEnd_gt: $now } }) {
+      type
+      fixedPrice {
+        configAddress
+        saleStart
+        saleEnd
+        pricePerToken
+        txn {
+          timestamp
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+schema: https://api.goldsky.com/api/public/project_clhk16b61ay9t49vm6ntn4mkz/subgraphs/zora-create-goerli/stable/gn
+documents: 'src/graphql/**/*.graphql'
+generates:
+  graphql/sdk.generated.ts:
+    config:
+      scalars:
+        ID: Address
+        BigDecimal: string
+        BigInt: string
+        Bytes: Address
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+      - add:
+          content:
+            - "import { Address } from 'wagmi'"

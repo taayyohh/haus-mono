@@ -1,27 +1,14 @@
-import ProductPage from '@/modules/store/components/ProductPage'
-import { fetchProduct, ProductResponse } from '@/modules/store/utils/fetchProduct'
-import { fetchStripeProduct } from '@/stripe/utils/fetchStripeProduct'
-import { CheckoutForm } from '@/modules/store/components/CheckoutForm'
-import config from '@/constants/config'
-
-async function getProduct(): Promise<ProductResponse> {
-  return await fetchProduct('lucidhaus-garden-session-vi', config.BASE_URL as string)
-}
+import { fetchAlbums } from '@/modules/albums/utils/fetchAlbums'
+import { randomSong } from '@/utils/randomSong'
+import HomePage from '@/modules/business/components/Home'
 
 export default async function Page(context: any) {
-  const product = await getProduct()
-  const stripeProduct = await fetchStripeProduct(product.product)
+  const { data: albums } = await fetchAlbums(1, 20)
+  const featuredTrack = await randomSong(albums)
 
   return (
-    <>
-      <CheckoutForm>
-        <ProductPage
-          product={product?.product}
-          stripeProduct={stripeProduct}
-          succeeded={context?.searchParams?.redirect_status === 'succeeded'}
-          referer={config.BASE_URL as string}
-        />
-      </CheckoutForm>
-    </>
+    <div className={'w-full'} style={{ height: 'calc(100vh - 96px)' }}>
+      <HomePage track={featuredTrack} />
+    </div>
   )
 }

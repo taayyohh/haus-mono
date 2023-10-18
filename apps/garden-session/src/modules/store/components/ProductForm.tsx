@@ -69,7 +69,12 @@ const ProductForm: React.FC<ProductFormProps> = () => {
         name: formData.name,
         description: formData.description,
         images: [getIpfsGateway(formData.imageUri)],
-        statement_descriptor: 'LucidHaus'
+        default_price_data: {
+          currency: 'USD',
+          unit_amount: formData.price * 100,
+        },
+        statement_descriptor: 'LucidHaus',
+        tax_code: 'txcd_99999999' //TODO: make this a field in the form
       })
       const storedProduct = {
         ...formData,
@@ -122,10 +127,11 @@ const ProductForm: React.FC<ProductFormProps> = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border mt-12 px-6 pt-8 pb-20 max-w-xl mx-auto flex flex-col space-y-4 max-h-[70vh] overflow-y-scroll text-white"
+      className="mt-12 px-6 pt-8 pb-20 flex flex-col space-y-4 overflow-y-scroll text-white"
     >
       <h2 className="text-right mb-8 border-b pb-2">Create Product</h2>
       <div className="flex flex-col space-y-1">
+        <SingleImageUpload handleChange={setFormData} name="imageUri" value={imageUri} />
         <label htmlFor="name" className="text-xs font-medium uppercase">
           Name
         </label>
@@ -230,7 +236,6 @@ const ProductForm: React.FC<ProductFormProps> = () => {
           }`}
         />
       </div>
-      <SingleImageUpload handleChange={setFormData} name="imageUri" value={imageUri} />
       <button
         type="submit"
         className="p-3 mt-8 bg-gray-50 hover:bg-gray-200 text-xs text-black uppercase font-bold focus:outline-none"

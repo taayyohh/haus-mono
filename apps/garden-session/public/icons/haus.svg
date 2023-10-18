@@ -1,0 +1,20 @@
+<svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 3D Pyramid Shape -->
+    <path d="M50 5 L0 90 L100 90 Z" fill="url(#opalGradient)" stroke="white" stroke-width="0.6" />
+    <path d="M50 5 L0 90 L50 70 Z" fill="url(#opalGradientSide)" stroke="white" stroke-width="0.5" />
+    <path d="M50 5 L100 90 L50 70 Z" fill="url(#opalGradientSide)" stroke="white" stroke-width="0.4" />
+
+    <!-- Gradient Definitions -->
+    <defs>
+        <radialGradient id="opalGradient" cx="0.5" cy="0.5" r="0.6">
+            <stop offset="0%" stop-color="#A8E4DA" />
+            <stop offset="50%" stop-color="#E0B1CB" />
+            <stop offset="100%" stop-color="#C2D6E1" />
+        </radialGradient>
+        <linearGradient id="opalGradientSide" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#C2D6E1" />
+            <stop offset="50%" stop-color="#A8E4DA" />
+            <stop offset="100%" stop-color="#E0B1CB" />
+        </linearGradient>
+    </defs>
+</svg>

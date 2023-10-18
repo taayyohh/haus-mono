@@ -1,0 +1,28 @@
+fragment Collection on ZoraCreateContract {
+  id
+  address
+  name
+  symbol
+  owner
+  creator
+  contractURI
+  contractStandard
+  contractVersion
+  mintFeePerQuantity
+  timestamp
+  metadata {
+    ...Metadata
+  }
+  tokens {
+    ...Token
+  }
+  salesStrategies {
+    ...SalesStrategy
+  }
+  royalties {
+    ...Royalties
+  }
+  txn {
+    ...TxnInfo
+  }
+}

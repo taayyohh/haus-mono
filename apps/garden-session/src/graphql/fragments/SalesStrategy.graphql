@@ -1,0 +1,52 @@
+fragment SalesStrategy on SalesStrategyConfig {
+  presale {
+    presaleStart
+    presaleEnd
+    merkleRoot
+    configAddress
+    fundsRecipient
+    txn {
+      timestamp
+    }
+  }
+  fixedPrice {
+    maxTokensPerAddress
+    saleStart
+    saleEnd
+    pricePerToken
+    configAddress
+    fundsRecipient
+    txn {
+      timestamp
+    }
+  }
+  redeemMinter {
+    configAddress
+    redeemsInstructionsHash
+    ethAmount
+    ethRecipient
+    isActive
+    saleEnd
+    saleStart
+    target
+    txn {
+      timestamp
+    }
+
+    redeemMintToken {
+      tokenId
+      tokenType
+      tokenContract
+      amount
+    }
+    redeemInstructions {
+      amount
+      tokenType
+      tokenIdStart
+      tokenIdEnd
+      burnFunction
+      tokenContract
+      transferRecipient
+    }
+  }
+}

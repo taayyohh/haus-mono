@@ -1,8 +1,8 @@
-import connectDb from '@/utils/db'
-import { AuthenticatedRequest, verifyToken } from '@/utils/verifyToken'
+import connectDb from '@/modules/auth/utils/db'
+import { AuthenticatedRequest, verifyToken } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
-import protect from '@/utils/protect'
-import Product from '@/models/Product'
+import protect from '@/modules/auth/utils/protect'
+import Product, { IProduct } from '@/models/Product'
 
 export const POST = connectDb(
   protect(async (req: AuthenticatedRequest) => {
@@ -36,8 +36,8 @@ export const GET = connectDb(async (req) => {
   const skip = (page - 1) * limit
 
   try {
-    const products = await Product.find({}).skip(skip).limit(limit).exec()
-    return NextResponse.json({ products }, { status: 200 })
+    const products: IProduct[] = await Product.find({}).skip(skip).limit(limit).exec()
+    return NextResponse.json(products, { status: 200 })
   } catch (err) {
     return NextResponse.json({ error: 'Error fetching products' }, { status: 500 })
   }

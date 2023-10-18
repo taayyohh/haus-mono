@@ -1,0 +1,5 @@
+fragment Royalties on RoyaltyConfig {
+  royaltyBPS
+  royaltyRecipient
+  royaltyMintSchedule
+}

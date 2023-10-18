@@ -4,7 +4,10 @@ const productionConfig = {
   nftStoragePublic: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
   stripeSecret: process.env.STRIPE_SECRET,
   stripePublic: process.env.NEXT_PUBLIC_STRIPE_PUBLIC,
-  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+  privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
+  adminWallet: process.env.ADMIN_WALLET,
+  orderSecret: process.env.ORDER_SECRET_KEY
 }
 
 const developmentConfig = {
@@ -13,7 +16,10 @@ const developmentConfig = {
   nftStoragePublic: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
   stripeSecret: process.env.STRIPE_TEST_SECRET,
   stripePublic: process.env.NEXT_PUBLIC_STRIPE_TEST_PUBLIC,
-  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL_TEST
+  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL_TEST,
+  privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
+  adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
+  orderSecret: process.env.ORDER_SECRET_KEY
 }
 
 

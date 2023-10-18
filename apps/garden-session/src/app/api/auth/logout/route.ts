@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { LOGIN_COOKIE_NAME } from '@/constants'
 
-export async function POST(_req: NextRequest, res: NextResponse) {
+export async function POST(_req: NextRequest) {
   // Set cookie
   const response = NextResponse.json(
     { message: 'Logged Out Successfully' },

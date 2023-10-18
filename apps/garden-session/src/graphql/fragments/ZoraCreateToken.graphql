@@ -1,0 +1,30 @@
+fragment ZoraCreateToken on ZoraCreateToken {
+  address
+  tokenId
+  totalSupply
+  maxSupply
+  totalMinted
+  uri
+  rendererContract
+  contract {
+    contractVersion
+  }
+  metadata {
+    name
+    description
+    image
+    animationUrl
+  }
+
+  salesStrategies {
+    ...SalesStrategy
+  }
+
+  royalties {
+    id
+    user
+    royaltyBPS
+    royaltyRecipient
+    royaltyMintSchedule
+  }
+}

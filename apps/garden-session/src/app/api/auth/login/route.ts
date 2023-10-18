@@ -1,32 +1,25 @@
-import User, { IUser } from '@/models/User'
+import { User as PrivyUser } from '@privy-io/react-auth'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import connectDb from '@/utils/db'
+import connectDb from '@/modules/auth/utils/db'
 import { NextRequest, NextResponse } from 'next/server'
 import { LOGIN_COOKIE_NAME } from '@/constants'
+import config from '@/constants/config'
 
 const secretKey = process.env.JWT_SECRET || ''
 
-const generateToken = (user: IUser) => {
-  return jwt.sign({ username: user.username, role: user.role }, secretKey, {
+const generateToken = (user: PrivyUser) => {
+  const role =
+    String(user?.wallet?.address) === String(config.adminWallet) ? 'superadmin' : 'user'
+
+  return jwt.sign({ username: user.id, role }, secretKey, {
     expiresIn: '1h', // Set an expiration time for the token
   })
 }
 
 export const POST = connectDb(async (req: NextRequest) => {
-  const { username, password } = await req.json()
+  const { user } = await req.json()
 
   try {
-    const user = await User.findOne({ username })
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 401 })
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.password)
-    if (!passwordMatch) {
-      return NextResponse.json({ error: 'incorrect password' }, { status: 401 })
-    }
-
     // Set cookie
     const token = generateToken(user)
     const response = NextResponse.json(

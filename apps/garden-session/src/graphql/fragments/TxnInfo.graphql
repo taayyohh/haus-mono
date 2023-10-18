@@ -1,0 +1,5 @@
+fragment TxnInfo on TransactionInfo {
+  id
+  block
+  timestamp
+}

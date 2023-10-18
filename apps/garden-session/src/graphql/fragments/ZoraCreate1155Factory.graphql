@@ -1,0 +1,7 @@
+fragment ZoraCreate1155Factory on ZoraCreate1155Factory {
+  fixedPriceSaleStrategyAddress
+  id
+  implementation
+  merkleSaleStrategyAddress
+  redeemMinterStrategyAddress
+}

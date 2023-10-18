@@ -1,16 +1,13 @@
 import { IProduct } from '@/models/Product'
+import config from '@/constants/config'
 
-export interface ProductResponse {
-  product: IProduct
-}
-
-export async function fetchProduct(
-  slug: string,
-  referrer: string
-): Promise<ProductResponse> {
-  const response = await fetch(`${referrer}api/products/${slug}`)
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
+export async function fetchProduct(slug: string): Promise<{ data: IProduct }> {
+  try {
+    const response = await fetch(`${config.BASE_URL}api/products/${slug}`)
+    const data = await response.json()
+    return { data }
+  } catch (err) {
+    console.log('err', err)
+    return { data: {} as IProduct }
   }
-  return await response.json()
 }

@@ -7,15 +7,6 @@ import React, { ChangeEvent } from 'react'
 import urlJoin from 'url-join'
 import { ProductFormData } from '@/modules/store/components/ProductForm'
 
-// import {
-//   defaultUploadStyle,
-//   singleImagePreview,
-//   singleImageUploadHelperText,
-//   singleImageUploadInputLabel,
-//   singleImageUploadWrapper,
-//   uploadErrorBox,
-// } from './styles.css'
-
 interface SingleImageUploadProps {
   handleChange: any //TODO: fix
   name: string
@@ -32,7 +23,7 @@ const SingleImageUpload: React.FC<SingleImageUploadProps> = ({
       ? process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN
       : '',
   })
-  const acceptableMIME = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp']
+  const acceptableMIME = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp', 'image/gif']
   const [uploadArtworkError, setUploadArtworkError] = React.useState<any>()
   const [preview, setPreview] = React.useState<string>('')
   const [imageUri, setImageUri] = React.useState<string>(value)
@@ -66,9 +57,8 @@ const SingleImageUpload: React.FC<SingleImageUploadProps> = ({
       setImageUri(uri)
       handleChange((prevFormData: ProductFormData) => ({
         ...prevFormData,
-        ['imageUri']: uri,
+        [name]: uri,
       }))
-
 
       // formik.setFieldValue(id, car.car)
       // formik.setFieldValue(`${id}_preview`, url)

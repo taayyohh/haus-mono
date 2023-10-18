@@ -1,0 +1,5 @@
+query zoraCreateToken($collectionAddress: String!, $tokenId: BigInt!) {
+  zoraCreateTokens(where: { contract: $collectionAddress, tokenId: $tokenId }) {
+    ...ZoraCreateToken
+  }
+}

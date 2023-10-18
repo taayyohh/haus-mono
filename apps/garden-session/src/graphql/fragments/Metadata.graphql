@@ -1,0 +1,7 @@
+fragment Metadata on MetadataInfo {
+  name
+  description
+  image
+  animationUrl
+  rawJson
+}

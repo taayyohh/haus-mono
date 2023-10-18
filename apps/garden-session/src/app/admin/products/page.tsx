@@ -1,22 +1,13 @@
-import { IProduct } from '@/models/Product'
-import ProductList from '@/modules/store/components/ProductList'
-import { fetchProducts } from '@/modules/store/utils/fetchProducts'
-import config from "@/constants/config";
-
-export interface ProductsResponse {
-  products: IProduct[]
-}
-
-async function getProducts(): Promise<ProductsResponse> {
-  return await fetchProducts(1, 10, config.BASE_URL as string)
-}
+import React from 'react'
+import Link from 'next/link'
 
 export default async function Page() {
-  const productsData = await getProducts()
-
   return (
     <div>
-      <ProductList initialData={productsData} />
+      <h2 className="text-right mb-8 border-b pb-2">Manage | Products</h2>
+      <div className={'flex flex-col'}>
+        <Link href={'/admin/products/create'}>Create</Link>
+      </div>
     </div>
   )
 }

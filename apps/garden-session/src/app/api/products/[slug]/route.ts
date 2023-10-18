@@ -1,8 +1,8 @@
-import connectDb from '@/utils/db'
-import { AuthenticatedRequest } from '@/utils/verifyToken'
+import connectDb from '@/modules/auth/utils/db'
+import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import Product from '@/models/Product'
 import { NextResponse } from 'next/server'
-import protect from '@/utils/protect'
+import protect from '@/modules/auth/utils/protect'
 
 export const GET = connectDb(async (req: AuthenticatedRequest) => {
   const slug = req.nextUrl.pathname.split('/')[3]
@@ -12,7 +12,7 @@ export const GET = connectDb(async (req: AuthenticatedRequest) => {
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
-    return NextResponse.json({ product }, { status: 200 })
+    return NextResponse.json(product, { status: 200 })
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: 'Error fetching product' }, { status: 500 })
@@ -35,7 +35,7 @@ export const PUT = connectDb(
         return NextResponse.json({ error: 'Product not found' }, { status: 404 })
       }
 
-      return NextResponse.json({ product }, { status: 200 })
+      return NextResponse.json(product , { status: 200 })
     } catch (err) {
       return NextResponse.json({ error: 'Error updating product' }, { status: 500 })
     }
