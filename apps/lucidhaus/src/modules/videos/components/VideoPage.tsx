@@ -11,6 +11,7 @@ import '@vidstack/react/player/styles/base.css'
 import { MediaPlayer, MediaProvider } from '@vidstack/react'
 import MintButton from '@/components/MintButton'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
+import Link from 'next/link'
 
 const VideoPage = ({
   video,
@@ -47,7 +48,9 @@ const VideoPage = ({
         </div>
         <div className={'flex flex-col px-4 sm:px-6'}>
           <div className={'text-2xl uppercase'}>
-            <div>{artist?.name}</div>
+            <div>
+              <Link href={`/artists/${artist.slug}`}>{artist?.name}</Link>
+            </div>
             <div className={'italic'}>{video.title}</div>
             <div>LH004</div>
           </div>

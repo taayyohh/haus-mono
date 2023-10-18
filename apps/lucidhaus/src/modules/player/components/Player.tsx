@@ -5,22 +5,9 @@ import Play from '../../../../public/icons/play.svg'
 import Pause from '../../../../public/icons/pause.svg'
 import Next from '../../../../public/icons/nextStop.svg'
 import Prev from '../../../../public/icons/backStep.svg'
-import { IAlbum } from '@/models/Album'
 import React from 'react'
-import { PlayerState, QueueItem, usePlayerStore } from '@/store/player'
+import { PlayerState, PlayerTrack, QueueItem, usePlayerStore } from '@/store/player'
 import { hhmmss } from '@/modules/player/utils'
-import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
-
-export interface PlayerTrack {
-  artist: string
-  image: string
-  audio: string
-  title: string
-  trackNumber: number
-  album: IAlbum
-  collection: ZoraCreateContractQuery['zoraCreateContract']
-  token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
-}
 
 export const Player = () => {
   const audioRef = React.useRef<null | HTMLAudioElement>(null)

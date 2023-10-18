@@ -1,7 +1,7 @@
 'use client'
 
-import { PlayerTrack } from '@/modules/player'
 import { FeaturedTrack } from '@/modules/business/components/FeaturedTrack'
+import { PlayerTrack } from '@/store'
 
 const HomePage = ({ track }: { track: PlayerTrack }) => {
   return (

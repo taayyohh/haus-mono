@@ -1,10 +1,10 @@
 import { IAlbum } from '@/models/Album'
-import { PlayerTrack } from '@/modules/player'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { sdk } from '@/graphql/client'
 import { Address } from 'viem'
 import { OrderDirection, ZoraCreateToken_OrderBy } from '@/graphql/sdk.generated'
 import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
+import { PlayerTrack } from '@/store'
 
 export const randomSong = async (songs: IAlbum[]): Promise<PlayerTrack> => {
   const random = (max: any[]) => Math.floor(Math.random() * max.length)

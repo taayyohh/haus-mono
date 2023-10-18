@@ -1,6 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react'
-import { PlayerState, QueueItem, usePlayerStore } from '@/store/player'
-import { PlayerTrack } from '@/modules/player'
+import { PlayerState, PlayerTrack, QueueItem, usePlayerStore } from '@/store/player'
 import { hhmmss } from '@/modules/player/utils'
 
 export const usePlayer = () => {

@@ -13,6 +13,8 @@ import { useMemo } from 'react'
 import MintBatchButton from '@/components/MintBatchButton'
 import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
+import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
+import { PlayerState, usePlayerStore } from '@/store/player'
 
 const AlbumPage = ({
   album,
@@ -44,6 +46,18 @@ const AlbumPage = ({
     return []
   }, [tokens])
 
+  const addMultipleToQueue = usePlayerStore(
+    (state: PlayerState) => state.addMultipleToQueue
+  )
+  const media = usePlayerStore((state: PlayerState) => state.media)
+
+  const handlePlayAlbum = () => {
+    if (!tokens) return
+
+    addMultipleToQueue(convertToPlayerTracks(tokens, collection, album, artist), 'front')
+    if (media) media.play()
+  }
+
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
       <div
@@ -57,6 +71,7 @@ const AlbumPage = ({
             width={700}
             height={700}
             style={{ objectFit: 'contain' }}
+            priority
           />
         </div>
         <div className={'flex flex-col px-4 sm:px-6'}>
@@ -76,6 +91,7 @@ const AlbumPage = ({
             </div>
           )}
           <div
+            onClick={handlePlayAlbum}
             className={
               'flex items-center justify-center gap-4 text-white border-solid border-t border-b py-2 mt-12'
             }
