@@ -6,7 +6,7 @@ const productionConfig = {
   stripePublic: process.env.NEXT_PUBLIC_STRIPE_PUBLIC,
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
-  adminWallet: process.env.ADMIN_WALLET,
+  adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
   orderSecret: process.env.ORDER_SECRET_KEY,
   graphClient: process.env.GRAPH_CLIENT
 }
