@@ -36,8 +36,6 @@ export const Player = () => {
     queuedItem,
   } = usePlayerStore((state: PlayerState) => state)
 
-  console.log('QA')
-
   const handleQueueAndPlay = React.useCallback(
     async (track: PlayerTrack) => {
       if (!audioRef.current) return
