@@ -27,7 +27,7 @@ export default function Og() {
           src={
             'https://nftstorage.link/ipfs/bafybeiaoa4fp54jlppleyg6l5lvpgqub2i3rigps4rbmjavomezq45gnw4/gardensession2.png'
           }
-          alt={'LucidHaus Garden Session'}
+          alt={'LucidHaus'}
         />
       </div>
     ),
