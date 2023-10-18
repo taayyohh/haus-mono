@@ -7,7 +7,7 @@ import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
 
 export default async function Page(context: any) {
   const { data: album } = await fetchAlbum(context.params.slug)
-  if(!album) return
+  if(!album.collectionAddress) return
 
   const { zoraCreateContract: collection } = await sdk().zoraCreateContract({
     address: album.collectionAddress as Address,
