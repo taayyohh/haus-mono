@@ -55,7 +55,7 @@ const VideoPage = ({
             <DateFormatter date={new Date(video.releaseDate)} />
           </div>
           <div className={'mt-20'}>
-            {wallet?.address && token && (
+            {wallet?.address && token && collection && (
               <MintButton collection={collection} token={token} type={'Video'} />
             )}
           </div>

@@ -32,7 +32,7 @@ const MintButton = ({
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
 
   let config
-  if (wallet?.address !== undefined && collection) {
+  if (wallet?.address !== undefined && !!collection?.address && !!token.tokenId) {
     config = getZora1155PrepareConfig(
       saleStrategyAddress,
       collection.address,
@@ -42,6 +42,9 @@ const MintButton = ({
       comment
     )
   }
+
+  console.log('C', config)
+  console.log('w', wallet?.address)
 
   const {
     config: prepareConfig,

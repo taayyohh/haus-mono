@@ -61,7 +61,9 @@ const Track = ({
       <div onClick={handleTrackClick}>
         <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span> {token.metadata?.name}
       </div>
-      <MintButton token={token} collection={collection} />
+      {token && collection && (
+        <MintButton token={token} collection={collection} />
+      )}
     </li>
   )
 }
