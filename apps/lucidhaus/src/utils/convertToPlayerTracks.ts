@@ -1,8 +1,8 @@
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 import { IAlbum } from '@/models/Album'
 import { IArtist } from '@/models/Artist'
-import { PlayerTrack } from '@/store'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { PlayerTrack } from '@/store/player'
 
 export function convertToPlayerTracks(
   tokens: ZoraCreateTokenQuery['zoraCreateTokens'],
