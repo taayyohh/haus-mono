@@ -28,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             appId={config.privyAppId as string}
             onSuccess={handlePrivySuccess}
             config={{
+              appearance: { theme: 'dark' },
               additionalChains: [zora],
             }}
           >
