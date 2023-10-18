@@ -8,8 +8,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "dev:garden": "cd apps/garden-session && dotenv -e .env  -e ../../.env -c development -- turbo run dev",
-    "build:garden": "cd apps/garden-session && dotenv -e .env  -e ../../.env -c development -- turbo run build",
+    "dev:app": "cd apps/lucidhaus && dotenv -e .env  -e ../../.env -c development -- turbo run dev",
+    "build:app": "cd apps/lucidhaus && dotenv -e .env  -e ../../.env -c development -- turbo run build",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean"
