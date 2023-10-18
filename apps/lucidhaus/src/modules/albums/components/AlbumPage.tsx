@@ -54,8 +54,7 @@ const AlbumPage = ({
   const handlePlayAlbum = () => {
     if (!tokens) return
 
-    addMultipleToQueue(convertToPlayerTracks(tokens, collection, album, artist), 'front')
-    if (media) media.play()
+    addMultipleToQueue(convertToPlayerTracks(tokens, collection, album, artist), 'play')
   }
 
   return (

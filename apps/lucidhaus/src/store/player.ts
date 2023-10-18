@@ -38,12 +38,12 @@ export interface PlayerState {
   setCurrentPosition: (position: number) => void
 }
 
-export const usePlayerStore = create<PlayerState>((set, get) => ({
+export const usePlayerStore = create<PlayerState>((set) => ({
   isPlaying: false,
   setIsPlaying: (is: boolean) => {
-    set((state) => ({
+    set({
       isPlaying: is,
-    }))
+    })
   },
   addToQueue: (track: PlayerTrack, type: PlayerQueueType) => {
     set((state) => ({
@@ -51,50 +51,18 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       queuedItem: { track, type },
     }))
   },
-  addMultipleToQueue: async (tracks: PlayerTrack[], type: PlayerQueueType) => {
-    const newQueueItems = tracks.map((track, i) => ({ track, type }))
-    const currentState = get()
+  addMultipleToQueue: (tracks: PlayerTrack[], type: PlayerQueueType) => {
+    const newQueueItems = tracks.map((track) => ({ track, type }))
+    set((state) => {
+      const combinedQueue = [...newQueueItems, ...state.queue]
 
-    // Prepending the new tracks to the front of the queue
-    const combinedQueue = [...newQueueItems, ...currentState.queue]
-
-    if (!currentState.isPlaying && tracks.length && currentState.media) {
-      const firstTrack = tracks[0]
-      currentState.media.src = firstTrack.audio
-      currentState.media.load()
-      try {
-        await currentState.media.play()
-        set({ isPlaying: true, queuedItem: { track: firstTrack, type } })
-        combinedQueue.shift() // Remove the track that's now playing
-      } catch (error) {
-        console.error('Playback failed:', error)
-      }
-    } else {
-      // If not playing immediately, then set queuedItem to first track of newQueueItems
-      set({ queuedItem: newQueueItems[0] })
-    }
-
-    set({ queue: combinedQueue })
-  },
-  setCurrentMedia: (media: HTMLAudioElement) => {
-    media.addEventListener('ended', async () => {
-      const { queue } = get()
-
-      if (queue.length) {
-        const nextItem = queue[0]
-        media.src = nextItem.track.audio
-        media.load()
-        try {
-          await media.play()
-          set({
-            queue: queue.slice(1),
-            queuedItem: nextItem,
-          })
-        } catch (error) {
-          console.error('Playback failed after track end:', error)
-        }
+      return {
+        queue: combinedQueue,
+        queuedItem: newQueueItems[0],
       }
     })
+  },
+  setCurrentMedia: (media: HTMLAudioElement) => {
     set({ media })
   },
   media: undefined,

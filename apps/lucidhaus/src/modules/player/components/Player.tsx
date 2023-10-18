@@ -97,6 +97,38 @@ export const Player = () => {
     setDuration(hhmmss(media?.duration.toString()))
   }
 
+  React.useEffect(() => {
+    const audioElement = audioRef.current
+
+    if (!audioElement) return
+
+    const handleAudioEnded = async () => {
+      const { queue } = usePlayerStore.getState()
+
+      if (queue.length) {
+        const nextItem = queue[0]
+        audioElement.src = nextItem.track.audio
+        audioElement.load()
+        try {
+          await audioElement.play()
+          usePlayerStore.setState({
+            queue: queue.slice(1),
+            queuedItem: nextItem,
+          })
+        } catch (error) {
+          console.error('Playback failed after track end:', error)
+        }
+      }
+    }
+
+    audioElement.addEventListener('ended', handleAudioEnded)
+
+    // Cleanup function to remove event listeners when component unmounts.
+    return () => {
+      audioElement.removeEventListener('ended', handleAudioEnded)
+    }
+  }, []) // Dependencies array is empty because the logic doesn't depend on any external values.
+
   return (
     <div className="fixed bottom-2 right-0 flex w-full items-center justify-between px-4">
       <div className="flex items-center gap-4 ">
