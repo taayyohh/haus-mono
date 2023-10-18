@@ -10,7 +10,7 @@ import { useResponsive } from '@/hooks/useResponsive'
 import Track from '@/modules/albums/components/Track'
 import DateFormatter from '@/components/DateFormatter'
 import { useMemo } from 'react'
-import MintBatchButton from '@/components/MintBatchButton'
+// import MintBatchButton from '@/components/MintBatchButton'
 import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
 
@@ -70,11 +70,11 @@ const AlbumPage = ({
           <div className={'mt-8'}>
             <DateFormatter date={new Date(album.releaseDate)} />
           </div>
-          {userAddress && (
-            <div className={'mt-20'}>
-              <MintBatchButton tokens={sortedTokens} collection={collection} />
-            </div>
-          )}
+          {/*{userAddress && (*/}
+          {/*  <div className={'mt-20'}>*/}
+          {/*    <MintBatchButton tokens={sortedTokens} collection={collection} />*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <div
             className={
               'flex items-center justify-center gap-4 text-white border-solid border-t border-b py-2 mt-12'
