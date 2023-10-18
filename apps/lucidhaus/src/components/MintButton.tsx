@@ -57,17 +57,14 @@ const MintButton = ({
     error: writeError,
   } = useContractWrite(prepareConfig)
 
-  const handleClick = useCallback(
-    (e: { preventDefault: () => void }) => {
-      e.preventDefault()
+  const handleClick = useCallback(() => {
+    if (!user) return login()
+    if (chain?.id !== ZORA_CHAIN_ID) return wallet?.switchChain(ZORA_CHAIN_ID)
 
-      if (!user) return login()
-      if (chain?.id !== ZORA_CHAIN_ID) return wallet?.switchChain(ZORA_CHAIN_ID)
+    return mint?.()
+  }, [user, login, mint, chain?.id, wallet])
 
-      return mint?.()
-    },
-    [user, login, mint, chain?.id, wallet]
-  )
+  console.log('pr', prepareError)
 
   return (
     <Modal
