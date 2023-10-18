@@ -7,7 +7,8 @@ const productionConfig = {
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
   adminWallet: process.env.ADMIN_WALLET,
-  orderSecret: process.env.ORDER_SECRET_KEY
+  orderSecret: process.env.ORDER_SECRET_KEY,
+  graphClient: process.env.GRAPH_CLIENT
 }
 
 const developmentConfig = {
@@ -19,7 +20,8 @@ const developmentConfig = {
   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL_TEST,
   privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
   adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
-  orderSecret: process.env.ORDER_SECRET_KEY
+  orderSecret: process.env.ORDER_SECRET_KEY,
+  graphClient: process.env.GRAPH_CLIENT
 }
 
 
