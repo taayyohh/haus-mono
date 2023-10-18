@@ -133,7 +133,6 @@ export default function MintBatchButton({
     // gas: estimatedGas,
   })
 
-  console.log('WR', prepareError, isIdle, prepareError, writeConfig)
 
   const {
     write: mintBatch,
