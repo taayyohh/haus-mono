@@ -57,9 +57,8 @@ const Track = ({
       className={
         'flex items-center justify-between py-2 border-solid border-t px-4 sm:px-8 text-white hover:bg-white hover:text-black'
       }
-      onClick={handleTrackClick}
     >
-      <div>
+      <div onClick={handleTrackClick}>
         <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span> {token.metadata?.name}
       </div>
       <MintButton token={token} collection={collection} />
