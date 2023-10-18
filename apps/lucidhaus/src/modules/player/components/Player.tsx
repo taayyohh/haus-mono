@@ -9,6 +9,7 @@ import { IAlbum } from '@/models/Album'
 import React from 'react'
 import { PlayerState, QueueItem, usePlayerStore } from '@/store/player'
 import { hhmmss } from '@/modules/player/utils'
+import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 
 export interface PlayerTrack {
   artist: string
@@ -16,9 +17,9 @@ export interface PlayerTrack {
   audio: string
   title: string
   trackNumber: number
-  release: IAlbum
-  collection?: any
-  token?: any
+  album: IAlbum
+  collection: ZoraCreateContractQuery['zoraCreateContract']
+  token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
 }
 
 export const Player = () => {
@@ -155,7 +156,9 @@ export const Player = () => {
 
         {queue[currentPosition]?.track.artist && queue[currentPosition]?.track.title && (
           <div className="inline-flex h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow text-black">
-            <div>{queue[currentPosition]?.track.title}</div>
+            <Link href={`/discography/${queue[currentPosition]?.track.album.slug}`}>
+              <div>{queue[currentPosition]?.track.title}</div>
+            </Link>
             <div>
               <Link
                 href={`/artists/${slugify(

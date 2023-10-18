@@ -1,7 +1,9 @@
+'use client'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { usePlayerStore } from '@/store/player'
 import { PlayerTrack } from '@/modules/player'
 import slugify from 'slugify'
@@ -9,8 +11,24 @@ import Play from '../../../../public/icons/play.svg'
 import Pause from '../../../../public/icons/pause.svg'
 import MintButton from '@/components/MintButton'
 export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
-  const { isPlaying, media, duration, currentTime, addToQueue, setIsPlaying } =
-    usePlayerStore()
+  const {
+    isPlaying,
+    media,
+    duration,
+    currentTime,
+    queue,
+    currentPosition,
+    addToQueue,
+    setIsPlaying,
+  } = usePlayerStore()
+
+  useEffect(() => {
+    if (media) return
+
+    addToQueue(track, 'front')
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleClick = React.useCallback(() => {
     if (!!media && media.src) {
@@ -23,7 +41,6 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
       }
       return
     }
-    addToQueue(track, 'play')
   }, [isPlaying, media])
 
   return (
@@ -52,15 +69,15 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
                 className={`relative h-72 w-72 min-h-72 min-w-72 overflow-hidden rounded-full border sm:h-96 sm:min-h-96 sm:w-96 sm:min-w-96 cursor-pointer`}
                 onClick={handleClick}
               >
-                {track?.image && (
+                {queue[currentPosition]?.track?.image && (
                   <Image
                     className={`h-full w-full flex-shrink-0 ${
                       isPlaying ? 'animate-spin-slow' : ''
                     }`}
-                    src={track?.image}
+                    src={queue[currentPosition]?.track?.image}
                     fill
                     priority
-                    alt={`Cover Art for ${track.title}`}
+                    alt={`Cover Art for ${queue[currentPosition]?.track.title}`}
                   />
                 )}
 
@@ -74,19 +91,32 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
               </div>
               <div className="mt-4 flex max-w-[320px] flex-col gap-2 sm:max-w-[400px] md:ml-8 md:mt-0 md:gap-4 md:pl-8">
                 <div className="text-3xl font-bold sm:text-4xl md:text-5xl text-white">
-                  <Link href={`discography/${track?.release?.slug}`}>{track?.title}</Link>
+                  <Link
+                    href={`discography/${queue[currentPosition]?.track?.album?.slug}`}
+                  >
+                    {queue[currentPosition]?.track?.title}
+                  </Link>
                 </div>
                 <div className="text-3xlsm:text-4xl md:text-5xl text-white">
-                  <Link href={`/artists/${slugify(track?.artist || '').toLowerCase()}`}>
-                    {track?.artist}
+                  <Link
+                    href={`/artists/${slugify(
+                      queue[currentPosition]?.track?.artist || ''
+                    ).toLowerCase()}`}
+                  >
+                    {queue[currentPosition]?.track?.artist}
                   </Link>
                 </div>
                 <div className="text-xl">
                   {currentTime || '0:00'} / {duration || '0:00'}
                 </div>
-                {isPlaying && track.token && track.collection && (
-                  <MintButton token={track.token} collection={track.collection} />
-                )}
+                {isPlaying &&
+                  queue[currentPosition]?.track.token &&
+                  queue[currentPosition]?.track.collection && (
+                    <MintButton
+                      token={queue[currentPosition]?.track.token}
+                      collection={queue[currentPosition]?.track.collection}
+                    />
+                  )}
               </div>
             </motion.div>
           </AnimatePresence>

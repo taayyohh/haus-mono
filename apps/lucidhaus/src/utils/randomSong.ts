@@ -8,31 +8,31 @@ import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
 
 export const randomSong = async (songs: IAlbum[]): Promise<PlayerTrack> => {
   const random = (max: any[]) => Math.floor(Math.random() * max.length)
-  const release = songs[random(songs)]
+  const album = songs[random(songs)]
 
-  if (!release) return {} as Promise<PlayerTrack>
+  if (!album) return {} as Promise<PlayerTrack>
 
   const { zoraCreateContract: collection } = await sdk().zoraCreateContract({
-    address: release?.collectionAddress as Address,
+    address: album?.collectionAddress as Address,
   })
   const { zoraCreateTokens: tokens } = await sdk().zoraCreateTokens({
-    collectionAddress: release?.collectionAddress as Address,
+    collectionAddress: album?.collectionAddress as Address,
     perPage: 20,
     offset: 0,
     orderBy: ZoraCreateToken_OrderBy.Id,
     orderDirection: OrderDirection.Asc,
   })
-  const { data: artist } = await fetchArtist(release.primaryArtist)
+  const { data: artist } = await fetchArtist(album.primaryArtist)
   const song = tokens[random(tokens)]
 
   return {
     artist: artist.name,
-    image: getIpfsGateway(release?.coverImageUri),
+    image: getIpfsGateway(album?.coverImageUri),
     audio: getIpfsGateway(song.metadata?.animationUrl!),
     title: song.metadata?.name!,
     trackNumber: Number(song.tokenId),
     token: song,
     collection: collection,
-    release,
+    album: album,
   }
 }

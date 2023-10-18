@@ -37,7 +37,7 @@ const Track = ({
       trackNumber: Number(token.tokenId),
       token,
       collection,
-      release: album,
+      album,
     }
 
     // If the same track is being clicked and it's currently playing, pause it
@@ -61,9 +61,7 @@ const Track = ({
       <div onClick={handleTrackClick}>
         <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span> {token.metadata?.name}
       </div>
-      {token && collection && (
-        <MintButton token={token} collection={collection} />
-      )}
+      {token && collection && <MintButton token={token} collection={collection} />}
     </li>
   )
 }
