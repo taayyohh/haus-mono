@@ -194,7 +194,7 @@ export default function MintBatchModal({
             'inline-flex items-center justify-center bg-black text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={handleClick}
-          disabled={isPrepareError}
+          disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
         >
           Mint {type ? type : ''}
           <div className={'flex w-5 h-5 ml-3'}>
