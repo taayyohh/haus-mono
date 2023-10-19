@@ -35,8 +35,8 @@ export async function generateMetadata({
       images: [
         {
           url: getIpfsGateway(album.coverImageUri),
-          width: 800,
-          height: 600,
+          width: 1200,
+          height: 630,
         },
       ],
       locale: 'en_US',
