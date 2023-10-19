@@ -49,7 +49,7 @@ const AlbumPage = ({
   const addMultipleToQueue = usePlayerStore(
     (state: PlayerState) => state.addMultipleToQueue
   )
-  const media = usePlayerStore((state: PlayerState) => state.media)
+  const isPlaying = usePlayerStore((state: PlayerState) => state.isPlaying)
 
   const handlePlayAlbum = () => {
     if (!tokens) return

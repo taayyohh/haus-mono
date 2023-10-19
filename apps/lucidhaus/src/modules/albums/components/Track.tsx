@@ -55,11 +55,12 @@ const Track = ({
     <li
       key={token.tokenId}
       className={
-        'flex items-center justify-between py-2 border-solid border-t px-4 sm:px-8 text-white hover:bg-white hover:text-black'
+        'flex items-center justify-between border-solid border-t px-4 sm:px-8 text-white hover:bg-white hover:text-black'
       }
     >
-      <div onClick={handleTrackClick}>
-        <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span> {token.metadata?.name}
+      <div onClick={handleTrackClick} className={'cursor-pointer w-full py-5'}>
+        <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span>
+        <span>{token.metadata?.name}</span>
       </div>
       {token && collection && <MintButton token={token} collection={collection} />}
     </li>
