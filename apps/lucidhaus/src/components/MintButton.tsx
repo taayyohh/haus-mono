@@ -26,7 +26,7 @@ const MintButton = ({
   const { wallet } = usePrivyWagmi()
   const { user, login } = usePrivy()
 
-  if (chain?.id !== ZORA_CHAIN_ID || !!user)
+  if (chain?.id !== ZORA_CHAIN_ID || !user)
     return (
       <div>
         <button

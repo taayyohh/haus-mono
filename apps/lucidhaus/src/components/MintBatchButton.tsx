@@ -22,7 +22,7 @@ export default function MintBatchButton({
   const { wallet } = usePrivyWagmi()
   const { user, login } = usePrivy()
 
-  if (chain?.id !== ZORA_CHAIN_ID || !!user)
+  if (chain?.id !== ZORA_CHAIN_ID || !user)
     return (
       <button
         className={
