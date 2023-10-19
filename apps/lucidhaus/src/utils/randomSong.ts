@@ -27,8 +27,8 @@ export const randomSong = async (songs: IAlbum[]): Promise<PlayerTrack> => {
 
   return {
     artist: artist.name,
-    image: getIpfsGateway(album?.coverImageUri),
-    audio: getIpfsGateway(song.metadata?.animationUrl!),
+    image: getIpfsGateway(album?.coverImageUri || ''),
+    audio: getIpfsGateway(song.metadata?.animationUrl || ''),
     title: song.metadata?.name!,
     trackNumber: Number(song.tokenId),
     token: song,

@@ -31,8 +31,8 @@ const Track = ({
   const handleTrackClick = () => {
     const currentTrack = {
       artist: artist.name || '',
-      audio: getIpfsGateway(token.metadata?.animationUrl!),
-      image: getIpfsGateway(token.metadata?.image!),
+      audio: getIpfsGateway(token.metadata?.animationUrl || ''),
+      image: getIpfsGateway(token.metadata?.image || ''),
       title: token.metadata?.name!,
       trackNumber: Number(token.tokenId),
       token,

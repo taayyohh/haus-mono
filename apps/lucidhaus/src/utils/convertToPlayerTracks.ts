@@ -12,7 +12,7 @@ export function convertToPlayerTracks(
 ): PlayerTrack[] {
   return tokens.map((token, index) => ({
     artist: artist.name,
-    image: token.metadata?.image || '',
+    image: getIpfsGateway(token.metadata?.image || ''),
     audio: getIpfsGateway(token.metadata?.animationUrl || '') || '', // Assuming animationUrl is the audio file
     title: token.metadata?.name || '',
     trackNumber: Number(token.tokenId),

@@ -121,7 +121,6 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
           </AnimatePresence>
         )}
       </div>
-      <div className="fixed bottom-5 animate-bounce">{/*<BsArrowDown size={24} />*/}</div>
     </div>
   )
 }
