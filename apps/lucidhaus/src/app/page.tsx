@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: getIpfsGateway(
-          'ipfs://bafybeib7yvnmqxquhsc4fscbkgeyxol457n4ptn3kdyxvjvduf5ao2qtrm/haus-og.png'
+          'ipfs://bafybeigm23wpntkvhdaqvuaebhwibwoqtdmopz2l4gbr2ri7d64dr6hzwa'
         ),
         width: 800,
         height: 600,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     site: '@lucidhaus',
     creator: '@lucidhaus',
     images: getIpfsGateway(
-      'ipfs://bafybeib7yvnmqxquhsc4fscbkgeyxol457n4ptn3kdyxvjvduf5ao2qtrm/haus-og.png'
+      'ipfs://bafybeigm23wpntkvhdaqvuaebhwibwoqtdmopz2l4gbr2ri7d64dr6hzwa'
     ),
   },
 }
