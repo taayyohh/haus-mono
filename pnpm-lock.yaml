@@ -39,6 +39,7 @@ importers:
       '@types/react-dom': 18.2.4
       '@typescript-eslint/eslint-plugin': ^6.1.0
       '@typescript-eslint/parser': ^6.1.0
+      '@vercel/analytics': ^1.1.1
       '@vercel/og': ^0.5.9
       '@vidstack/react': ^1.1.11
       '@zoralabs/universal-minter': ^0.2.12
@@ -95,6 +96,7 @@ importers:
       '@types/node': 20.2.6
       '@types/react': 18.2.11
       '@types/react-dom': 18.2.4
+      '@vercel/analytics': 1.1.1
       '@vercel/og': 0.5.17
       '@vidstack/react': 1.1.11_j4swkgacdxrhexoapez3itylte
       '@zoralabs/universal-minter': 0.2.12_atthrnwih3wikwrt4nxchqakee
@@ -5143,6 +5145,12 @@ packages:
     dependencies:
       '@vanilla-extract/css': 1.9.1
     dev: true
+
+  /@vercel/analytics/1.1.1:
+    resolution: {integrity: sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==}
+    dependencies:
+      server-only: 0.0.1
+    dev: false
 
   /@vercel/edge-config-fs/0.1.0:
     resolution: {integrity: sha512-NRIBwfcS0bUoUbRWlNGetqjvLSwgYH/BqKqDN7vK1g32p7dN96k0712COgaz6VFizAm9b0g6IG6hR6+hc0KCPg==}
@@ -14789,6 +14797,10 @@ packages:
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /server-only/0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
     dev: false
 
   /set-blocking/2.0.0:

@@ -14,6 +14,7 @@ import { zora } from 'viem/chains'
 import Navigation from '@/components/navigation/Navigation'
 import { Player } from '@/modules/player'
 import Footer from '@/components/Footer'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </PrivyWagmiConnector>
           </PrivyProvider>
         </div>
+        <Analytics />
       </body>
     </html>
   )
