@@ -7,6 +7,7 @@ import MintBatchModal from '@/components/MintBatchModal'
 import { useNetwork } from 'wagmi'
 import { ZORA_CHAIN_ID } from '@/constants'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
+import { usePrivy } from '@privy-io/react-auth'
 
 export default function MintBatchButton({
   tokens,
@@ -19,14 +20,15 @@ export default function MintBatchButton({
 }) {
   const { chain } = useNetwork()
   const { wallet } = usePrivyWagmi()
+  const { user, login } = usePrivy()
 
-  if (chain?.id !== ZORA_CHAIN_ID)
+  if (chain?.id !== ZORA_CHAIN_ID || !!user)
     return (
       <button
         className={
           'inline-flex self-start items-center bg-white text-black py-4 px-8 rounded uppercase text-sm'
         }
-        onClick={() => wallet?.switchChain(ZORA_CHAIN_ID)}
+        onClick={!!user ? () => wallet?.switchChain(ZORA_CHAIN_ID) : () => login()}
       >
         Mint {type ? type : ''}
         <div className={'flex w-5 h-5 ml-4'}>

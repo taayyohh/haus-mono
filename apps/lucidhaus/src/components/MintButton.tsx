@@ -7,6 +7,7 @@ import MintModal from '@/components/MintModal'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { useNetwork } from 'wagmi'
 import { ZORA_CHAIN_ID } from '@/constants'
+import { usePrivy } from '@privy-io/react-auth'
 
 const MintButton = ({
   collection,
@@ -23,15 +24,16 @@ const MintButton = ({
 }) => {
   const { chain } = useNetwork()
   const { wallet } = usePrivyWagmi()
+  const { user, login } = usePrivy()
 
-  if (chain?.id !== ZORA_CHAIN_ID)
+  if (chain?.id !== ZORA_CHAIN_ID || !!user)
     return (
       <div>
         <button
           className={
             'inline-flex self-start items-center bg-white text-black border rounded py-2 px-8 uppercase text-sm'
           }
-          onClick={() => wallet?.switchChain(ZORA_CHAIN_ID)}
+          onClick={!!user ? () => wallet?.switchChain(ZORA_CHAIN_ID) : () => login()}
         >
           {!clean && <div className={'mr-4'}> Mint {type ? type : ''}</div>}
           <div className={'flex w-5 h-5'}>
