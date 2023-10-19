@@ -15,6 +15,7 @@ import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { PlayerState, usePlayerStore } from '@/store/player'
+import { useNetwork } from 'wagmi'
 
 const AlbumPage = ({
   album,
