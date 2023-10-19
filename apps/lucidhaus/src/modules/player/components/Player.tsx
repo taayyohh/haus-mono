@@ -110,19 +110,24 @@ export const Player = () => {
     const handleAudioEnded = async () => {
       const { queue } = usePlayerStore.getState()
 
-      if (queue.length) {
-        const nextItem = queue[0]
-        audioElement.src = nextItem.track.audio
-        audioElement.load()
-        try {
-          await audioElement.play()
-          usePlayerStore.setState({
-            queue: queue.slice(1),
-            queuedItem: nextItem,
-          })
-        } catch (error) {
-          console.error('Playback failed after track end:', error)
-        }
+      if (queue.length === 1) {
+        // If there's only one song in the queue, stop the playback
+        audioElement.pause()
+        setIsPlaying(false)
+        return
+      }
+
+      const nextItem = queue[0]
+      audioElement.src = nextItem.track.audio
+      audioElement.load()
+      try {
+        await audioElement.play()
+        usePlayerStore.setState({
+          queue: queue.slice(1),
+          queuedItem: nextItem,
+        })
+      } catch (error) {
+        console.error('Playback failed after track end:', error)
       }
     }
 
