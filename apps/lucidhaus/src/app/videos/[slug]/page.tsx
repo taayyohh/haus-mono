@@ -1,24 +1,12 @@
 import VideoPage from '@/modules/videos/components/VideoPage'
-import { sdk } from '@/graphql/client'
-import { Address } from 'viem'
-import { OrderDirection, ZoraCreateToken_OrderBy } from '@/graphql/sdk.generated'
-import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
 import { fetchVideo } from '@/modules/videos/utils/fetchVideo'
+import { Metadata } from 'next'
+import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
 
 export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
-
-  const { zoraCreateContract: collection } = await sdk().zoraCreateContract({
-    address: video.collectionAddress as Address,
-  })
-  const { zoraCreateTokens: tokens } = await sdk().zoraCreateTokens({
-    collectionAddress: video.collectionAddress as Address,
-    perPage: 20,
-    offset: 0,
-    orderBy: ZoraCreateToken_OrderBy.Id,
-    orderDirection: OrderDirection.Asc,
-  })
-  const { data: artist } = await fetchArtist(video.primaryArtist)
+  const { collection, tokens, artist } = await onchainVideoFetch(video)
 
   return (
     <VideoPage
@@ -28,4 +16,41 @@ export default async function Page(context: any) {
       artist={artist}
     />
   )
+}
+
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { data: video } = await fetchVideo(params.slug)
+  const { collection, tokens, artist } = await onchainVideoFetch(video)
+
+  return {
+    title: `LUCIDHAUS - ${video.title}`,
+    description:
+      collection?.metadata?.description || 'Timeless, post-genre, Black music.',
+    openGraph: {
+      images: [
+        {
+          url: getIpfsGateway(video.thumbnailUri),
+          width: 800,
+          height: 600,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `LUCIDHAUS - ${video.title}`,
+      description: 'Timeless, post-genre, Black music.',
+      site: '@lucidhaus',
+      creator: '@lucidhaus',
+      images: getIpfsGateway(video.thumbnailUri),
+    },
+  }
 }

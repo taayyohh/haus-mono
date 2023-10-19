@@ -1,20 +1,33 @@
 <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- 3D Pyramid Shape -->
-    <path d="M50 5 L0 90 L100 90 Z" fill="url(#opalGradient)" stroke="white" stroke-width="0.6" />
-    <path d="M50 5 L0 90 L50 70 Z" fill="url(#opalGradientSide)" stroke="white" stroke-width="0.5" />
-    <path d="M50 5 L100 90 L50 70 Z" fill="url(#opalGradientSide)" stroke="white" stroke-width="0.4" />
+    <path d="M50 5 L0 90 L100 90 Z" fill="url(#amplifiedIlluminatedGradient)" />
+    <path d="M50 5 L0 90 L50 70 Z" fill="url(#amplifiedIlluminatedGradientSide)" />
+    <path d="M50 5 L100 90 L50 70 Z" fill="url(#amplifiedIlluminatedGradientSide)" />
 
     <!-- Gradient Definitions -->
     <defs>
-        <radialGradient id="opalGradient" cx="0.5" cy="0.5" r="0.6">
-            <stop offset="0%" stop-color="#A8E4DA" />
-            <stop offset="50%" stop-color="#E0B1CB" />
-            <stop offset="100%" stop-color="#C2D6E1" />
+        <radialGradient id="amplifiedIlluminatedGradient" cx="0.5" cy="0.1" r="0.7" gradientUnits="userSpaceOnUse"
+                        gradientTransform="translate(50 5) scale(90 90)">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="0.1" stop-color="#EFEFEF" />
+            <stop offset="0.15625" stop-color="#A8E4DA" />
+            <stop offset="0.302083" stop-color="#C9BEDD" />
+            <stop offset="0.427083" stop-color="#BFAAC9" />
+            <stop offset="0.557292" stop-color="#B496B5" />
+            <stop offset="0.796875" stop-color="#8D7FA3" />
+            <stop offset="0.90625" stop-color="#8A759E" />
+            <stop offset="1" stop-color="#7F688A" />
         </radialGradient>
-        <linearGradient id="opalGradientSide" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#C2D6E1" />
-            <stop offset="50%" stop-color="#A8E4DA" />
-            <stop offset="100%" stop-color="#E0B1CB" />
+        <linearGradient id="amplifiedIlluminatedGradientSide" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="0.1" stop-color="#EFEFEF" />
+            <stop offset="0.15625" stop-color="#A8E4DA" />
+            <stop offset="0.302083" stop-color="#C9BEDD" />
+            <stop offset="0.427083" stop-color="#BFAAC9" />
+            <stop offset="0.557292" stop-color="#B496B5" />
+            <stop offset="0.796875" stop-color="#8D7FA3" />
+            <stop offset="0.90625" stop-color="#8A759E" />
+            <stop offset="1" stop-color="#7F688A" />
         </linearGradient>
     </defs>
 </svg>

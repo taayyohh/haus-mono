@@ -34,9 +34,9 @@ const AboutPage = () => {
               <Haus />
             </div>
           </div>
-          <div className={'px-4 sm:px-7'}>
+          <div className={'px-4 sm:px-7 flex flex-col gap-2'}>
             <div>
-              Founded in 2017 by musicians Nappy Nina, Théo Mode and artist manager Ryann Holmes, LucidHaus is an artist owned and operated
+              Founded in 2017, by Nappy Nina, Théo Mode and Ryann Holmes, in a lobby-bar of a hotel in Manhattan,  LucidHaus is an artist owned and operated
               record label based in Brooklyn, New York.
             </div>
             <div>

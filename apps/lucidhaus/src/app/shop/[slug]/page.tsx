@@ -1,10 +1,49 @@
 import ProductPage from '@/modules/store/components/ProductPage'
 import { fetchProduct } from '@/modules/store/utils/fetchProduct'
 import { stripe } from '@/stripe/stripe-sdk'
+import { Metadata } from 'next'
+import { fetchVideo } from '@/modules/videos/utils/fetchVideo'
+import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
+import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 export default async function Page(context: any) {
   const { data: product } = await fetchProduct(context.params.slug)
   const stripeProduct = await stripe.products.retrieve(product.stripeId)
 
   return <ProductPage product={{ haus: product, stripe: stripeProduct }} />
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { data: product } = await fetchProduct(params.slug)
+
+  return {
+    title: `LUCIDHAUS - ${product.name}`,
+    description: product.description || 'Timeless, post-genre, Black music.',
+    openGraph: {
+      images: [
+        {
+          url: getIpfsGateway(product.imageUri),
+          width: 800,
+          height: 600,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `LUCIDHAUS - ${product.name}`,
+      description: 'Timeless, post-genre, Black music.',
+      site: '@lucidhaus',
+      creator: '@lucidhaus',
+      images: getIpfsGateway(product.imageUri),
+    },
+  }
 }
