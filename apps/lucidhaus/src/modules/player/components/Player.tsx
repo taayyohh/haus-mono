@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { CurrentTime } from './CurrentTime'
 import slugify from 'slugify'
@@ -8,8 +10,11 @@ import Prev from '../../../../public/icons/backStep.svg'
 import React from 'react'
 import { PlayerState, PlayerTrack, QueueItem, usePlayerStore } from '@/store/player'
 import { hhmmss } from '@/modules/player/utils'
+import MintButton from '@/components/MintButton'
+import { useResponsive } from '@/hooks/useResponsive'
 
 export const Player = () => {
+  const { isMobile } = useResponsive()
   const audioRef = React.useRef<null | HTMLAudioElement>(null)
   const {
     media,
@@ -174,7 +179,7 @@ export const Player = () => {
         </div>
 
         {queue[currentPosition]?.track.artist && queue[currentPosition]?.track.title && (
-          <div className="inline-flex h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow text-black">
+          <div className="inline-flex h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow text-black max-w-[200px] overflow-hidden whitespace-nowrap">
             <Link href={`/discography/${queue[currentPosition]?.track.album.slug}`}>
               <div>{queue[currentPosition]?.track.title}</div>
             </Link>
@@ -189,6 +194,15 @@ export const Player = () => {
             </div>
           </div>
         )}
+        {!isMobile &&
+          queue[currentPosition]?.track.token &&
+          queue[currentPosition]?.track.collection && (
+            <MintButton
+              token={queue[currentPosition]?.track.token}
+              collection={queue[currentPosition]?.track.collection}
+              clean={true}
+            />
+          )}
       </div>
 
       <CurrentTime />

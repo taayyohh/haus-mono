@@ -10,11 +10,13 @@ const MintButton = ({
   token,
   type,
   comment,
+  clean = false,
 }: {
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
   collection: ZoraCreateContractQuery['zoraCreateContract']
   comment?: string | undefined
   type?: 'Album' | 'Video'
+  clean?: boolean
 }) => {
   return (
     <Modal
@@ -24,8 +26,8 @@ const MintButton = ({
             'inline-flex self-start items-center bg-white text-black border rounded py-2 px-8 uppercase text-sm'
           }
         >
-          Mint {type ? type : ''}
-          <div className={'flex w-5 h-5 ml-4'}>
+          {!clean && <div className={'mr-4'}> Mint {type ? type : ''}</div>}
+          <div className={'flex w-5 h-5'}>
             <Zorb />
           </div>
         </button>
