@@ -48,7 +48,9 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
 
           <div className={'flex items py-2'}>
             <Link href={'https://zora.energy/'}>
-              <Zorb />
+              <div className={'flex w-5 h-5'}>
+                <Zorb />
+              </div>
             </Link>
           </div>
         </div>
