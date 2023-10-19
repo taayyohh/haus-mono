@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {
+    title: 'LUCIDHAUS',
     images: [
       {
         url: getIpfsGateway(
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   twitter: {
+    title: 'LUCIDHAUS',
     card: 'summary_large_image',
     description: 'Timeless, post-genre, Black music.',
     site: '@lucidhaus',

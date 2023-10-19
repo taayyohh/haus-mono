@@ -34,6 +34,9 @@ export async function generateMetadata({
     description:
       collection?.metadata?.description || 'Timeless, post-genre, Black music.',
     openGraph: {
+      title: `LUCIDHAUS - ${video.title}`,
+      description:
+        collection?.metadata?.description || 'Timeless, post-genre, Black music.',
       images: [
         {
           url: getIpfsGateway(video.thumbnailUri),
@@ -45,9 +48,10 @@ export async function generateMetadata({
       type: 'website',
     },
     twitter: {
-      card: 'summary_large_image',
       title: `LUCIDHAUS - ${video.title}`,
-      description: 'Timeless, post-genre, Black music.',
+      description:
+        collection?.metadata?.description || 'Timeless, post-genre, Black music.',
+      card: 'summary_large_image',
       site: '@lucidhaus',
       creator: '@lucidhaus',
       images: getIpfsGateway(video.thumbnailUri),

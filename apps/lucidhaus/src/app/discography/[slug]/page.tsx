@@ -29,6 +29,9 @@ export async function generateMetadata({
     description:
       collection?.metadata?.description || 'Timeless, post-genre, Black music.',
     openGraph: {
+      title: `LUCIDHAUS - ${album.title}`,
+      description:
+        collection?.metadata?.description || 'Timeless, post-genre, Black music.',
       images: [
         {
           url: getIpfsGateway(album.coverImageUri),

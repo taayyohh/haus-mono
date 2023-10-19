@@ -27,6 +27,8 @@ export async function generateMetadata({
     title: `LUCIDHAUS - ${product.name}`,
     description: product.description || 'Timeless, post-genre, Black music.',
     openGraph: {
+      title: `LUCIDHAUS - ${product.name}`,
+      description: product.description || 'Timeless, post-genre, Black music.',
       images: [
         {
           url: getIpfsGateway(product.imageUri),

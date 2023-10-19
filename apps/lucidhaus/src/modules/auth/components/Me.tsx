@@ -53,28 +53,28 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
         </div>
       )}
-      {(onramp && (
-        <>
-          <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>
-          <CryptoElements stripeOnramp={stripeOnrampPromise}>
-            {onramp?.client_secret && (
-              <OnrampElement
-                clientSecret={onramp.client_secret}
-                appearance={{ theme: 'dark' }}
-                onChange={() => console.log('on change')}
-                onReady={() => console.log('ready')}
-              />
-            )}
-          </CryptoElements>
-        </>
-      )) || (
-        <div className={'flex flex-col py-2'}>
-          <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>
-          <Link href={'/me/onramp'}>
-            <button className={'border px-2 py-3 w-full mt-2'}>Buy ETH </button>
-          </Link>
-        </div>
-      )}
+      {/*{(onramp && (*/}
+      {/*  <>*/}
+      {/*    <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>*/}
+      {/*    <CryptoElements stripeOnramp={stripeOnrampPromise}>*/}
+      {/*      {onramp?.client_secret && (*/}
+      {/*        <OnrampElement*/}
+      {/*          clientSecret={onramp.client_secret}*/}
+      {/*          appearance={{ theme: 'dark' }}*/}
+      {/*          onChange={() => console.log('on change')}*/}
+      {/*          onReady={() => console.log('ready')}*/}
+      {/*        />*/}
+      {/*      )}*/}
+      {/*    </CryptoElements>*/}
+      {/*  </>*/}
+      {/*)) || (*/}
+      {/*  <div className={'flex flex-col py-2'}>*/}
+      {/*    <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>*/}
+      {/*    <Link href={'/me/onramp'}>*/}
+      {/*      <button className={'border px-2 py-3 w-full mt-2'}>Buy ETH </button>*/}
+      {/*    </Link>*/}
+      {/*  </div>*/}
+      {/*)}*/}
       <Login />
     </div>
   )
