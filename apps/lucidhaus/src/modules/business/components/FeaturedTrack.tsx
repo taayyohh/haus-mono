@@ -22,7 +22,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
   } = usePlayerStore()
 
   useEffect(() => {
-    if (media) return
+    if (media && isPlaying) return
 
     addToQueue(track, 'front')
 
