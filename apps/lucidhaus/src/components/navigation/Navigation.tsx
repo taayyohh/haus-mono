@@ -2,7 +2,7 @@ import Connect from '@/modules/auth/components/Connect'
 import Link from 'next/link'
 import Cart from '@/components/navigation/Cart'
 import { PopOut } from '@/components/PopOut'
-import Haus from '../../../public/icons/haus.svg'
+import Haus from '../../../public/icons/haus-alt-2.svg'
 import React from 'react'
 
 const Navigation = () => {

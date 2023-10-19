@@ -1,6 +1,6 @@
 'use client'
 
-import Haus from '../../../../public/icons/haus.svg'
+import Haus from '../../../../public/icons/haus-alt-2.svg'
 import { AnimatePresence, motion } from 'framer-motion'
 
 const AboutPage = () => {
