@@ -197,11 +197,7 @@ const VideoForm: React.FC<VideoFormProps> = () => {
       >
         Create Music Video
       </button>
-      <Notification
-        message={errorMessage}
-        isVisible={showNotification}
-        onClose={handleCloseNotification}
-      />
+      <Notification message={errorMessage} onClose={handleCloseNotification} />
     </form>
   )
 }

@@ -15,7 +15,6 @@ import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { PlayerState, usePlayerStore } from '@/store/player'
-import { useNetwork } from 'wagmi'
 
 const AlbumPage = ({
   album,
@@ -50,13 +49,15 @@ const AlbumPage = ({
   const addMultipleToQueue = usePlayerStore(
     (state: PlayerState) => state.addMultipleToQueue
   )
-  const isPlaying = usePlayerStore((state: PlayerState) => state.isPlaying)
-
   const handlePlayAlbum = () => {
     if (!tokens) return
 
     addMultipleToQueue(convertToPlayerTracks(tokens, collection, album, artist), 'play')
   }
+
+  const totalMints = useMemo(() => {
+    return tokens?.reduce((sum, item) => sum + parseInt(item.totalMinted, 10), 0)
+  }, [tokens])
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
@@ -82,14 +83,15 @@ const AlbumPage = ({
             <div className={'italic'}>{album.title}</div>
             <div>LH004</div>
           </div>
-          <div className={'mt-8'}>
+          <div className={'flex flex-col gap-2 mt-8'}>
             <DateFormatter date={new Date(album.releaseDate)} />
-          </div>
-          {userAddress && (
-            <div className={'mt-20'}>
-              <MintBatchButton tokens={sortedTokens} collection={collection} />
+            <div className={'italic'}>
+              {Number(totalMints) > 1 ? `${totalMints} mints` : `${totalMints} mint`}
             </div>
-          )}
+          </div>
+          <div className={'mt-20'}>
+            <MintBatchButton tokens={sortedTokens} collection={collection} />
+          </div>
           <div
             onClick={handlePlayAlbum}
             className={

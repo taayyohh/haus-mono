@@ -1,33 +1,38 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface NotificationProps {
-  message: string
-  isVisible: boolean
-  onClose: () => void
+  message?: string | undefined // Message can be undefined
+  onClose: (
+    value: ((prevState: string | undefined) => string | undefined) | string | undefined
+  ) => void
 }
 
-const Notification: React.FC<NotificationProps> = ({ message, isVisible, onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ message, onClose }) => {
+  const [isVisible, setIsVisible] = useState(!!message) // Set visibility based on the presence of a message
+
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
-        onClose()
+        setIsVisible(false)
+        onClose(undefined)
       }, 5000)
 
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [isVisible, onClose])
+  }, [isVisible])
 
   return (
     <>
-      {isVisible && (
-        <div className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded shadow">
-          {message}
-        </div>
-      )}
+      {isVisible &&
+        message && ( // Ensure message exists before rendering
+          <div className="fixed bottom-5 right-5 bg-[#faf5b7] text-[#163a2e] p-3 rounded shadow max-w-[250px] max-h-[80px] overflow-y-scroll">
+            {message}
+          </div>
+        )}
     </>
   )
 }

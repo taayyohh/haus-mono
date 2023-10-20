@@ -161,11 +161,7 @@ const GenreForm = ({ initialData, mode = 'create', onDelete }: GenreFormProps) =
           Delete Genre
         </button>
       )}
-      <Notification
-        message={errorMessage}
-        isVisible={showNotification}
-        onClose={handleCloseNotification}
-      />
+      <Notification message={errorMessage} onClose={handleCloseNotification} />
     </form>
   )
 }

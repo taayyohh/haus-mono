@@ -12,7 +12,7 @@ importers:
     devDependencies:
       dotenv-cli: 7.3.0
       eslint: 8.50.0
-      eslint-config-turbo: 1.10.15_eslint@8.50.0
+      eslint-config-turbo: 1.10.16_eslint@8.50.0
       lint-staged: 13.3.0
       turbo: 1.10.14
 
@@ -23,8 +23,8 @@ importers:
       '@graphql-codegen/typescript': ^2.7.3
       '@graphql-codegen/typescript-graphql-request': ^4.5.4
       '@graphql-codegen/typescript-operations': ^2.5.3
-      '@privy-io/react-auth': ^1.40.3
-      '@privy-io/wagmi-connector': ^0.1.4
+      '@privy-io/react-auth': ^1.43.4
+      '@privy-io/wagmi-connector': ^0.1.5
       '@stripe/crypto': ^0.0.4
       '@stripe/react-stripe-js': ^2.1.1
       '@stripe/stripe-js': ^1.54.2
@@ -87,8 +87,8 @@ importers:
       yup: ^1.2.0
       zustand: ^4.3.3
     dependencies:
-      '@privy-io/react-auth': 1.40.3_qov4cjxi5tqn7nekji4kvvduvu
-      '@privy-io/wagmi-connector': 0.1.4_tzwukjooyd3gl2nssftvfc7xoe
+      '@privy-io/react-auth': 1.43.4_qov4cjxi5tqn7nekji4kvvduvu
+      '@privy-io/wagmi-connector': 0.1.5_6jur4sxevak3gcb4wr7hpcfg3e
       '@stripe/crypto': 0.0.4_@stripe+stripe-js@1.54.2
       '@stripe/react-stripe-js': 2.3.0_hpa2ch2x6mnoay7rkquvvfg72y
       '@stripe/stripe-js': 1.54.2
@@ -3816,8 +3816,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@privy-io/react-auth/1.40.3_qov4cjxi5tqn7nekji4kvvduvu:
-    resolution: {integrity: sha512-1FV7dtJGQwbNJmnOUSDFFehWeCqYt1HIClW2MiZil+XxQ/XYs0IGPxW+SPzTSp8SVwqefmecVDgGAn/9yYXLfg==}
+  /@privy-io/react-auth/1.43.4_qov4cjxi5tqn7nekji4kvvduvu:
+    resolution: {integrity: sha512-bLd892jS2QKFxtk1dRcnlMw9KfJUDjyBFuG3I7sbYKQv63B10ik/QkI3CXjHu+hgbU4PMCRctMcDnJsgh/FSrA==}
     peerDependencies:
       react: ^18
       react-dom: ^18
@@ -3859,7 +3859,7 @@ packages:
       tinycolor2: 1.6.0
       uuid: 9.0.1
       web3-core: 1.10.2_encoding@0.1.13
-      web3-core-helpers: 1.10.0
+      web3-core-helpers: 1.10.2
       wicg-inert: 3.1.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -3871,8 +3871,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@privy-io/wagmi-connector/0.1.4_tzwukjooyd3gl2nssftvfc7xoe:
-    resolution: {integrity: sha512-0UNLfFw6Py6oSxsil4k9HJ/fMq4n3GP1mI2TP3zTBZnTIA8y029PYvvq8n0g54jdRtZxX9MtzYDtOEMslOuKug==}
+  /@privy-io/wagmi-connector/0.1.5_6jur4sxevak3gcb4wr7hpcfg3e:
+    resolution: {integrity: sha512-EJ4V6Wk5XmNMSTWaahnU9r481oN5rODMk4/NCCZq2IXWss2EEBI1s71EBnN7cn7U+FAijA2QYeyVGnHUJmJI4A==}
     peerDependencies:
       '@privy-io/react-auth': ^1.33.0
       react: ^18
@@ -3880,7 +3880,7 @@ packages:
       viem: '>=0.3.35'
       wagmi: '>=1 <2'
     dependencies:
-      '@privy-io/react-auth': 1.40.3_qov4cjxi5tqn7nekji4kvvduvu
+      '@privy-io/react-auth': 1.43.4_qov4cjxi5tqn7nekji4kvvduvu
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       viem: 1.7.0_typescript@5.1.6
@@ -8874,13 +8874,13 @@ packages:
       eslint: 8.42.0
     dev: true
 
-  /eslint-config-turbo/1.10.15_eslint@8.50.0:
-    resolution: {integrity: sha512-76mpx2x818JZE26euen14utYcFDxOahZ9NaWA+6Xa4pY2ezVKVschuOxS96EQz3o3ZRSmcgBOapw/gHbN+EKxQ==}
+  /eslint-config-turbo/1.10.16_eslint@8.50.0:
+    resolution: {integrity: sha512-O3NQI72bQHV7FvSC6lWj66EGx8drJJjuT1kuInn6nbMLOHdMBhSUX/8uhTAlHRQdlxZk2j9HtgFCIzSc93w42g==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.50.0
-      eslint-plugin-turbo: 1.10.15_eslint@8.50.0
+      eslint-plugin-turbo: 1.10.16_eslint@8.50.0
     dev: true
 
   /eslint-import-resolver-node/0.3.9:
@@ -9040,8 +9040,8 @@ packages:
       string.prototype.matchall: 4.0.10
     dev: false
 
-  /eslint-plugin-turbo/1.10.15_eslint@8.50.0:
-    resolution: {integrity: sha512-Tv4QSKV/U56qGcTqS/UgOvb9HcKFmWOQcVh3HEaj7of94lfaENgfrtK48E2CckQf7amhKs1i+imhCsNCKjkQyA==}
+  /eslint-plugin-turbo/1.10.16_eslint@8.50.0:
+    resolution: {integrity: sha512-ZjrR88MTN64PNGufSEcM0tf+V1xFYVbeiMeuIqr0aiABGomxFLo4DBkQ7WI4WzkZtWQSIA2sP+yxqSboEfL9MQ==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:

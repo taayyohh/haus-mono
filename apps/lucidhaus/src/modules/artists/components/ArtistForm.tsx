@@ -59,7 +59,7 @@ const ArtistForm: React.FC<ArtistFormProps> = () => {
   const [showNotification, setShowNotification] = useState(false)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, } = e.target
+    const { name, value } = e.target
 
     // You can update the nested properties like socialLinks or ethereum accordingly here
     setFormData((prevFormData) => ({
@@ -189,11 +189,7 @@ const ArtistForm: React.FC<ArtistFormProps> = () => {
       >
         Create Artist
       </button>
-      <Notification
-        message={errorMessage}
-        isVisible={showNotification}
-        onClose={handleCloseNotification}
-      />
+      <Notification message={errorMessage} onClose={handleCloseNotification} />
     </form>
   )
 }

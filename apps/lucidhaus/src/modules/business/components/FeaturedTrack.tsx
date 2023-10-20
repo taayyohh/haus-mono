@@ -40,6 +40,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
     }
   }, [isPlaying, media])
 
+
   return (
     <div className="absolute top-0 z-0 grid h-screen w-screen place-items-center ">
       <div className="absolute -z-10 flex w-full max-w-screen-xl justify-center">

@@ -66,6 +66,8 @@ export default function MintModal({
     hash: writeData?.hash,
   })
 
+  console.log('TX', txReceipt)
+
   return (
     <div className={'p-4'}>
       <div className={'w-full sm:w-[500px]'}>

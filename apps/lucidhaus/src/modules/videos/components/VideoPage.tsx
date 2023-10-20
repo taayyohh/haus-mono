@@ -12,6 +12,7 @@ import { MediaPlayer, MediaProvider } from '@vidstack/react'
 import MintButton from '@/components/MintButton'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import Link from 'next/link'
+import { useMemo } from 'react'
 
 const VideoPage = ({
   video,
@@ -54,11 +55,16 @@ const VideoPage = ({
             <div className={'italic'}>{video.title}</div>
             <div>LH004</div>
           </div>
-          <div className={'mt-8'}>
+          <div className={'flex flex-col gap-2 mt-8'}>
             <DateFormatter date={new Date(video.releaseDate)} />
+            <div className={'italic'}>
+              {Number(token?.totalMinted) > 1
+                ? `${token?.totalMinted} mints`
+                : `${token?.totalMinted} mint`}
+            </div>
           </div>
           <div className={'mt-20'}>
-            {wallet?.address && token && collection && (
+            {token && collection && (
               <MintButton collection={collection} token={token} type={'Video'} />
             )}
           </div>

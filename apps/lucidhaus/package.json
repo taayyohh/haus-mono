@@ -10,8 +10,8 @@
     "codegen": "graphql-codegen && prettier --write src/graphql/*.generated.ts"
   },
   "dependencies": {
-    "@privy-io/react-auth": "^1.40.3",
-    "@privy-io/wagmi-connector": "^0.1.4",
+    "@privy-io/react-auth": "^1.43.4",
+    "@privy-io/wagmi-connector": "^0.1.5",
     "@stripe/crypto": "^0.0.4",
     "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.2",

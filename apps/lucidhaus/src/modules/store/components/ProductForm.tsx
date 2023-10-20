@@ -74,7 +74,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
           unit_amount: formData.price * 100,
         },
         statement_descriptor: 'LucidHaus',
-        tax_code: 'txcd_99999999' //TODO: make this a field in the form
+        tax_code: 'txcd_99999999', //TODO: make this a field in the form
       })
       const storedProduct = {
         ...formData,
@@ -243,11 +243,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
         Create
       </button>
 
-      <Notification
-        message={errorMessage}
-        isVisible={showNotification}
-        onClose={handleCloseNotification}
-      />
+      <Notification message={errorMessage} onClose={handleCloseNotification} />
     </form>
   )
 }

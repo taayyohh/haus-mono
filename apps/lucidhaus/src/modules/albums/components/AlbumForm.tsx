@@ -243,11 +243,7 @@ const AlbumForm = () => {
       >
         Create Album
       </button>
-      <Notification
-        message={errorMessage}
-        isVisible={showNotification}
-        onClose={handleCloseNotification}
-      />
+      <Notification message={errorMessage} onClose={handleCloseNotification} />
     </form>
   )
 }

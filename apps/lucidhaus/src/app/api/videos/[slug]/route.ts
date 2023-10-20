@@ -7,8 +7,6 @@ import protect from '@/modules/auth/utils/protect'
 export const GET = connectDb(async (req: AuthenticatedRequest) => {
   const slug = req.nextUrl.pathname.split('/')[3]
 
-  console.log('SL', slug)
-
   try {
     const musicVideo = await MusicVideo.findOne({ slug })
     if (!musicVideo) {
