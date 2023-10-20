@@ -174,7 +174,7 @@ export default function MintBatchModal({
               </div>
             </div>
           </div>
-          <div className={'flex flex-col max-h-[200px] overflow-y-scroll'}>
+          <div className={'flex flex-col max-h-[200px] overflow-y-scroll border border-white-13 p-2 px-6 rounded pb-4'}>
             {tokens &&
               tokens.map((token) => (
                 <div
@@ -192,7 +192,7 @@ export default function MintBatchModal({
         </div>
         <button
           className={
-            'inline-flex items-center justify-center bg-[#1b1b1b] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
+            'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg-[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mintBatch?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}

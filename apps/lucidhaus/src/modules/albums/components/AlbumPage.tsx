@@ -9,7 +9,7 @@ import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { useResponsive } from '@/hooks/useResponsive'
 import Track from '@/modules/albums/components/Track'
 import DateFormatter from '@/components/DateFormatter'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import MintBatchButton from '@/components/MintBatchButton'
 import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
@@ -29,8 +29,6 @@ const AlbumPage = ({
   artist: IArtist
 }) => {
   const { isMobile } = useResponsive()
-  const { wallet: activeWallet } = usePrivyWagmi()
-  const userAddress = activeWallet?.address as `0x${string}`
   const currentTime = Math.floor(Date.now() / 1000)
   const sortedTokens = useMemo(() => {
     if (Array.isArray(tokens)) {
@@ -51,6 +49,9 @@ const AlbumPage = ({
     (state: PlayerState) => state.addMultipleToQueue
   )
   const isPlaying = usePlayerStore((state) => state.isPlaying)
+  const setIsPlaying = usePlayerStore((state) => state.setIsPlaying)
+  const media = usePlayerStore((state) => state.media)
+
   const handlePlayAlbum = () => {
     if (!tokens) return
 
@@ -100,10 +101,7 @@ const AlbumPage = ({
               isPlaying ? 'bg-[#111]' : ''
             }`}
           >
-            {(isPlaying && <Pause fill={'#fff'} width={12} />) || (
-              <Play fill={'#fff'} width={12} />
-            )}
-            {isPlaying ? 'Pause' : 'Play'}
+            <Play fill={'#fff'} width={12} /> Play
           </div>
         </div>
       </div>
