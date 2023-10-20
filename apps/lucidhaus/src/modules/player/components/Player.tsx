@@ -190,7 +190,7 @@ export const Player = () => {
             </Link>
           </div>
         )}
-        {queue[currentPosition]?.track.title && (
+        {!isMobile && queue[currentPosition]?.track.title && (
           <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 max-w-[200px] overflow-hidden whitespace-nowrap">
             <Link
               href={`/artists/${slugify(
