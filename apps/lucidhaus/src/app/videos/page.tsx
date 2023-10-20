@@ -47,7 +47,7 @@ export default async function Page() {
     <div>
       <div
         className={
-          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto justify-center'
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto justify-center border-t border-white-13'
         }
       >
         {videos && videos.map((video) => <VideoCard video={video} key={video._id} />)}

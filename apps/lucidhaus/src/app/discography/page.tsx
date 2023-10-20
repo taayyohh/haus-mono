@@ -45,7 +45,11 @@ export default async function Page() {
   )
 
   return (
-    <div className={'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto'}>
+    <div
+      className={
+        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto border-t border-white-13'
+      }
+    >
       {albums && albums.map((album) => <AlbumCard album={album} key={album._id} />)}
     </div>
   )

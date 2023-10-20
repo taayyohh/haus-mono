@@ -141,7 +141,7 @@ export const Player = () => {
 
   return (
     <div className="fixed bottom-2 right-0 flex w-full items-center justify-between px-4">
-      <div className="flex items-center gap-4 ">
+      <div className="flex items-center gap-2">
         <div>
           <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-4 shadow max-w-[200px] overflow-hidden whitespace-nowrap">
             <button
@@ -188,17 +188,20 @@ export const Player = () => {
             <Link href={`/discography/${queue[currentPosition]?.track.album.slug}`}>
               <div>{queue[currentPosition]?.track.title}</div>
             </Link>
-            <div>
-              <Link
-                href={`/artists/${slugify(
-                  queue[currentPosition]?.track.artist
-                ).toLowerCase()}`}
-              >
-                {queue[currentPosition]?.track.artist}
-              </Link>
-            </div>
           </div>
         )}
+        {queue[currentPosition]?.track.title && (
+          <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 max-w-[200px] overflow-hidden whitespace-nowrap">
+            <Link
+              href={`/artists/${slugify(
+                queue[currentPosition]?.track.artist
+              ).toLowerCase()}`}
+            >
+              {queue[currentPosition]?.track.artist}
+            </Link>
+          </div>
+        )}
+
         {!isMobile &&
           queue[currentPosition]?.track.token &&
           queue[currentPosition]?.track.collection && (

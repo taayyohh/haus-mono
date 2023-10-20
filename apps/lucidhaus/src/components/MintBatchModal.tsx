@@ -162,7 +162,7 @@ export default function MintBatchModal({
                 />
               </div>
             )}
-            <div className={'flex flex-col text-black uppercase'}>
+            <div className={'flex flex-col text-white uppercase'}>
               <div className={'italic'}>{collection?.metadata?.name}</div>
               <div>
                 <a
@@ -179,20 +179,20 @@ export default function MintBatchModal({
               tokens.map((token) => (
                 <div
                   key={token.tokenId}
-                  className={'text-black py-2 border-b border-black'}
+                  className={'text-white py-2 border-solid border-b border-white-13'}
                 >
                   <div>{token.metadata?.name}</div>
                 </div>
               ))}
           </div>
-          <div className={'flex flex-col text-black py-2 mt-12 border-black border-t'}>
+          <div className={'flex flex-col text-white py-2 mt-12'}>
             <div>{tokens.length} tracks</div>
             <div>Total: {parseFloat(formatEther(mintFee)) * tokens.length} ETH</div>
           </div>
         </div>
         <button
           className={
-            'inline-flex items-center justify-center bg-[#131313] text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
+            'inline-flex items-center justify-center bg-[#1b1b1b] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mintBatch?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}

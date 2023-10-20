@@ -63,7 +63,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
               exit="closed"
             >
               <div
-                className={`relative h-72 w-72 min-h-72 min-w-72 overflow-hidden rounded-full border sm:h-96 sm:min-h-96 sm:w-96 sm:min-w-96 cursor-pointer`}
+                className={`relative h-72 w-72 min-h-72 min-w-72 overflow-hidden rounded-full border border-white-13 sm:h-96 sm:min-h-96 sm:w-96 sm:min-w-96 cursor-pointer`}
                 onClick={handleClick}
               >
                 {queue[currentPosition]?.track?.image && (

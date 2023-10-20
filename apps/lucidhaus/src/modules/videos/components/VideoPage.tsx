@@ -26,7 +26,6 @@ const VideoPage = ({
   artist: IArtist
 }) => {
   const { isMobile } = useResponsive()
-  const { wallet } = usePrivyWagmi()
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>

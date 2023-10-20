@@ -55,7 +55,7 @@ const Track = ({
     <li
       key={token.tokenId}
       className={
-        'flex items-center justify-between border-solid border-t px-4 sm:px-8 text-white hover:bg-white hover:text-black'
+        'flex items-center justify-between border-solid border-t border-white-13 px-4 sm:px-8 text-white hover:bg-[#111]'
       }
     >
       <div onClick={handleTrackClick} className={'cursor-pointer w-full py-5'}>

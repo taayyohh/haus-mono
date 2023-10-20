@@ -23,9 +23,8 @@ const Connect = () => {
   } else {
     return (
       <Link
-        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border px-4 py-2 w-full z-20 rounded`}
+        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#131313]`}
         href={'/me'}
-        style={{ boxShadow: '-2px 4px 3px 0px #000' }}
       >
         Me
         {/*<User width="12" style={{ fill: '#000' }} />*/}

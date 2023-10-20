@@ -50,7 +50,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         src={'/header-logo.png'}
                         alt={'Logo'}
                         width="100"
-                        height="50"
+                        height="80"
+                        priority
                       />
                     </Link>
                     <Navigation />

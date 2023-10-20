@@ -31,7 +31,7 @@ const MintButton = ({
       <div>
         <button
           className={
-            'inline-flex self-start items-center bg-[#1b1b1b] text-white border-solid border-[rgb(255 255 255 / 13%)] rounded py-2 px-8 uppercase text-sm'
+            'inline-flex self-start items-center bg-[#1b1b1b] hover:bg-[#111] text-white border border-white-13 rounded py-2 px-8 uppercase text-sm'
           }
           onClick={!!user ? () => wallet?.switchChain(ZORA_CHAIN_ID) : () => login()}
         >
@@ -48,7 +48,7 @@ const MintButton = ({
       trigger={
         <button
           className={
-            'inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-8 uppercase text-sm'
+            'inline-flex self-start items-center bg-[#1b1b1b] hover:bg-[#111] text-white border border-white-13 rounded py-2 px-8 uppercase text-sm'
           }
         >
           {!clean && <div className={'mr-4'}> Mint {type ? type : ''}</div>}

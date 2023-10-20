@@ -42,7 +42,7 @@ export const PopOut: React.FC<PopOutProps> = ({
         {trigger}
       </button>
       {isVisible && (
-        <div className="absolute w-[91vw] sm:w-auto top-full right-0 mt-2 z-50 bg-[#131313] border rounded p-4 shadow-lg">
+        <div className="absolute w-[91vw] sm:w-auto top-full right-0 mt-2 z-50 bg-[#131313] border border-white-13 rounded p-4 shadow-lg">
           {children}
           {closeButton && (
             <button

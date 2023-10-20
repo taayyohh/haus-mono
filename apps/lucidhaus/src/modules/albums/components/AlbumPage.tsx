@@ -13,6 +13,7 @@ import { useMemo } from 'react'
 import MintBatchButton from '@/components/MintBatchButton'
 import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
+import Pause from '../../../../public/icons/pause.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { PlayerState, usePlayerStore } from '@/store/player'
 
@@ -49,6 +50,7 @@ const AlbumPage = ({
   const addMultipleToQueue = usePlayerStore(
     (state: PlayerState) => state.addMultipleToQueue
   )
+  const isPlaying = usePlayerStore((state) => state.isPlaying)
   const handlePlayAlbum = () => {
     if (!tokens) return
 
@@ -94,12 +96,14 @@ const AlbumPage = ({
           </div>
           <div
             onClick={handlePlayAlbum}
-            className={
-              'flex items-center justify-center gap-4 text-white border-solid border-t border-b py-2 mt-12'
-            }
+            className={`flex items-center justify-center gap-4 text-white border-solid border-t border-white-13 hover:bg-[#111] border-b py-2 mt-12 cursor-pointer ${
+              isPlaying ? 'bg-[#111]' : ''
+            }`}
           >
-            <Play fill={'#fff'} width={12} />
-            Play
+            {(isPlaying && <Pause fill={'#fff'} width={12} />) || (
+              <Play fill={'#fff'} width={12} />
+            )}
+            {isPlaying ? 'Pause' : 'Play'}
           </div>
         </div>
       </div>
