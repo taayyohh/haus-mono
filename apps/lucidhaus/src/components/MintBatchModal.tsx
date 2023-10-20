@@ -27,6 +27,7 @@ import {
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 import { getZora1155PrepareConfig } from '@/utils/getZora1155PrepareConfig'
 import Zorb from '../../public/icons/zorb.svg'
+import Haus from '../../public/icons/haus-alt-2.svg'
 
 function getMintBatchArgs({
   userAddress,
@@ -133,7 +134,8 @@ export default function MintBatchModal({
   const {
     write: mintBatch,
     data: writeData,
-    isLoading: isWriteLoading,
+    isLoading: writeLoading,
+    isSuccess: writeSuccess,
     error: writeError,
   } = useContractWrite({
     ...writeConfig,
@@ -174,7 +176,11 @@ export default function MintBatchModal({
               </div>
             </div>
           </div>
-          <div className={'flex flex-col max-h-[200px] overflow-y-scroll border border-white-13 p-2 px-6 rounded pb-4'}>
+          <div
+            className={
+              'flex flex-col max-h-[200px] overflow-y-scroll border border-white-13 p-2 px-6 rounded pb-4'
+            }
+          >
             {tokens &&
               tokens.map((token) => (
                 <div
@@ -197,9 +203,16 @@ export default function MintBatchModal({
           onClick={() => mintBatch?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
         >
-          Mint {type ? type : ''}
+          {writeLoading ? (
+            <>{'Minting'}</>
+          ) : txReceipt?.status === 'success' ? (
+            <>{'Minted'}</>
+          ) : (
+            <>Mint {type ? type : ''}</>
+          )}
+
           <div className={'flex w-5 h-5 ml-3'}>
-            <Zorb />
+            {(writeSuccess && <Haus />) || <Zorb />}
           </div>
         </button>
       </div>

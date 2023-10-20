@@ -3,6 +3,8 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { shortenAddress } from '@/utils/shortenAddress'
 import { formatEther } from 'viem'
 import Zorb from '../../public/icons/zorb.svg'
+import Haus from '../../public/icons/haus-alt-2.svg'
+
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 import { usePrivy } from '@privy-io/react-auth'
 import {
@@ -44,29 +46,21 @@ export default function MintModal({
     )
   }
 
-  const {
-    config: prepareConfig,
-    error: prepareError,
-    isError: isPrepareError,
-  } = usePrepareContractWrite({ ...config, enabled: !!address })
+  const { config: prepareConfig, isError: isPrepareError } = usePrepareContractWrite({
+    ...config,
+    enabled: !!address,
+  })
 
   const {
     write: mint,
     data: writeData,
     isLoading: writeLoading,
     isSuccess: writeSuccess,
-    error: writeError,
   } = useContractWrite(prepareConfig)
 
-  const {
-    data: txReceipt,
-    isSuccess,
-    isFetching,
-  } = useWaitForTransaction({
+  const { data: txReceipt } = useWaitForTransaction({
     hash: writeData?.hash,
   })
-
-  console.log('TX', txReceipt)
 
   return (
     <div className={'p-4'}>
@@ -113,11 +107,20 @@ export default function MintModal({
             'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mint?.()}
-          disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
+          disabled={
+            (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) || writeLoading
+          }
         >
-          Mint {type ? type : ''}
+          {writeLoading ? (
+            <>{'Minting'}</>
+          ) : txReceipt?.status === 'success' ? (
+            <>{'Minted'}</>
+          ) : (
+            <>Mint {type ? type : ''}</>
+          )}
+
           <div className={'flex w-5 h-5 ml-3'}>
-            <Zorb />
+            {(writeSuccess && <Haus />) || <Zorb />}
           </div>
         </button>
       </div>

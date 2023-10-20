@@ -97,9 +97,7 @@ const AlbumPage = ({
           </div>
           <div
             onClick={handlePlayAlbum}
-            className={`flex items-center justify-center gap-4 text-white border-solid border-t border-white-13 hover:bg-[#111] border-b py-2 mt-12 cursor-pointer ${
-              isPlaying ? 'bg-[#111]' : ''
-            }`}
+            className={`flex items-center justify-center gap-4 text-white border-solid border-t border-white-13 hover:bg-[#111] border-b py-2 mt-12 cursor-pointer`}
           >
             <Play fill={'#fff'} width={12} /> Play
           </div>
