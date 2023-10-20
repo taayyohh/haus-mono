@@ -4,6 +4,7 @@ import HomePage from '@/modules/business/components/Home'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',

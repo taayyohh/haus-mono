@@ -18,7 +18,7 @@ import {
   UsePrepareContractWriteConfig,
   useWaitForTransaction,
 } from 'wagmi'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
 import {
   zoraUniversalMinterABI,
