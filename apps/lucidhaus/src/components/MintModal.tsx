@@ -5,10 +5,14 @@ import { formatEther } from 'viem'
 import Zorb from '../../public/icons/zorb.svg'
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 import { usePrivy } from '@privy-io/react-auth'
-import { useAccount, useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
-import { usePrivyWagmi } from '@privy-io/wagmi-connector'
+import {
+  useAccount,
+  useContractWrite,
+  useNetwork,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
 import { getZora1155PrepareConfig } from '@/utils/getZora1155PrepareConfig'
-import { useCallback } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
 
 export default function MintModal({
@@ -24,7 +28,6 @@ export default function MintModal({
 }) {
   const { user, login } = usePrivy()
   const { address } = useAccount()
-  const { wallet, ready } = usePrivyWagmi()
   const { chain } = useNetwork()
   const saleStrategyAddress = token?.salesStrategies[0]?.fixedPrice?.configAddress!
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
@@ -45,8 +48,8 @@ export default function MintModal({
     config: prepareConfig,
     error: prepareError,
     isError: isPrepareError,
-    isIdle,
   } = usePrepareContractWrite({ ...config, enabled: !!address })
+
   const {
     write: mint,
     data: writeData,
@@ -55,12 +58,13 @@ export default function MintModal({
     error: writeError,
   } = useContractWrite(prepareConfig)
 
-  const handleClick = useCallback(() => {
-    if (!user) return login()
-    if (chain?.id !== ZORA_CHAIN_ID) return wallet?.switchChain(ZORA_CHAIN_ID)
-
-    return mint?.()
-  }, [user, login, mint, chain?.id, wallet])
+  const {
+    data: txReceipt,
+    isSuccess,
+    isFetching,
+  } = useWaitForTransaction({
+    hash: writeData?.hash,
+  })
 
   return (
     <div className={'p-4'}>
@@ -103,7 +107,7 @@ export default function MintModal({
           className={
             'inline-flex items-center justify-center bg-black text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
-          onClick={handleClick}
+          onClick={() => mint?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
         >
           Mint {type ? type : ''}

@@ -15,6 +15,8 @@ import {
 } from '@/modules/store/components/StripeCryptoElements'
 import Zorb from '../../../../public/icons/zorb.svg'
 import { OnrampSessionResult } from '@stripe/crypto/types/api/onramp'
+import { useResponsive } from '@/hooks/useResponsive'
+import { shortenAddress } from '@/utils/shortenAddress'
 
 const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   const { login, logout, ready, authenticated, user } = usePrivy()
@@ -25,6 +27,7 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   })
   const { chain, chains } = useNetwork()
   const stripeOnrampPromise = loadStripeOnramp(config.stripePublic!)
+  const { isMobile } = useResponsive()
 
   if (!ready || !authenticated) return null
 
@@ -33,7 +36,9 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
       {activeWallet && (
         <div className={'flex flex-col py-2'}>
           <label className={'text-xs font-bold uppercase'}>Wallet</label>
-          <div>{activeWallet?.address}</div>
+          <div>
+            {isMobile ? shortenAddress(activeWallet?.address) : activeWallet?.address}
+          </div>
         </div>
       )}
       {balance && (

@@ -22,12 +22,10 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
   } = usePlayerStore()
 
   useEffect(() => {
-    if (media && isPlaying) return
+    if (isPlaying) return
 
     addToQueue(track, 'front')
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isPlaying, track])
 
   const handleClick = React.useCallback(() => {
     if (!!media && media.src) {
@@ -82,7 +80,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
 
                 <div className="absolute top-[50%] left-[50%] -mt-[24px] -ml-[24px]">
                   <div className={'flex items-center justify-center h-12 w-12'}>
-                    {(isPlaying && <Pause width={48} height={48} />) || (
+                    {(isPlaying && <Pause width={48} height={48} fill={'#FFF'} />) || (
                       <Play width={48} height={48} fill={'#FFF'} />
                     )}
                   </div>

@@ -16,6 +16,7 @@ import {
   useNetwork,
   usePrepareContractWrite,
   UsePrepareContractWriteConfig,
+  useWaitForTransaction,
 } from 'wagmi'
 import { useCallback, useMemo } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
@@ -88,8 +89,8 @@ export default function MintBatchModal({
   collection: ZoraCreateContractQuery['zoraCreateContract']
   type?: string
 }) {
-  const { wallet, setActiveWallet } = usePrivyWagmi()
-  const { ready, user, login } = usePrivy()
+  const { wallet } = usePrivyWagmi()
+  const { user } = usePrivy()
   const { chain } = useNetwork()
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
 
@@ -132,19 +133,19 @@ export default function MintBatchModal({
   const {
     write: mintBatch,
     data: writeData,
-    isSuccess,
     isLoading: isWriteLoading,
     error: writeError,
   } = useContractWrite({
     ...writeConfig,
   })
 
-  const handleClick = useCallback(() => {
-    if (!user) return login()
-    if (chain?.id !== ZORA_CHAIN_ID) return wallet?.switchChain(ZORA_CHAIN_ID)
-
-    return mintBatch?.()
-  }, [user, login, mintBatch, chain?.id, wallet])
+  const {
+    data: txReceipt,
+    isSuccess,
+    isFetching,
+  } = useWaitForTransaction({
+    hash: writeData?.hash,
+  })
 
   return (
     <div className={'p-4'}>
@@ -193,7 +194,7 @@ export default function MintBatchModal({
           className={
             'inline-flex items-center justify-center bg-black text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
-          onClick={handleClick}
+          onClick={() => mintBatch?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
         >
           Mint {type ? type : ''}
