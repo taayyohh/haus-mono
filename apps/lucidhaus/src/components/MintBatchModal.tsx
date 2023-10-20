@@ -201,7 +201,11 @@ export default function MintBatchModal({
             'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg-[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mintBatch?.()}
-          disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
+          disabled={
+            (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
+            writeLoading ||
+            txReceipt?.status === 'success'
+          }
         >
           {writeLoading ? (
             <>{'Minting'}</>
@@ -212,7 +216,7 @@ export default function MintBatchModal({
           )}
 
           <div className={'flex w-5 h-5 ml-3'}>
-            {(writeSuccess && <Haus />) || <Zorb />}
+            {(txReceipt?.status === 'success' && <Haus />) || <Zorb />}
           </div>
         </button>
       </div>

@@ -108,7 +108,9 @@ export default function MintModal({
           }
           onClick={() => mint?.()}
           disabled={
-            (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) || writeLoading
+            (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
+            writeLoading ||
+            txReceipt?.status === 'success'
           }
         >
           {writeLoading ? (
@@ -120,7 +122,7 @@ export default function MintModal({
           )}
 
           <div className={'flex w-5 h-5 ml-3'}>
-            {(writeSuccess && <Haus />) || <Zorb />}
+            {(txReceipt?.status === 'success' && <Haus />) || <Zorb />}
           </div>
         </button>
       </div>
