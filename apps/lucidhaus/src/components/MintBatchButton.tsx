@@ -26,7 +26,7 @@ export default function MintBatchButton({
     return (
       <button
         className={
-          'inline-flex self-start items-center bg-white text-black py-4 px-8 rounded uppercase text-sm'
+          'inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-4 px-8 uppercase text-sm'
         }
         onClick={!!user ? () => wallet?.switchChain(ZORA_CHAIN_ID) : () => login()}
       >
@@ -42,7 +42,7 @@ export default function MintBatchButton({
       trigger={
         <button
           className={
-            'inline-flex self-start items-center bg-white text-black py-4 px-8 rounded uppercase text-sm'
+            'inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-4 px-8 uppercase text-sm'
           }
         >
           Mint {type ? type : ''}

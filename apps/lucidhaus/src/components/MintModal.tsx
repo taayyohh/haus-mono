@@ -100,14 +100,14 @@ export default function MintModal({
               <div>{token.metadata?.name}</div>
             </div>
           </div>
-          <div className={'flex flex-col text-black py-2 mt-12 border-t'}>
+          <div className={'flex flex-col text-black py-2 mt-12'}>
             <div>1 {type ? type : 'token'}</div>
             <div>Total: {parseFloat(formatEther(mintFee))} ETH</div>
           </div>
         </div>
         <button
           className={
-            'inline-flex items-center justify-center bg-black text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
+            'inline-flex items-center justify-center bg-[#131313] text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mint?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}

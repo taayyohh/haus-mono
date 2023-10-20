@@ -22,7 +22,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
   } = usePlayerStore()
 
   useEffect(() => {
-    if (isPlaying) return
+    if (isPlaying || (media?.src && currentTime !== '00:00')) return
 
     addToQueue(track, 'front')
   }, [isPlaying, track])
@@ -39,7 +39,6 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
       return
     }
   }, [isPlaying, media])
-
 
   return (
     <div className="absolute top-0 z-0 grid h-screen w-screen place-items-center ">
@@ -107,8 +106,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
                 <div className="text-xl">
                   {currentTime || '0:00'} / {duration || '0:00'}
                 </div>
-                {isPlaying &&
-                  queue[currentPosition]?.track.token &&
+                {queue[currentPosition]?.track.token &&
                   queue[currentPosition]?.track.collection && (
                     <MintButton
                       token={queue[currentPosition]?.track.token}

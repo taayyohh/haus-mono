@@ -143,33 +143,33 @@ export const Player = () => {
     <div className="fixed bottom-2 right-0 flex w-full items-center justify-between px-4">
       <div className="flex items-center gap-4 ">
         <div>
-          <div className="inline-flex text-black h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow">
+          <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-4 shadow max-w-[200px] overflow-hidden whitespace-nowrap">
             <button
               type="button"
               onClick={queue.length > 0 ? () => handlePrev() : () => {}}
             >
-              <Prev />
+              <Prev fill={'#FFF'} />
             </button>
             {(isPlaying && (
               <button
                 type="button"
                 onClick={queue.length > 0 ? () => handlePause() : () => {}}
               >
-                <Pause />
+                <Pause fill={'#FFF'} />
               </button>
             )) || (
               <button
                 type="button"
                 onClick={queue.length > 0 ? () => handlePlay() : () => {}}
               >
-                <Play />
+                <Play fill={'#FFF'} />
               </button>
             )}
             <button
               type="button"
               onClick={queue.length > 0 ? () => handleNext() : () => {}}
             >
-              <Next />
+              <Next fill={'#FFF'} />
             </button>
           </div>
           <audio
@@ -184,7 +184,7 @@ export const Player = () => {
         </div>
 
         {queue[currentPosition]?.track.artist && queue[currentPosition]?.track.title && (
-          <div className="inline-flex h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow text-black max-w-[200px] overflow-hidden whitespace-nowrap">
+          <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 max-w-[200px] overflow-hidden whitespace-nowrap">
             <Link href={`/discography/${queue[currentPosition]?.track.album.slug}`}>
               <div>{queue[currentPosition]?.track.title}</div>
             </Link>

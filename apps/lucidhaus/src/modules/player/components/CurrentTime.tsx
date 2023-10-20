@@ -10,7 +10,7 @@ export const CurrentTime = () => {
   return (
     <div className="hidden items-center gap-4 sm:visible sm:flex text-black">
       <div>
-        <div className="inline-flex h-10 items-center gap-2 self-start rounded border bg-white p-2 shadow">
+        <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 overflow-hidden whitespace-nowrap">
           {currentTime || '0:00'} / {duration || '0:00'}
         </div>
       </div>

@@ -192,7 +192,7 @@ export default function MintBatchModal({
         </div>
         <button
           className={
-            'inline-flex items-center justify-center bg-black text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
+            'inline-flex items-center justify-center bg-[#131313] text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mintBatch?.()}
           disabled={isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user}
