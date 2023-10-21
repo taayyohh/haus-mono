@@ -4,7 +4,6 @@ import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
 
-export const dynamic = 'force-dynamic'
 export default async function Page(context: any) {
   const { data: artist } = await fetchArtist(context.params.slug)
 

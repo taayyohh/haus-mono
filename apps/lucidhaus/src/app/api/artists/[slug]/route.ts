@@ -6,6 +6,10 @@ import protect from '@/modules/auth/utils/protect'
 import mongoose from 'mongoose'
 const ObjectId = mongoose.Types.ObjectId
 
+function isMongoObjectId(str: string) {
+  return /^[a-f\d]{24}$/i.test(str)
+}
+
 export const GET = connectDb(async (req) => {
   const slugOrId = req.nextUrl.pathname.split('/')[3]
 
@@ -14,7 +18,7 @@ export const GET = connectDb(async (req) => {
     try {
       // Check if slugOrId is a valid ObjectId
       let query
-      if (ObjectId.isValid(slugOrId)) {
+      if (isMongoObjectId(slugOrId)) {
         query = { _id: new ObjectId(slugOrId) }
       } else {
         query = { slug: slugOrId }
