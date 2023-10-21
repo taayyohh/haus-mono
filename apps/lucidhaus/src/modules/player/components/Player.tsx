@@ -202,8 +202,7 @@ export const Player = () => {
           </div>
         )}
 
-        {!isMobile &&
-          queue[currentPosition]?.track.token &&
+        {queue[currentPosition]?.track.token &&
           queue[currentPosition]?.track.collection && (
             <MintButton
               token={queue[currentPosition]?.track.token}

@@ -9,6 +9,7 @@ import slugify from 'slugify'
 import Play from '../../../../public/icons/play.svg'
 import Pause from '../../../../public/icons/pause.svg'
 import MintButton from '@/components/MintButton'
+import { useResponsive } from '@/hooks/useResponsive'
 export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
   const {
     isPlaying,
@@ -20,6 +21,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
     addToQueue,
     setIsPlaying,
   } = usePlayerStore()
+  const { isMobile } = useResponsive()
 
   useEffect(() => {
     if (isPlaying || (media?.src && currentTime !== '00:00')) return
@@ -106,7 +108,8 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
                 <div className="text-xl">
                   {currentTime || '0:00'} / {duration || '0:00'}
                 </div>
-                {queue[currentPosition]?.track.token &&
+                {!isMobile &&
+                  queue[currentPosition]?.track.token &&
                   queue[currentPosition]?.track.collection && (
                     <MintButton
                       token={queue[currentPosition]?.track.token}
