@@ -14,7 +14,7 @@ export default function AlbumCard({ album }: { album: IAlbum & { artist: IArtist
         href={`/discography/${album.slug}`}
         key={album.slug}
         className={
-          'flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 border-white-13 h-full'
+          'flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 hover:bg-[#111] border-white-13 h-full'
         }
       >
         <div
