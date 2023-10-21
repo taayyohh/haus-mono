@@ -96,7 +96,7 @@ export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = ({ track }) => {
                     {queue[currentPosition]?.track?.title}
                   </Link>
                 </div>
-                <div className="text-3xlsm:text-4xl md:text-5xl text-white">
+                <div className="text-3xl sm:text-4xl md:text-5xl text-white">
                   <Link
                     href={`/artists/${slugify(
                       queue[currentPosition]?.track?.artist || ''
