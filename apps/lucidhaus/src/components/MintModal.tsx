@@ -16,6 +16,7 @@ import {
 } from 'wagmi'
 import { getZora1155PrepareConfig } from '@/utils/getZora1155PrepareConfig'
 import { ZORA_CHAIN_ID } from '@/constants'
+import { useMemo } from 'react'
 
 export default function MintModal({
   collection,
@@ -46,7 +47,11 @@ export default function MintModal({
     )
   }
 
-  const { config: prepareConfig, isError: isPrepareError } = usePrepareContractWrite({
+  const {
+    config: prepareConfig,
+    isError: isPrepareError,
+    error: prepareError,
+  } = usePrepareContractWrite({
     ...config,
     enabled: !!address,
   })
@@ -61,6 +66,10 @@ export default function MintModal({
   const { data: txReceipt } = useWaitForTransaction({
     hash: writeData?.hash,
   })
+
+  const insufficientFunds = useMemo(() => {
+    return prepareError?.toString().includes('insufficient funds')
+  }, [prepareError])
 
   return (
     <div className={'p-4'}>
@@ -110,10 +119,16 @@ export default function MintModal({
           disabled={
             (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
             writeLoading ||
-            txReceipt?.status === 'success'
+            writeSuccess ||
+            txReceipt?.status === 'success' ||
+            insufficientFunds
           }
         >
-          {writeLoading ? (
+          {insufficientFunds ? (
+            <>{'Insufficient Funds'}</>
+          ) : writeLoading ? (
+            <>{'Confirming'}</>
+          ) : writeSuccess ? (
             <>{'Minting'}</>
           ) : txReceipt?.status === 'success' ? (
             <>{'Minted'}</>

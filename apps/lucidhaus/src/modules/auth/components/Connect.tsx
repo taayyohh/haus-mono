@@ -14,7 +14,7 @@ const Connect = () => {
       <div className={'flex gap-2'}>
         <button
           onClick={login}
-          className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border px-4 py-2 w-full z-20 uppercase rounded`}
+          className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#131313] hover:bg-[#111]`}
         >
           Connect
         </button>
@@ -23,7 +23,7 @@ const Connect = () => {
   } else {
     return (
       <Link
-        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#131313]`}
+        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#131313] hover:bg-[#111]`}
         href={'/me'}
       >
         Me

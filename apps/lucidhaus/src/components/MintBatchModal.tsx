@@ -149,6 +149,10 @@ export default function MintBatchModal({
     hash: writeData?.hash,
   })
 
+  const insufficientFunds = useMemo(() => {
+    return prepareError?.toString().includes('insufficient funds')
+  }, [prepareError])
+
   return (
     <div className={'p-4'}>
       <div className={'w-full sm:w-[500px]'}>
@@ -204,10 +208,16 @@ export default function MintBatchModal({
           disabled={
             (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
             writeLoading ||
-            txReceipt?.status === 'success'
+            writeSuccess ||
+            txReceipt?.status === 'success' ||
+            insufficientFunds
           }
         >
-          {writeLoading ? (
+          {insufficientFunds ? (
+            <>{'Insufficient Funds'}</>
+          ) : writeLoading ? (
+            <>{'Confirming'}</>
+          ) : writeSuccess ? (
             <>{'Minting'}</>
           ) : txReceipt?.status === 'success' ? (
             <>{'Minted'}</>

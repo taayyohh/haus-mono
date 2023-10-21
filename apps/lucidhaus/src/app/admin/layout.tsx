@@ -13,8 +13,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!hasAccess) redirect('/')
 
   return (
-    <div className="border-solid border-8 border-white mt-12 px-6 pt-8 pb-20 max-w-xl mx-auto flex flex-col space-y-4 max-h-[70vh] overflow-y-scroll text-white">
-      <div className="text-xs uppercase mb-4 border-t pt-2">
+    <div className="border border-white-13 mt-12 px-6 pt-8 pb-20 max-w-xl mx-auto flex flex-col space-y-4 max-h-[70vh] overflow-y-scroll text-white">
+      <div className="text-xs uppercase mb-4 border-t border-white-13 pt-2">
         <Link href={'/admin'}>Admin</Link>
       </div>
       {children}
