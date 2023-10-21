@@ -16,7 +16,7 @@ export default function VideoCard({
         href={`/videos/${video.slug}`}
         key={video.slug}
         className={
-          'flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 border-white-13 h-full'
+          'flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 border-white-13 h-full hover:bg-[#111]'
         }
       >
         <div

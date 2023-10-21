@@ -58,7 +58,7 @@ const Track = ({
         'flex items-center justify-between border-solid border-t border-white-13 px-4 sm:px-8 text-white hover:bg-[#111]'
       }
     >
-      <div onClick={handleTrackClick} className={'cursor-pointer w-full py-5'}>
+      <div onClick={handleTrackClick} className={'flex cursor-pointer w-full py-5'}>
         <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span>
         <span>{token.metadata?.name}</span>
       </div>
