@@ -113,7 +113,7 @@ export default function MintModal({
         </div>
         <button
           className={
-            'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
+            'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg-[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
           }
           onClick={() => mint?.()}
           disabled={
