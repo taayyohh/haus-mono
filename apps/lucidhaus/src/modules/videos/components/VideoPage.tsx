@@ -28,7 +28,6 @@ const VideoPage = ({
   album: IAlbum
 }) => {
   const { isMobile } = useResponsive()
-  console.log('v', album)
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
