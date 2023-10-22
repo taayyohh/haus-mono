@@ -4,23 +4,55 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import * as Yup from 'yup'
 import Notification from '@/components/Notification'
 import SingleImageUpload from '@/components/SingleImageUpload'
-import { IGenre } from '@/models/Genre'
+import { fetchAlbums } from '@/modules/albums/utils/fetchAlbums'
+import AsyncSelect from 'react-select/async'
+import { IAlbum } from '@/models/Album'
+import { MultiValue } from 'react-select'
 
 interface ArtistEditFormProps {
   slug: string
 }
 
+interface FormData {
+  name: string
+  bio: string
+  albums: string[]
+  heroImage: string
+  socialLinks: {
+    twitter: string
+    instagram: string
+    zora: string
+    futureTape: string
+    warpcast: string
+  }
+  ethereum: {
+    walletAddresses: string[]
+    ensName: string
+  }
+}
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   bio: Yup.string().required('Bio is required'),
+  albums: Yup.array().of(Yup.string()).required('At least one album should be selected'),
   heroImage: Yup.string().required('Image is required'),
+  socialLinks: Yup.object().shape({
+    twitter: Yup.string().url('Must be a valid URL'),
+    instagram: Yup.string().url('Must be a valid URL'),
+    zora: Yup.string().url('Must be a valid URL'),
+    futureTape: Yup.string().url('Must be a valid URL'),
+    warpcast: Yup.string().url('Must be a valid URL'),
+  }),
+  ethereum: Yup.object().shape({
+    walletAddresses: Yup.array().of(Yup.string()),
+    ensName: Yup.string(),
+  }),
 })
 
 const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     bio: '',
-    genre: '',
     albums: [],
     heroImage: '',
     socialLinks: {
@@ -38,6 +70,7 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [errorMessage, setErrorMessage] = useState('')
   const [showNotification, setShowNotification] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<MultiValue<any>>()
 
   useEffect(() => {
     const fetchArtistData = async () => {
@@ -46,6 +79,9 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
         const data = await response.json()
         if (data) {
           setFormData(data)
+          setSelectedOption(
+            data.albums.map((album: IAlbum) => ({ value: album._id, label: album.title }))
+          )
         }
       } catch (error) {
         console.error('Error fetching artist data:', error)
@@ -55,13 +91,19 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
     fetchArtistData()
   }, [slug])
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
+
+  // const handleNestedChange = (field: string, key: string, value: string | string[]) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [field]: { ...prev[field], [key]: value },
+  //   }))
+  // }
 
   const handleCloseNotification = () => {
     setShowNotification(false)
@@ -114,7 +156,6 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
         setShowNotification(true)
       } else {
         console.log('Artist deleted successfully:', data)
-        // Handle successful deletion (e.g., redirect to another page or show a success message)
       }
     } catch (error) {
       console.error(error)
@@ -128,7 +169,8 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
       .replace(/(^-|-$)+/g, '')
   }
 
-  const { name, heroImage, bio } = formData
+  const { name, heroImage, bio, socialLinks, ethereum } = formData
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -175,38 +217,51 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
       </div>
 
       <div className="flex flex-col space-y-1">
-        <label htmlFor="slug" className="text-xs font-medium uppercase">
-          Slug
+        <label htmlFor="albums" className="text-xs font-medium uppercase">
+          Albums
         </label>
-        <input
-          type="text"
-          id="slug"
-          name="slug"
-          value={slugify(name)}
-          readOnly
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.category ? 'border-red-500' : 'border-gray-300'
-          }`}
+        <AsyncSelect
+          cacheOptions
+          defaultOptions
+          loadOptions={async () =>
+            (await fetchAlbums(1, 30)).data.map((album) => ({
+              value: album._id,
+              label: album.title,
+            }))
+          }
+          isMulti
+          className={'text-black'}
+          value={selectedOption}
+          onChange={(selected) => {
+            const selectedAlbums = selected ? selected.map((option) => option.value) : []
+            setFormData((prev) => ({ ...prev, albums: selectedAlbums }))
+            setSelectedOption(selected)
+          }}
         />
+        {errors.albums && <span className="error">{errors.albums}</span>}
       </div>
 
-      <div className="flex space-x-4 mt-4">
+      {/** Rest of the form fields for socialLinks, ethereum, etc... **/}
+
+      <div className="mt-8">
         <button
           type="submit"
-          className="p-3 bg-gray-50 hover:bg-gray-200 text-xs text-black uppercase font-bold focus:outline-none"
+          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
         >
-          Update Artist
+          Save
         </button>
         <button
           type="button"
+          className="px-4 py-2 ml-4 bg-red-500 hover:bg-red-600 text-white rounded"
           onClick={handleDelete}
-          className="p-3 bg-red-600 hover:bg-red-700 text-xs text-white uppercase font-bold focus:outline-none"
         >
-          Delete Artist
+          Delete
         </button>
       </div>
 
-      <Notification message={errorMessage} onClose={handleCloseNotification} />
+      {showNotification && (
+        <Notification message={errorMessage} onClose={handleCloseNotification} />
+      )}
     </form>
   )
 }

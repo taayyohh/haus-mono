@@ -1,13 +1,12 @@
-import { Document, model, Schema, Types } from 'mongoose'
+import { Document, model, ObjectId, Schema, Types } from 'mongoose'
 import * as mongoose from 'mongoose'
-import { IGenre } from './Genre'
 import slugify from 'slugify' // Adjust path as needed
 
 export interface IArtist extends Document {
   name: string // Artist's full name or stage name
   slug: string
   bio: string // Short biography or description
-  albums: string[] // List of album names/IDs associated with this artist
+  albums: ObjectId[] // List of album names/IDs associated with this artist
   heroImage: string // URL of the artist's primary promotional image
   socialLinks: {
     // Links to various social platforms
@@ -28,7 +27,7 @@ const artistSchema = new Schema<IArtist>({
   name: { type: String, required: true },
   slug: { type: String, unique: true },
   bio: { type: String, required: true },
-  albums: [{ type: String }],
+  albums: [{ type: Schema.Types.ObjectId, ref: 'Album' }],
   heroImage: { type: String, required: true },
   socialLinks: {
     twitter: String,

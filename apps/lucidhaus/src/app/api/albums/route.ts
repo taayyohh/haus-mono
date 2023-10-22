@@ -71,3 +71,4 @@ export const GET = connectDb(async (req) => {
     return NextResponse.json({ error: 'Error fetching albums' }, { status: 500 })
   }
 })
+

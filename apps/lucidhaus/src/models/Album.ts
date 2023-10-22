@@ -1,6 +1,4 @@
 import mongoose, { Schema, model, Document, Types, ObjectId } from 'mongoose'
-import { IArtist } from '@/models/Artist'
-import { IGenre } from '@/models/Genre'
 import slugify from 'slugify'
 
 export interface IAlbum extends Document {

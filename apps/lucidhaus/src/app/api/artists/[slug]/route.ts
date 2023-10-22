@@ -49,11 +49,21 @@ export const GET = connectDb(async (req) => {
 
 export const PUT = connectDb(
   protect(async (req: AuthenticatedRequest) => {
-    const artistId = req.nextUrl.searchParams.get('id')
-    const { name } = await req.json()
+    const identifier = req.nextUrl.pathname.split('/')[3]
+
+    let query
+    if (isMongoObjectId(identifier)) {
+      query = { _id: new ObjectId(identifier) }
+    } else {
+      query = { slug: identifier }
+    }
+
+    const { name, bio, albums, heroImage } = await req.json()
+
+    console.log('name', name)
 
     try {
-      const artist = await Artist.findByIdAndUpdate(artistId, { name }, { new: true })
+      const artist = await Artist.findOneAndUpdate(query, { name, bio, albums, heroImage  }, { new: true })
 
       if (!artist) {
         return NextResponse.json({ error: 'Artist not found' }, { status: 404 })

@@ -1,13 +1,14 @@
+import { Metadata } from 'next'
 import ArtistPage from '@/modules/artists/components/ArtistPage'
 import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
-import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-
+import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
 
 export default async function Page(context: any) {
   const { data: artist } = await fetchArtist(context.params.slug)
+  const { data: albums } = await fetchBatchAlbums(artist.albums)
 
-  return <ArtistPage artist={artist} />
+  return <ArtistPage artist={artist} albums={albums} />
 }
 
 type Props = {
