@@ -30,7 +30,12 @@ export async function fetchBatchAlbums(
       }
     )
     const data = await response.json()
-    return { data }
+
+    if (!response.ok) {
+      return { data: [] }
+    } else {
+      return { data }
+    }
   } catch (err) {
     console.log('err', err)
     return { data: [] }

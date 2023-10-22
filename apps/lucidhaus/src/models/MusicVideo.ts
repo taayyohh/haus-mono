@@ -7,6 +7,7 @@ export interface IMusicVideo extends Document {
   song: string
   primaryArtist: ObjectId
   artists: ObjectId[] | string[]
+  associatedAlbum: ObjectId
   videoUri: string
   thumbnailUri: string
   director: string
@@ -28,6 +29,7 @@ const musicVideoSchema = new Schema<IMusicVideo>({
   song: { type: String },
   primaryArtist: { type: Schema.Types.ObjectId, ref: 'Artist', required: true },
   artists: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
+  associatedAlbum: { type: Schema.Types.ObjectId, ref: 'Album' },
   videoUri: { type: String },
   thumbnailUri: { type: String },
   director: { type: String },
