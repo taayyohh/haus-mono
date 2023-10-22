@@ -6,7 +6,7 @@ import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
 
 export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
-  const { collection, tokens, artist } = await onchainVideoFetch(video)
+  const { collection, tokens, artist, album } = await onchainVideoFetch(video)
 
   return (
     <VideoPage
@@ -14,6 +14,7 @@ export default async function Page(context: any) {
       collection={collection}
       token={tokens?.[0]}
       artist={artist}
+      album={album}
     />
   )
 }

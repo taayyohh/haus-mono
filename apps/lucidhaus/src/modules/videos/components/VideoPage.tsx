@@ -13,19 +13,24 @@ import MintButton from '@/components/MintButton'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import Link from 'next/link'
 import { useMemo } from 'react'
+import { IAlbum } from '@/models/Album'
+import AlbumCard from '@/modules/albums/components/AlbumCard'
 
 const VideoPage = ({
   video,
   collection,
   token,
   artist,
+  album,
 }: {
   video: IMusicVideo
   collection: ZoraCreateContractQuery['zoraCreateContract'] | null | undefined
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0] | null | undefined
   artist: IArtist
+  album: IAlbum
 }) => {
   const { isMobile } = useResponsive()
+  console.log('v', album)
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
@@ -73,6 +78,7 @@ const VideoPage = ({
         <div className={'uppercase mt-4 py-2'}>
           <div className={'px-4 sm:px-8'}>Off the album</div>
         </div>
+        <AlbumCard album={{ ...album, artist } as IAlbum & { artist: IArtist }} />
       </div>
       <div
         className={

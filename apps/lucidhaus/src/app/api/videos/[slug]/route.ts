@@ -3,6 +3,9 @@ import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import MusicVideo from '@/models/MusicVideo'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
+import { isMongoObjectId } from '@/app/api/artists/[slug]/route'
+import mongoose from 'mongoose'
+const ObjectId = mongoose.Types.ObjectId
 
 export const GET = connectDb(async (req: AuthenticatedRequest) => {
   const slug = req.nextUrl.pathname.split('/')[3]
@@ -21,13 +24,21 @@ export const GET = connectDb(async (req: AuthenticatedRequest) => {
 
 export const PUT = connectDb(
   protect(async (req: AuthenticatedRequest) => {
-    const musicVideoId = req.nextUrl.searchParams.get('id')
-    const { title } = await req.json() // Assuming you want to update the title, adjust as needed
+    const identifier = req.nextUrl.pathname.split('/')[3]
+
+    let query
+    if (isMongoObjectId(identifier)) {
+      query = { _id: new ObjectId(identifier) }
+    } else {
+      query = { slug: identifier }
+    }
+
+    const { title, associatedAlbum } = await req.json() // Assuming you want to update the title, adjust as needed
 
     try {
-      const musicVideo = await MusicVideo.findByIdAndUpdate(
-        musicVideoId,
-        { title },
+      const musicVideo = await MusicVideo.findOneAndUpdate(
+        query,
+        { title, associatedAlbum },
         { new: true }
       )
 

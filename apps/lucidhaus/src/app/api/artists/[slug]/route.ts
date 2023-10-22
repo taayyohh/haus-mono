@@ -6,7 +6,7 @@ import protect from '@/modules/auth/utils/protect'
 import mongoose from 'mongoose'
 const ObjectId = mongoose.Types.ObjectId
 
-function isMongoObjectId(str: string) {
+export function isMongoObjectId(str: string) {
   return /^[a-f\d]{24}$/i.test(str)
 }
 
