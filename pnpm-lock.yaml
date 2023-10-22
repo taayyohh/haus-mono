@@ -45,6 +45,7 @@ importers:
       '@zoralabs/universal-minter': ^0.2.12
       '@zoralabs/zora-1155-contracts': ^2.0.3
       autoprefixer: 10.4.14
+      axios: ^1.2.2
       bcrypt: ^5.1.0
       cookie: ^0.5.0
       cookies-next: ^2.1.2
@@ -103,6 +104,7 @@ importers:
       '@zoralabs/universal-minter': 0.2.12_atthrnwih3wikwrt4nxchqakee
       '@zoralabs/zora-1155-contracts': 2.0.3_3eavqhlg3dpcajlb4vxzehymke
       autoprefixer: 10.4.14_postcss@8.4.24
+      axios: 1.5.0
       bcrypt: 5.1.1
       cookie: 0.5.0
       cookies-next: 2.1.2
