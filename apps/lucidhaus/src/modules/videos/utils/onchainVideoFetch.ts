@@ -21,12 +21,10 @@ export async function onchainVideoFetch(video: IMusicVideo) {
   })
 
   const { data: artist } = await fetchArtist(video.primaryArtist)
-  const { data: album } = await fetchBatchAlbums([video.associatedAlbum])
 
   return {
     collection,
     tokens,
     artist,
-    album: album[0],
   }
 }

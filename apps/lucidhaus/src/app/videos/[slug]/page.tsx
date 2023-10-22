@@ -3,10 +3,12 @@ import { fetchVideo } from '@/modules/videos/utils/fetchVideo'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
+import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
 
 export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
-  const { collection, tokens, artist, album } = await onchainVideoFetch(video)
+  const { collection, tokens, artist } = await onchainVideoFetch(video)
+  const { data: albums } = await fetchBatchAlbums([video.associatedAlbum])
 
   return (
     <VideoPage
@@ -14,7 +16,7 @@ export default async function Page(context: any) {
       collection={collection}
       token={tokens?.[0]}
       artist={artist}
-      album={album}
+      album={albums[0]}
     />
   )
 }
