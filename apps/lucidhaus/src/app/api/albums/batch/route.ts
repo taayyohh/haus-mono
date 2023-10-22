@@ -1,8 +1,8 @@
 import connectDb from '@/modules/auth/utils/db'
 import Album, { IAlbum } from '@/models/Album'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export const POST = connectDb(async (req) => {
+export const POST = connectDb(async (req: NextRequest) => {
   const body = await req.json()
 
   // If ids are provided in the request body
