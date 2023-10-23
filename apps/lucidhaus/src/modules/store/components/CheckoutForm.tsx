@@ -17,8 +17,14 @@ export function CheckoutForm({ children }: { children: ReactElement }) {
     currency: 'usd',
     amount: total * 100, // usd represented in cents
     appearance: {
-      theme: 'stripe' as 'stripe',
+      theme: 'night' as 'night',
       labels: 'floating' as 'floating',
+      variables: {
+        colorPrimary: '#fff',
+        colorBackground: '#1b1b1b',
+        colorText: '#fff',
+        colorDanger: '#df1b41',
+      }
     },
   }
 

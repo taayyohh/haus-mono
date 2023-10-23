@@ -1,14 +1,15 @@
 import mongoose, { Schema, model, Document, Types } from 'mongoose'
 import { IProduct } from '@/models/Product'
 
-interface OrderProduct {
-  product: IProduct | Types.ObjectId // Reference to the Product model
+export interface OrderProduct {
+  product: IProduct
   quantity: number
   size?: string // This is optional, as not all products will have sizes
 }
 
 export interface IOrder extends Document {
   user: Types.ObjectId // Reference to User model if you have one
+  email: string,
   products: OrderProduct[]
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'canceled'
   totalPrice: number
@@ -21,10 +22,6 @@ export interface IOrder extends Document {
     postalCode: string
     country: string
   }
-  paymentMethod: {
-    type: string // e.g., 'Credit Card', 'PayPal', 'Stripe'
-    details: string // e.g., '**** **** **** 1234' or other relevant details
-  }
   trackingNumber?: string
   notes?: string
 }
@@ -36,7 +33,8 @@ const orderProductSchema = new Schema({
 })
 
 const orderSchema = new Schema<IOrder>({
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  email: { type: String },
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [orderProductSchema],
   status: {
     type: String,
@@ -45,18 +43,14 @@ const orderSchema = new Schema<IOrder>({
   },
   totalPrice: { type: Number, required: true },
   dateOrdered: { type: Date, default: Date.now },
-  dateShipped: Date,
-  shippingAddress: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: String,
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
-  },
-  paymentMethod: {
-    type: { type: String, required: true },
-    details: { type: String, required: true },
-  },
+  // dateShipped: Date,
+  // shippingAddress: {
+  //   street: { type: String, required: true },
+  //   city: { type: String, required: true },
+  //   state: String,
+  //   postalCode: { type: String, required: true },
+  //   country: { type: String, required: true },
+  // },
   trackingNumber: String,
   notes: String,
 })

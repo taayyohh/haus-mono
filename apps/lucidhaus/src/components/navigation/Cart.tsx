@@ -11,7 +11,7 @@ export default function Cart() {
 
   return (
     <Link
-      className={`border-solid border-t mt-4 py-2 relative flex gap-1 items-center justify-center focus:outline-none text-white cursor-pointer z-20`}
+      className={`border-solid border-t border-white-13 mt-4 py-2 relative flex gap-1 items-center justify-center focus:outline-none text-white cursor-pointer z-20`}
       href={'/checkout'}
     >
       Cart

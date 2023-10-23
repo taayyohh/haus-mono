@@ -36,7 +36,7 @@ const ProductPage = ({
             <div>{product.haus.name}</div>
           </div>
           <button
-            className={`mt-12 inline-flex self-start justify-center w-full px-6 py-2 border rounded border-[#141418] focus:outline-none text-white bg-[#1c1c21] hover:bg-[#232125]`}
+            className={`mt-12 inline-flex self-start justify-center w-full px-6 py-2 border border-white-13 rounded text-white bg-[#1b1b1b] hover:bg-[#111]`}
             style={{ boxShadow: '1px 3px 3px 0px #141418' }}
             onClick={() => addProduct(product)}
           >

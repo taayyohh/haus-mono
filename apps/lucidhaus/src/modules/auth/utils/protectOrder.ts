@@ -16,7 +16,7 @@ function orderProtect(routeHandler: (req: NextRequest) => Promise<NextResponse>)
     }
 
     try {
-      jwt.verify(token, SECRET_KEY!)
+      jwt.verify(token.split(' ')[1], SECRET_KEY!)
 
       // Additional checks can be extended here if necessary
 

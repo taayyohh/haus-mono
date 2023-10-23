@@ -3,10 +3,11 @@ import { IProduct } from '@/models/Product'
 import Stripe from 'stripe'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-type CartItem = {
+export type CartItem = {
   haus: IProduct
   stripe: Stripe.Product | undefined
   quantity: number
+  size?: string
 }
 
 type CartState = {

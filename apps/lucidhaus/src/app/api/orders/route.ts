@@ -2,7 +2,8 @@ import connectDb from '@/modules/auth/utils/db'
 import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
-import Order, { IOrder } from '@/models/Order'
+import Order, { IOrder, OrderProduct } from '@/models/Order'
+import Product, { IProduct, Stock } from '@/models/Product'
 import orderProtect from '@/modules/auth/utils/protectOrder' // Importing the Order model
 
 // Create a new order
@@ -10,27 +11,79 @@ export const POST = connectDb(
   orderProtect(async (req: AuthenticatedRequest) => {
     const {
       user,
-      products,
+      email,
+      products, // Assume this is an array of objects with { id, quantity, size? }
       status,
       totalPrice,
       dateOrdered,
       shippingAddress,
-      paymentMethod,
-      trackingNumber,
-      notes,
     } = await req.json()
 
     try {
+      // Decrement product quantities
+      for (let orderedProduct of products) {
+        const dbProduct: IProduct | null = await Product.findById(
+          orderedProduct.product._id
+        )
+
+        if (!dbProduct) {
+          return NextResponse.json(
+            { error: `Product ${orderedProduct._id} not found` },
+            { status: 400 }
+          )
+        }
+
+        if (orderedProduct.size) {
+          // Product has sizes and uses the stock array
+          const stockItem = dbProduct.stock?.find(
+            (s: Stock) => s.size === orderedProduct.size
+          )
+
+          if (!stockItem) {
+            return NextResponse.json(
+              {
+                error: `Size ${orderedProduct.size} not available for product ${dbProduct.name}`,
+              },
+              { status: 400 }
+            )
+          }
+
+          if (stockItem.quantity < orderedProduct.quantity) {
+            return NextResponse.json(
+              {
+                error: `Not enough stock for product ${dbProduct.name} size ${orderedProduct.size}`,
+              },
+              { status: 400 }
+            )
+          }
+
+          stockItem.quantity -= orderedProduct.quantity
+        } else if (typeof dbProduct.quantity === 'number') {
+          // Product has a direct quantity
+          if (dbProduct.quantity < orderedProduct.quantity) {
+            return NextResponse.json(
+              { error: `Not enough stock for product ${dbProduct.name}` },
+              { status: 400 }
+            )
+          }
+          dbProduct.quantity -= orderedProduct.quantity
+        } else {
+          return NextResponse.json(
+            { error: `Invalid product quantity structure for ${dbProduct.name}` },
+            { status: 400 }
+          )
+        }
+
+        await dbProduct.save()
+      }
+
       const order = new Order({
-        user,
+        email,
         products,
         status,
         totalPrice,
         dateOrdered,
         shippingAddress,
-        paymentMethod,
-        trackingNumber,
-        notes,
       })
 
       await order.save()

@@ -25,6 +25,8 @@ export async function generateMetadata({
     title: `${artist.name} - LUCIDHAUS`,
     description: artist.bio || 'Timeless, post-genre, Black music.',
     openGraph: {
+      title: `${artist.name} - LUCIDHAUS`,
+      description: artist.bio || 'Timeless, post-genre, Black music.',
       images: [
         {
           url: getIpfsGateway(artist.heroImage),

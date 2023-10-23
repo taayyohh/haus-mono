@@ -4,7 +4,7 @@ import { IArtist } from '@/models/Artist'
 import mongoose from 'mongoose'
 import slugify from 'slugify'
 
-interface Stock {
+export interface Stock {
   size: string // 'XS', 'S', 'M', 'L', 'XL', 'XXL'
   quantity: number
 }
@@ -31,7 +31,7 @@ const productSchema = new Schema<IProduct>({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
-  category: { type: Types.ObjectId, ref: 'Category', required: true },
+  category: { type: Types.ObjectId, ref: 'Category' },
   imageUri: { type: String, required: true },
   stripeId: { type: String, required: true },
   slug: { type: String, unique: true },
