@@ -71,12 +71,15 @@ const VideoPage = ({
           </div>
         </div>
       </div>
-      <div className={'flex flex-col self-start w-full'}>
-        <div className={'uppercase mt-4 py-2'}>
-          <div className={'px-4 sm:px-8'}>Off the album</div>
+      {album && (
+        <div className={'flex flex-col self-start w-full'}>
+          <div className={'uppercase mt-4 py-2'}>
+            <div className={'px-4 sm:px-8'}>Off the album</div>
+          </div>
+          <AlbumCard album={{ ...album, artist } as IAlbum & { artist: IArtist }} />
         </div>
-        <AlbumCard album={{ ...album, artist } as IAlbum & { artist: IArtist }} />
-      </div>
+      )}
+
       <div
         className={
           'relative overflow-hidden mt-24 flex flex-col w-full h-[500px] blur opacity-40'

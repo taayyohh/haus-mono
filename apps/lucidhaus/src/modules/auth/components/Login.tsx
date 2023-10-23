@@ -22,7 +22,7 @@ const Login = () => {
         <button
           onClick={handleLogout}
           className={
-            'flex w-full self-start items-center justify-center rounded py-3 px-6 bg-white text-black border'
+            'flex w-full self-start items-center justify-center rounded py-3 px-6 bg-[#1b1b1b] text-white border border-white-13 hover:bg-[#111]'
           }
         >
           Disconnect
@@ -35,7 +35,7 @@ const Login = () => {
         <button
           onClick={login}
           className={
-            'flex w-full self-start items-center justify-center rounded py-3 px-6 bg-white text-black border'
+            'flex w-full self-start items-center justify-center rounded py-3 px-6 bg-[#1b1b1b] text-white border border-white-13 hover:bg-[#111]'
           }
         >
           login

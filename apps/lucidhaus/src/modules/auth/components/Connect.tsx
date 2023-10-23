@@ -23,7 +23,7 @@ const Connect = () => {
   } else {
     return (
       <Link
-        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#131313] hover:bg-[#111]`}
+        className={`relative flex items-center justify-center focus:outline-none text-white cursor-pointer border border-white-13 px-4 py-2 w-full z-20 rounded bg-[#1b1b1b] hover:bg-[#111]`}
         href={'/me'}
       >
         Me

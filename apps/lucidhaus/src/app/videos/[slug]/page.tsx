@@ -9,7 +9,7 @@ export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
   const { collection, tokens, artist } = await onchainVideoFetch(video)
   const { data: albums } = await fetchBatchAlbums([video.associatedAlbum])
-
+  
   return (
     <VideoPage
       video={video}
