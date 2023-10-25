@@ -43,7 +43,44 @@ const AboutPage = () => {
               Founded in 2017, by Nappy Nina, Théo Mode and Ryann Holmes, LucidHaus is an
               artist owned and operated record label based in Brooklyn, New York.
             </div>
-            <div>We operate onchain, on ethereum at lucidhaus.eth</div>
+            <div>
+              We operate onchain, on{' '}
+              <a
+                href={'https://ethereum.org/en/'}
+                className={'hover:opacity-70'}
+                target={'_blank'}
+              >
+                Ethereum
+              </a>
+              , wielding{' '}
+              <a
+                href={'https://zora.energy/'}
+                className={'hover:opacity-70'}
+                target={'_blank'}
+              >
+                Zora
+              </a>{' '}
+              at lucidhaus.eth.
+            </div>
+            <div className={'mt-5 gap-2 uppercase text-sm'}>
+              <div className={'pb-2 text-xs'}>Socials</div>
+              <div className={'flex gap-4'}>
+                <a
+                  href={'https://twitter.com/lucidhaus'}
+                  className={'hover:opacity-70'}
+                  target={'_blank'}
+                >
+                  Twitter
+                </a>
+                <a
+                  href={'https://instagram.com/lucidhaus'}
+                  className={'hover:opacity-70'}
+                  target={'_blank'}
+                >
+                  Instagram
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>

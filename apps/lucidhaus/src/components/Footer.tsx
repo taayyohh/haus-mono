@@ -12,6 +12,9 @@ export default function Footer() {
       <div>
         <Link href={'/about'}>About</Link>
       </div>
+      <div>
+        <Link href={'/what'}>What</Link>
+      </div>
       <div></div>
     </div>
   )
