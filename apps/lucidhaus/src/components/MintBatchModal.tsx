@@ -12,6 +12,7 @@ import {
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { usePrivy } from '@privy-io/react-auth'
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -90,18 +91,18 @@ export default function MintBatchModal({
   collection: ZoraCreateContractQuery['zoraCreateContract']
   type?: string
 }) {
-  const { wallet } = usePrivyWagmi()
   const { user } = usePrivy()
+  const { address } = useAccount()
   const { chain } = useNetwork()
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
 
   const { targets, values, calldatas, totalTxnValue } = useMemo(() => {
     return getMintBatchArgs({
-      userAddress: wallet?.address as `0x${string}`,
+      userAddress: address as `0x${string}`,
       tokens,
       collection,
     })
-  }, [wallet?.address, tokens, collection])
+  }, [address, tokens, collection])
 
   const prepareConfig = {
     chainId: ZORA_CHAIN_ID,
@@ -128,7 +129,7 @@ export default function MintBatchModal({
     refetch,
   } = usePrepareContractWrite({
     ...prepareConfig,
-    enabled: !!wallet?.address,
+    enabled: !!address,
     // gas: estimatedGas,
   })
 
@@ -151,8 +152,8 @@ export default function MintBatchModal({
   })
 
   useEffect(() => {
-    if (isIdle) refetch()
-  }, [isIdle])
+    if (address && isIdle) refetch()
+  }, [address, isIdle, refetch])
 
   const insufficientFunds = useMemo(() => {
     return !!prepareError?.toString().includes('insufficient funds')

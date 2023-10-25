@@ -47,6 +47,9 @@ body.night {
   color: #FFF;
 }
 
+p {
+  margin-bottom: 12px !important;
+}
 
 @tailwind base;
 @tailwind components;

@@ -188,7 +188,7 @@ const WhatPage = () => {
                   Connect
                 </button>{' '}
                 to lucid.haus with your phone number, and a wallet, owned only by you,
-                will be created for you!
+                will be created for you! Funding wallets from your dashboard soon to come!
               </div>
             </div>
           </div>

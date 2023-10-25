@@ -59,8 +59,9 @@ export default function MintModal({
   })
 
   useEffect(() => {
-    if (isIdle) refetch()
-  }, [isIdle])
+    if (address && isIdle) refetch()
+
+  }, [isIdle, address, refetch])
 
   const {
     write: mint,
