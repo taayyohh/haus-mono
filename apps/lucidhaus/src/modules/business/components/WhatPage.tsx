@@ -141,7 +141,7 @@ const WhatPage = () => {
                 </div>
               </div>
               <div className={'border border-white-13 p-4 sm:p-8 w-full max-w-3xl'}>
-                We believe in the power of blockchain&#39;s, specifically Ethereum and its
+                We believe in the power of blockchains, specifically Ethereum and its
                 ecosystem, as a promising solution to adequately and equitably value music
                 and pay artists!
                 <br />
