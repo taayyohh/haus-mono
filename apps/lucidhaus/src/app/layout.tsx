@@ -15,11 +15,16 @@ import Navigation from '@/components/navigation/Navigation'
 import { Player } from '@/modules/player'
 import Footer from '@/components/Footer'
 import { Analytics } from '@vercel/analytics/react'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const configureChainsConfig = configureChains([zora], [publicProvider()])
+  const configureChainsConfig = configureChains(
+    [zora],
+    [infuraProvider({ apiKey: config.infura as string }), publicProvider()],
+    { stallTimeout: 5000 }
+  )
 
   return (
     <html lang="en">
@@ -33,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               additionalChains: [zora],
             }}
           >
-            <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>
+            <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig} >
               <>
                 <div
                   className={

@@ -8,7 +8,8 @@ const productionConfig = {
   privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
   adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
   orderSecret: process.env.ORDER_SECRET_KEY,
-  graphClient: process.env.GRAPH_CLIENT
+  graphClient: process.env.GRAPH_CLIENT,
+  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY
 }
 
 const developmentConfig = {
@@ -21,7 +22,8 @@ const developmentConfig = {
   privyAppId: process.env.NEXT_PUBLIC_PRIVY_APP_ID,
   adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
   orderSecret: process.env.ORDER_SECRET_KEY,
-  graphClient: process.env.GRAPH_CLIENT
+  graphClient: process.env.GRAPH_CLIENT,
+  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY
 }
 
 

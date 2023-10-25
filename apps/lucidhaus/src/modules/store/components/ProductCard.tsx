@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
           }}
         />
       </div>
-      <div className={'flex flex-col mt-4'}>
+      <div className={'flex flex-col mt-4 w-full'}>
         <div>{product.name}</div>
         <div className={'text-sm'}>{product.price} USD</div>
       </div>

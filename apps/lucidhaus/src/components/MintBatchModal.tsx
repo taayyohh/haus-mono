@@ -18,7 +18,7 @@ import {
   UsePrepareContractWriteConfig,
   useWaitForTransaction,
 } from 'wagmi'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
 import {
   zoraUniversalMinterABI,
@@ -125,6 +125,7 @@ export default function MintBatchModal({
     error: prepareError,
     isError: isPrepareError,
     isIdle,
+    refetch,
   } = usePrepareContractWrite({
     ...prepareConfig,
     enabled: !!wallet?.address,
@@ -149,9 +150,23 @@ export default function MintBatchModal({
     hash: writeData?.hash,
   })
 
+  useEffect(() => {
+    if (isIdle) refetch()
+  }, [isIdle])
+
   const insufficientFunds = useMemo(() => {
-    return prepareError?.toString().includes('insufficient funds')
+    return !!prepareError?.toString().includes('insufficient funds')
   }, [prepareError])
+
+  const isDisabled = useMemo(() => {
+    return (
+      (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
+      writeLoading ||
+      writeSuccess ||
+      txReceipt?.status === 'success' ||
+      insufficientFunds
+    )
+  }, [isPrepareError, chain?.id, user, writeLoading, writeSuccess, txReceipt?.status])
 
   return (
     <div className={'p-4'}>
@@ -201,17 +216,11 @@ export default function MintBatchModal({
           </div>
         </div>
         <button
-          className={
-            'inline-flex items-center justify-center bg-[#1b1b1b] hover:bg-[#111] border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase'
-          }
+          className={`inline-flex items-center justify-center bg-[#1b1b1b] ${
+            !isDisabled && 'hover:bg-[#111]'
+          } border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase`}
           onClick={() => mintBatch?.()}
-          disabled={
-            (isPrepareError && chain?.id === ZORA_CHAIN_ID && !!user) ||
-            writeLoading ||
-            writeSuccess ||
-            txReceipt?.status === 'success' ||
-            insufficientFunds
-          }
+          disabled={isDisabled}
         >
           {insufficientFunds ? (
             <>{'Insufficient Funds'}</>

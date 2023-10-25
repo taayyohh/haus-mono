@@ -49,7 +49,7 @@ export default function PaymentModal({
                 <button
                   onClick={handlePurchase}
                   className={
-                    'px-6 py-4 flex items-center justify-center border border-white-13 text-white bg-[#1b1b1b] hover:bg-[#111] text-black rounded w-full mt-4 mb-8'
+                    'px-6 py-4 flex items-center justify-center border border-white-13 text-white bg-[#1b1b1b] hover:bg-[#111] rounded w-full mt-4 mb-8'
                   }
                 >
                   Purchase
