@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     title: 'LUCIDHAUS',
     card: 'summary_large_image',
-    description: 'Timeless, post-genre, Black music.',
+    description: 'BUT LIKE WHAT IS THIS? AND WHY IS THIS? AND HOW DO I USE IT??',
     site: '@lucidhaus',
     creator: '@lucidhaus',
     images: getIpfsGateway(
