@@ -5,10 +5,10 @@ import WhatPage from '@/modules/business/components/WhatPage'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
-  description: 'Timeless, post-genre, Black music.',
+  description: 'BUT LIKE WHAT IS THIS? AND WHY IS THIS? AND HOW DO I USE IT??',
   openGraph: {
     title: 'LUCIDHAUS',
-    description: 'Timeless, post-genre, Black music.',
+    description: 'BUT LIKE WHAT IS THIS? AND WHY IS THIS? AND HOW DO I USE IT??',
     images: [
       {
         url: getIpfsGateway(
