@@ -15,8 +15,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
   return (
     <div className="border border-white-13 mt-12 px-6 pt-8 pb-20 max-w-xl mx-auto flex flex-col space-y-4 max-h-[70vh] overflow-y-scroll text-white">
-      <Script src="https://js.stripe.com/v3/" />
-      <Script src="https://crypto-js.stripe.com/crypto-onramp-outer.js" />
+      {/*<Script src="https://js.stripe.com/v3/" />*/}
+      {/*<Script src="https://crypto-js.stripe.com/crypto-onramp-outer.js" />*/}
       {isAdmin && (
         <div className="text-xs uppercase mb-4 border-t border-white-13 pt-2">
           <Link href={'/admin'}>Admin</Link>
