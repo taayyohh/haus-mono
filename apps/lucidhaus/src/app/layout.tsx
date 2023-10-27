@@ -10,7 +10,7 @@ import { handlePrivySuccess } from '@/modules/auth/utils/handlePrivySuccess'
 import { PrivyWagmiConnector } from '@privy-io/wagmi-connector'
 import { configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-import { zora } from 'viem/chains'
+import { zora, mainnet } from 'viem/chains'
 import Navigation from '@/components/navigation/Navigation'
 import { Player } from '@/modules/player'
 import Footer from '@/components/Footer'
@@ -21,7 +21,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const configureChainsConfig = configureChains(
-    [zora],
+    [zora, mainnet],
     [infuraProvider({ apiKey: config.infura as string }), publicProvider()],
     { stallTimeout: 5000 }
   )
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               additionalChains: [zora],
             }}
           >
-            <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig} >
+            <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>
               <>
                 <div
                   className={

@@ -102,5 +102,12 @@ export const OnrampElement = ({
   useOnrampSessionListener('onramp_ui_loaded', session, onReady)
   useOnrampSessionListener('onramp_session_updated', session, onChange)
 
-  return <div id="onramp-element" {...props} ref={onrampElementRef} className={'w-full'}></div>
+  return (
+    <div
+      id="onramp-element"
+      {...props}
+      ref={onrampElementRef}
+      className={'flex items-center justify-center w-full'}
+    ></div>
+  )
 }

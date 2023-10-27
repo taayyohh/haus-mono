@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const { transaction_details } = await req.json()
 
-    console.log('DET', transaction_details)
-
     const onrampSession = new OnrampSessionResource(stripe).create({
       transaction_details: {
         destination_currency: transaction_details['destination_currency'],
@@ -17,7 +15,6 @@ export async function POST(req: NextRequest) {
       },
     })
     const [session] = await Promise.all([onrampSession])
-    console.log('S', session)
 
     return NextResponse.json({ data: session }, { status: 200 })
   } catch (e) {
