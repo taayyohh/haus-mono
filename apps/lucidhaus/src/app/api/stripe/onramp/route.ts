@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
       },
     })
     const [session] = await Promise.all([onrampSession])
+    console.log('S', session)
 
     return NextResponse.json({ data: session }, { status: 200 })
   } catch (e) {
