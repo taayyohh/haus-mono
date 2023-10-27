@@ -1,6 +1,9 @@
 import Me from '@/modules/auth/components/Me'
+import { fetchOnrampSession } from '@/modules/store/utils/fetchOnrampSession'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { loadStripeOnramp } from '@stripe/crypto'
+import config from '@/constants/config'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
@@ -32,5 +35,7 @@ export const metadata: Metadata = {
   },
 }
 export default async function Page() {
-  return <Me />
+  const { data: onramp } = await fetchOnrampSession()
+
+  return <Me onramp={onramp} />
 }

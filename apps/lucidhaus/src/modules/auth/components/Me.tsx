@@ -17,6 +17,7 @@ import Onramp from '@/modules/auth/components/Onramp'
 import { Modal } from '@/components/Modal'
 import Bridge from '@/modules/auth/components/Bridge'
 import { ZORA_CHAIN_ID } from '@/constants'
+import Haus from '../../../../public/icons/haus-alt.svg'
 
 const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   const { login, logout, ready, authenticated, user } = usePrivy()
@@ -36,6 +37,12 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
 
   return (
     <div className={'flex flex-col'}>
+      <div className={'flex w-full items-center justify-center mb-8'}>
+        <div className={'w-12 h-12'}>
+          <Haus />
+        </div>
+      </div>
+
       {activeWallet && (
         <div className={'flex flex-col py-2'}>
           <label className={'text-xs font-bold uppercase'}>Wallet</label>
@@ -63,57 +70,48 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
         </div>
       )}
-      {(onramp && stripeOnrampPromise && (
+      {onramp && stripeOnrampPromise && (
         <div className={'flex flex-col'}>
           <div className={'uppercase text-sm border-t pt-2 mt-8 mb-4 border-white-13'}>
             Getting Started
           </div>
           <Modal
             trigger={
-              <label className={'text-xs font-bold uppercase mb-2 cursor-pointer'}>
-                Fund Wallet with ETH
+              <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+                1. Fund Wallet with ETH
               </label>
             }
           >
-            <div className={'flex flex-col w-full sm:w-[500px] pt-12'}>
+            <div className={'flex flex-col w-full sm:w-[500px] pt-'}>
               <Onramp onramp={onramp} stripePromise={stripeOnrampPromise} />
             </div>
           </Modal>
 
           <div className={'flex flex-col mt-2'}>
-            {chain?.id !== 1 ||
-              (!user && (
-                <label
-                  className={'text-xs font-bold uppercase mb-2 cursor-pointer'}
-                  onClick={!!user ? () => wallet?.switchChain(1) : () => login()}
-                >
-                  Bridge ETH to Zora
-                </label>
-              )) || (
-                <Modal
-                  trigger={
-                    <label className={'text-xs font-bold uppercase mb-2 cursor-pointer'}>
-                      Bridge ETH to Zora
-                    </label>
-                  }
-                >
-                  <Bridge />
-                </Modal>
-              )}
+            {chain?.id === 1 ? (
+              <Modal
+                trigger={
+                  <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+                    2. Bridge ETH to Zora
+                  </label>
+                }
+              >
+                <Bridge />
+              </Modal>
+            ) : (
+              <label
+                className={'text-xs font-bold uppercase mb-2 cursor-pointer'}
+                onClick={!!user ? () => wallet?.switchChain(1) : () => login()}
+              >
+                Bridge ETH to Zora
+              </label>
+            )}
           </div>
-        </div>
-      )) || (
-        <div className={'flex flex-col py-2'}>
-          <label className={'text-xs font-bold uppercase mb-2'}>Fund Wallet</label>
-          <Link href={'/me/onramp'}>
-            <button
-              className={
-                'border border-white-13 bg-[#1b1b1b] hover:bg-[#111] px-2 py-3 w-full mt-2'
-              }
-            >
-              Buy ETH{' '}
-            </button>
-          </Link>
+          <div className={'flex flex-col mt-4'}>
+            <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+              <Link href={'/discography'}>3. Explore and Mint</Link>
+            </label>
+          </div>
         </div>
       )}
       <Login />

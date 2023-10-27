@@ -10,6 +10,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
 import Zorb from '../../../../public/icons/zorb.svg'
 import ETH from '../../../../public/icons/eth.svg'
+import Haus from '../../../../public/icons/haus-alt-2.svg'
 
 const L2_BRIDGING_GAS_LIMIT = BigInt(100000)
 // @ts-ignore
@@ -21,8 +22,12 @@ export const optimismPortalAbi = parseAbi([
 
 export default function Bridge() {
   const { address } = useAccount()
-  const { data: ethBalance } = useBalance({ address, chainId: 1 })
-  const { data: zoraBalance } = useBalance({ address, chainId: ZORA_CHAIN_ID })
+  const { data: ethBalance } = useBalance({ address, chainId: 1, watch: true })
+  const { data: zoraBalance } = useBalance({
+    address,
+    chainId: ZORA_CHAIN_ID,
+    watch: true,
+  })
   const [value, setValue] = useState('0')
   const {
     config,
@@ -42,6 +47,7 @@ export default function Bridge() {
     data: writeData,
     write,
     isLoading,
+    isSuccess,
     isIdle,
     error: sendError,
   } = useContractWrite({
@@ -58,8 +64,8 @@ export default function Bridge() {
   }, [write])
 
   const isDisabled = useMemo(() => {
-    return Number(value) <= 0 || !!prepareError || isLoading
-  }, [value, prepareError, isLoading])
+    return Number(value) <= 0 || !!prepareError || isLoading || isSuccess
+  }, [value, prepareError, isLoading, isSuccess])
 
   useEffect(() => {
     if (address && isIdle) refetch()
@@ -103,14 +109,26 @@ export default function Bridge() {
         </div>
         <button
           type="submit"
-          className={`p-2 bg-[#1b1b1b] ${
+          className={`flex items-center justify-center py-4 bg-[#1b1b1b] ${
             !isDisabled && 'hover:bg-[#111]'
           }  w-full border border-white-13 text-white rounded-lg`}
           onClick={handleBridge}
           disabled={isDisabled}
           style={isDisabled ? { border: '1px solid #1b1b1b' } : undefined}
         >
-          {receipt?.status === 'success' ? 'Bridged!' : 'Bridge'}
+          <div>
+            {' '}
+            {isLoading
+              ? 'Confirming'
+              : isSuccess
+              ? 'Bridging'
+              : receipt?.status === 'success'
+              ? 'Bridged!'
+              : 'Bridge'}
+          </div>
+          <div className={'flex w-5 h-5 ml-3'}>
+            {(receipt?.status === 'success' && <Haus />) || <Zorb />}
+          </div>
         </button>
         <div className="mb-4 border-t border-white-13 mt-12 pt-4">
           <label htmlFor="value" className="block mb-2 text-white uppercase text-sm">
