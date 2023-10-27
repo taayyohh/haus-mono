@@ -182,23 +182,6 @@ const WhatPage = () => {
                   equitably split between
                 </a>{' '}
                 the artists, the lucidhaus, and Zora.
-                <br />
-                <br />
-                If you&#39;re new to Ethereum, to move from online {'=>'} onchain, you can{' '}
-                <button onClick={login} className={'underline hover:opacity-70'}>
-                  Connect
-                </button>{' '}
-                to lucid.haus with your phone number, and a wallet, owned only by you,
-                will be created for you! You can then fund your wallet and buy ETH on{' '}
-                {(!!user && (
-                  <Link href={'/me/onramp'} className={'underline hover:opacity-70'}>
-                    our onramp.
-                  </Link>
-                )) || (
-                  <button onClick={login} className={'underline hover:opacity-70'}>
-                    our onramp.
-                  </button>
-                )}
               </div>
             </div>
           </div>

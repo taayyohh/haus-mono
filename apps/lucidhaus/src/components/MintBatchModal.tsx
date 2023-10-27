@@ -223,14 +223,14 @@ export default function MintBatchModal({
           onClick={() => mintBatch?.()}
           disabled={isDisabled}
         >
-          {insufficientFunds ? (
+          {txReceipt?.status === 'success' ? (
+            <>{'Minted'}</>
+          ) : insufficientFunds ? (
             <>{'Insufficient Funds'}</>
           ) : writeLoading ? (
             <>{'Confirming'}</>
           ) : writeSuccess ? (
             <>{'Minting'}</>
-          ) : txReceipt?.status === 'success' ? (
-            <>{'Minted'}</>
           ) : (
             <>Mint {type ? type : ''}</>
           )}

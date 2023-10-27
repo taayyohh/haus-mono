@@ -60,7 +60,6 @@ export default function MintModal({
 
   useEffect(() => {
     if (address && isIdle) refetch()
-
   }, [isIdle, address, refetch])
 
   const {
@@ -135,14 +134,14 @@ export default function MintModal({
           onClick={() => mint?.()}
           disabled={isDisabled}
         >
-          {insufficientFunds ? (
+          {txReceipt?.status === 'success' ? (
+            <>{'Minted'}</>
+          ) : insufficientFunds ? (
             <>{'Insufficient Funds'}</>
           ) : writeLoading ? (
             <>{'Confirming'}</>
           ) : writeSuccess ? (
             <>{'Minting'}</>
-          ) : txReceipt?.status === 'success' ? (
-            <>{'Minted'}</>
           ) : (
             <>Mint {type ? type : ''}</>
           )}
