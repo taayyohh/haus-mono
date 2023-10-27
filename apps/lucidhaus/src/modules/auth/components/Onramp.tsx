@@ -14,15 +14,18 @@ export default function Onramp({
   stripePromise: Promise<StripeOnramp | null>
 }) {
   return (
-    <CryptoElements stripeOnramp={stripePromise}>
-      {onramp?.client_secret && (
-        <OnrampElement
-          clientSecret={onramp.client_secret}
-          appearance={{ theme: 'dark' }}
-          onChange={() => console.log('on change')}
-          onReady={() => console.log('ready')}
-        />
-      )}
-    </CryptoElements>
+    <div className={'flex items-center w-full'}>
+      <CryptoElements stripeOnramp={stripePromise}>
+        {onramp?.client_secret && (
+          <OnrampElement
+            clientSecret={onramp.client_secret}
+            appearance={{ theme: 'dark' }}
+            onChange={() => console.log('on change')}
+            onReady={() => console.log('ready')}
+          />
+        )}
+      </CryptoElements>
+    </div>
+
   )
 }

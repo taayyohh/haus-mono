@@ -59,12 +59,12 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
       )}
       {(onramp && stripeOnrampPromise && (
         <>
-          <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>
+          <label className={'text-xs font-bold uppercase mb-2'}>Fund Wallet</label>
           <Onramp onramp={onramp} stripePromise={stripeOnrampPromise} />
         </>
       )) || (
         <div className={'flex flex-col py-2'}>
-          <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>
+          <label className={'text-xs font-bold uppercase mb-2'}>Fund Wallet</label>
           <Link href={'/me/onramp'}>
             <button
               className={
