@@ -16,8 +16,8 @@ export const metadata: Metadata = {
         url: getIpfsGateway(
           'ipfs://bafkreictv3m2xnxqh7yvulrots3w3t3fbnqe32migivqonmxvwhh2qtbuy'
         ),
-       width: 1200,
-          height: 630,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',
@@ -36,8 +36,6 @@ export const metadata: Metadata = {
 }
 export default async function Page() {
   const { data: onramp } = await fetchOnrampSession()
-  const stripeOnrampPromise = loadStripeOnramp(config.stripePublic!)
 
-
-  return <Me onramp={onramp} stripePromise={stripeOnrampPromise} />
+  return <Me onramp={onramp} />
 }

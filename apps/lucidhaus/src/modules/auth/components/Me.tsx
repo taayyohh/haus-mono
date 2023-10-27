@@ -7,12 +7,8 @@ import { useBalance, useNetwork } from 'wagmi'
 import { Address } from 'viem'
 import Link from 'next/link'
 import Login from '@/modules/auth/components/Login'
-import { loadStripeOnramp, StripeOnramp } from '@stripe/crypto'
+import { loadStripeOnramp } from '@stripe/crypto'
 import config from '@/constants/config'
-import {
-  CryptoElements,
-  OnrampElement,
-} from '@/modules/store/components/StripeCryptoElements'
 import Zorb from '../../../../public/icons/zorb.svg'
 import { OnrampSessionResult } from '@stripe/crypto/types/api/onramp'
 import { useResponsive } from '@/hooks/useResponsive'
@@ -61,7 +57,7 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
         </div>
       )}
-      {(onramp && (
+      {(onramp && stripeOnrampPromise && (
         <>
           <label className={'text-xs font-bold uppercase'}>Fund Wallet</label>
           <Onramp onramp={onramp} stripePromise={stripeOnrampPromise} />
