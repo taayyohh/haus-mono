@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { useBalance, useNetwork } from 'wagmi'
@@ -33,6 +33,15 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
 
   const { wallet } = usePrivyWagmi()
 
+  const [copySuccess, setCopySuccess] = useState(false)
+
+  const handleAddressClick = () => {
+    navigator.clipboard.writeText(activeWallet?.address || '').then(() => {
+      setCopySuccess(true)
+      setTimeout(() => setCopySuccess(false), 1500)
+    })
+  }
+
   if (!ready || !authenticated) return null
 
   return (
@@ -46,8 +55,9 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
       {activeWallet && (
         <div className={'flex flex-col py-2'}>
           <label className={'text-xs font-bold uppercase'}>Wallet</label>
-          <div>
+          <div onClick={handleAddressClick} style={{ cursor: 'pointer' }} className={'flex items-center'}>
             {isMobile ? shortenAddress(activeWallet?.address) : activeWallet?.address}
+            {copySuccess && <span className="ml-2 text-white-500 opacity-70 text-xs">copied!</span>}
           </div>
         </div>
       )}
@@ -77,7 +87,11 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
           <Modal
             trigger={
-              <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+              <label
+                className={
+                  'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'
+                }
+              >
                 1. Fund Wallet with ETH
               </label>
             }
@@ -91,7 +105,11 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
             {chain?.id === 1 ? (
               <Modal
                 trigger={
-                  <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+                  <label
+                    className={
+                      'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'
+                    }
+                  >
                     2. Bridge ETH to Zora
                   </label>
                 }
@@ -108,7 +126,11 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
             )}
           </div>
           <div className={'flex flex-col mt-4'}>
-            <label className={'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'}>
+            <label
+              className={
+                'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'
+              }
+            >
               <Link href={'/discography'}>3. Explore and Mint</Link>
             </label>
           </div>
