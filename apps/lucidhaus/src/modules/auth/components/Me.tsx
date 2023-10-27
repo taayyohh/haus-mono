@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { useBalance, useNetwork } from 'wagmi'
@@ -18,10 +18,11 @@ import { Modal } from '@/components/Modal'
 import Bridge from '@/modules/auth/components/Bridge'
 import { ZORA_CHAIN_ID } from '@/constants'
 import Haus from '../../../../public/icons/haus-alt.svg'
+import { useRouter } from 'next/navigation'
 
 const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
+  const router = useRouter()
   const { login, logout, ready, authenticated, user } = usePrivy()
-  const { wallets } = useWallets()
   const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
   const { data: balance } = useBalance({
     address: activeWallet?.address as Address,
@@ -42,6 +43,10 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
     })
   }
 
+  useEffect(() => {
+    if (!ready || !authenticated) router.push('/')
+  }, [ready, authenticated])
+
   if (!ready || !authenticated) return null
 
   return (
@@ -55,9 +60,15 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
       {activeWallet && (
         <div className={'flex flex-col py-2'}>
           <label className={'text-xs font-bold uppercase'}>Wallet</label>
-          <div onClick={handleAddressClick} style={{ cursor: 'pointer' }} className={'flex items-center'}>
+          <div
+            onClick={handleAddressClick}
+            style={{ cursor: 'pointer' }}
+            className={'flex items-center'}
+          >
             {isMobile ? shortenAddress(activeWallet?.address) : activeWallet?.address}
-            {copySuccess && <span className="ml-2 text-white-500 opacity-70 text-xs">copied!</span>}
+            {copySuccess && (
+              <span className="ml-2 text-white-500 opacity-70 text-xs">copied!</span>
+            )}
           </div>
         </div>
       )}
