@@ -925,6 +925,117 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
+export type Premint = {
+  __typename?: 'Premint';
+  contractAddress: Scalars['Bytes'];
+  createdNewContract: Scalars['Boolean'];
+  id: Scalars['ID'];
+  minter: Scalars['Bytes'];
+  tokenAndContract?: Maybe<ZoraCreateToken>;
+  tokenId: Scalars['BigInt'];
+  uid: Scalars['BigInt'];
+};
+
+export type Premint_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Premint_Filter>>>;
+  contractAddress?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  contractAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_not?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  contractAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  createdNewContract?: InputMaybe<Scalars['Boolean']>;
+  createdNewContract_in?: InputMaybe<Array<Scalars['Boolean']>>;
+  createdNewContract_not?: InputMaybe<Scalars['Boolean']>;
+  createdNewContract_not_in?: InputMaybe<Array<Scalars['Boolean']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  minter?: InputMaybe<Scalars['Bytes']>;
+  minter_contains?: InputMaybe<Scalars['Bytes']>;
+  minter_gt?: InputMaybe<Scalars['Bytes']>;
+  minter_gte?: InputMaybe<Scalars['Bytes']>;
+  minter_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  minter_lt?: InputMaybe<Scalars['Bytes']>;
+  minter_lte?: InputMaybe<Scalars['Bytes']>;
+  minter_not?: InputMaybe<Scalars['Bytes']>;
+  minter_not_contains?: InputMaybe<Scalars['Bytes']>;
+  minter_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  or?: InputMaybe<Array<InputMaybe<Premint_Filter>>>;
+  tokenAndContract?: InputMaybe<Scalars['String']>;
+  tokenAndContract_?: InputMaybe<ZoraCreateToken_Filter>;
+  tokenAndContract_contains?: InputMaybe<Scalars['String']>;
+  tokenAndContract_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenAndContract_ends_with?: InputMaybe<Scalars['String']>;
+  tokenAndContract_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenAndContract_gt?: InputMaybe<Scalars['String']>;
+  tokenAndContract_gte?: InputMaybe<Scalars['String']>;
+  tokenAndContract_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenAndContract_lt?: InputMaybe<Scalars['String']>;
+  tokenAndContract_lte?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_contains?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenAndContract_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenAndContract_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenAndContract_starts_with?: InputMaybe<Scalars['String']>;
+  tokenAndContract_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenId?: InputMaybe<Scalars['BigInt']>;
+  tokenId_gt?: InputMaybe<Scalars['BigInt']>;
+  tokenId_gte?: InputMaybe<Scalars['BigInt']>;
+  tokenId_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  tokenId_lt?: InputMaybe<Scalars['BigInt']>;
+  tokenId_lte?: InputMaybe<Scalars['BigInt']>;
+  tokenId_not?: InputMaybe<Scalars['BigInt']>;
+  tokenId_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  uid?: InputMaybe<Scalars['BigInt']>;
+  uid_gt?: InputMaybe<Scalars['BigInt']>;
+  uid_gte?: InputMaybe<Scalars['BigInt']>;
+  uid_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  uid_lt?: InputMaybe<Scalars['BigInt']>;
+  uid_lte?: InputMaybe<Scalars['BigInt']>;
+  uid_not?: InputMaybe<Scalars['BigInt']>;
+  uid_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+};
+
+export enum Premint_OrderBy {
+  ContractAddress = 'contractAddress',
+  CreatedNewContract = 'createdNewContract',
+  Id = 'id',
+  Minter = 'minter',
+  TokenAndContract = 'tokenAndContract',
+  TokenAndContractAddress = 'tokenAndContract__address',
+  TokenAndContractBlock = 'tokenAndContract__block',
+  TokenAndContractCreatedAtBlock = 'tokenAndContract__createdAtBlock',
+  TokenAndContractHolders1155Number = 'tokenAndContract__holders1155Number',
+  TokenAndContractId = 'tokenAndContract__id',
+  TokenAndContractMaxSupply = 'tokenAndContract__maxSupply',
+  TokenAndContractMetadataIpfsid = 'tokenAndContract__metadataIPFSID',
+  TokenAndContractRendererContract = 'tokenAndContract__rendererContract',
+  TokenAndContractTimestamp = 'tokenAndContract__timestamp',
+  TokenAndContractTokenId = 'tokenAndContract__tokenId',
+  TokenAndContractTokenStandard = 'tokenAndContract__tokenStandard',
+  TokenAndContractTotalMinted = 'tokenAndContract__totalMinted',
+  TokenAndContractTotalSupply = 'tokenAndContract__totalSupply',
+  TokenAndContractUri = 'tokenAndContract__uri',
+  TokenId = 'tokenId',
+  Uid = 'uid'
+}
+
 export type Query = {
   __typename?: 'Query';
   /** Access to subgraph metadata */
@@ -939,6 +1050,8 @@ export type Query = {
   mintComments: Array<MintComment>;
   onChainMetadataHistories: Array<OnChainMetadataHistory>;
   onChainMetadataHistory?: Maybe<OnChainMetadataHistory>;
+  premint?: Maybe<Premint>;
+  premints: Array<Premint>;
   redeemInstructions: Array<RedeemInstructions>;
   redeemMintToken?: Maybe<RedeemMintToken>;
   redeemMintTokens: Array<RedeemMintToken>;
@@ -1095,6 +1208,24 @@ export type QueryOnChainMetadataHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryPremintArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryPremintsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Premint_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Premint_Filter>;
 };
 
 
@@ -4074,6 +4205,8 @@ export type Subscription = {
   mintComments: Array<MintComment>;
   onChainMetadataHistories: Array<OnChainMetadataHistory>;
   onChainMetadataHistory?: Maybe<OnChainMetadataHistory>;
+  premint?: Maybe<Premint>;
+  premints: Array<Premint>;
   redeemInstructions: Array<RedeemInstructions>;
   redeemMintToken?: Maybe<RedeemMintToken>;
   redeemMintTokens: Array<RedeemMintToken>;
@@ -4230,6 +4363,24 @@ export type SubscriptionOnChainMetadataHistoryArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionPremintArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionPremintsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Premint_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Premint_Filter>;
 };
 
 
@@ -5893,6 +6044,7 @@ export type ZoraCreateToken = {
   mintComments: Array<MintComment>;
   onChainMetadataHistory: Array<OnChainMetadataHistory>;
   permissions: Array<ZoraCreatorPermission>;
+  premint?: Maybe<Premint>;
   rendererContract?: Maybe<Scalars['Bytes']>;
   royalties: Array<RoyaltyConfig>;
   sales: Array<TokenSale>;
@@ -6090,6 +6242,7 @@ export type ZoraCreateToken_Filter = {
   onChainMetadataHistory_?: InputMaybe<OnChainMetadataHistory_Filter>;
   or?: InputMaybe<Array<InputMaybe<ZoraCreateToken_Filter>>>;
   permissions_?: InputMaybe<ZoraCreatorPermission_Filter>;
+  premint_?: InputMaybe<Premint_Filter>;
   rendererContract?: InputMaybe<Scalars['Bytes']>;
   rendererContract_contains?: InputMaybe<Scalars['Bytes']>;
   rendererContract_gt?: InputMaybe<Scalars['Bytes']>;
@@ -6236,6 +6389,13 @@ export enum ZoraCreateToken_OrderBy {
   MintComments = 'mintComments',
   OnChainMetadataHistory = 'onChainMetadataHistory',
   Permissions = 'permissions',
+  Premint = 'premint',
+  PremintContractAddress = 'premint__contractAddress',
+  PremintCreatedNewContract = 'premint__createdNewContract',
+  PremintId = 'premint__id',
+  PremintMinter = 'premint__minter',
+  PremintTokenId = 'premint__tokenId',
+  PremintUid = 'premint__uid',
   RendererContract = 'rendererContract',
   Royalties = 'royalties',
   Sales = 'sales',

@@ -6,7 +6,11 @@ query zoraCreateTokens(
   $orderDirection: OrderDirection!
 ) {
   zoraCreateTokens(
-    where: { contract: $collectionAddress, tokenId_gt: 0 }
+    where: {
+      contract: $collectionAddress
+      tokenId_gt: 0
+      salesStrategies_: { type: "FIXED_PRICE" }
+    }
     orderBy: $orderBy
     orderDirection: $orderDirection
     first: $perPage
