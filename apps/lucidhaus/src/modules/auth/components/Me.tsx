@@ -128,12 +128,16 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
                 <Bridge />
               </Modal>
             ) : (
-              <label
-                className={'text-xs font-bold uppercase mb-2 cursor-pointer'}
-                onClick={!!user ? () => wallet?.switchChain(1) : () => login()}
-              >
-                Bridge ETH to Zora
-              </label>
+              <div>
+                <label
+                  className={
+                    'text-xs font-bold uppercase mb-2 cursor-pointer hover:opacity-70'
+                  }
+                  onClick={!!user ? () => wallet?.switchChain(1) : () => login()}
+                >
+                  2. Bridge ETH to Zora
+                </label>
+              </div>
             )}
           </div>
           <div className={'flex flex-col mt-4'}>
