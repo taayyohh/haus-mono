@@ -1,3 +1,4 @@
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { shortenAddress } from '@/utils/shortenAddress'
@@ -16,17 +17,14 @@ import {
 } from 'wagmi'
 import { getZora1155PrepareConfig } from '@/utils/getZora1155PrepareConfig'
 import { ZORA_CHAIN_ID } from '@/constants'
-import { useEffect, useMemo } from 'react'
 
 export default function MintModal({
   collection,
   token,
   type,
-  comment,
 }: {
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
   collection: ZoraCreateContractQuery['zoraCreateContract']
-  comment?: string | undefined
   type?: 'Album' | 'Video'
 }) {
   const { user, login } = usePrivy()
@@ -34,6 +32,8 @@ export default function MintModal({
   const { chain } = useNetwork()
   const saleStrategyAddress = token?.salesStrategies[0]?.fixedPrice?.configAddress!
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
+
+  const [comment, setComment] = useState<string>('')
 
   let config
   if (!!address && !!collection?.address && !!token.tokenId) {
@@ -122,7 +122,22 @@ export default function MintModal({
               <div>{token.metadata?.name}</div>
             </div>
           </div>
-          <div className={'flex flex-col text-white py-2 mt-12'}>
+          <div className={'flex flex-col text-white py-2 mt-2'}>
+            <label htmlFor="comment" className={'text-xs font-bold uppercase'}>
+              Comment
+            </label>
+            <textarea
+              id="comment"
+              rows={4}
+              className={
+                'p-2 bg-[#1b1b1b] border border-white-13 rounded w-full mt-2 resize-none'
+              }
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="₊˚ʚ ᗢ₊˚✧ ﾟ. 𖤐⭒๋࣭ ⭑."
+            />
+          </div>
+          <div className={'flex flex-col text-white py-2 mt-2'}>
             <div>1 {type ? type : 'token'}</div>
             <div>Total: {parseFloat(formatEther(mintFee))} ETH</div>
           </div>

@@ -13,12 +13,10 @@ const MintButton = ({
   collection,
   token,
   type,
-  comment,
   clean = false,
 }: {
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
   collection: ZoraCreateContractQuery['zoraCreateContract']
-  comment?: string | undefined
   type?: 'Album' | 'Video'
   clean?: boolean
 }) => {
@@ -58,7 +56,7 @@ const MintButton = ({
         </button>
       }
     >
-      <MintModal token={token} collection={collection} comment={comment} />
+      <MintModal token={token} collection={collection} />
     </Modal>
   )
 }

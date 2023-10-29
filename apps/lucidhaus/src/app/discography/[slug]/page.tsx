@@ -3,13 +3,22 @@ import { fetchAlbum } from '@/modules/albums/utils/fetchAlbum'
 import { onchainAlbumFetch } from '@/modules/albums/utils/onchainAlbumFetch'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { useMemo } from 'react'
+import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
 
 export default async function Page(context: any) {
   const { data: album } = await fetchAlbum(context.params.slug)
   const { collection, tokens, artist } = await onchainAlbumFetch(album)
+  const mintCommentEndpoints = generateMintCommentEndpoints(tokens)
 
   return (
-    <AlbumPage album={album} collection={collection} tokens={tokens} artist={artist} />
+    <AlbumPage
+      album={album}
+      collection={collection}
+      tokens={tokens}
+      artist={artist}
+      mintCommentEndpoints={mintCommentEndpoints}
+    />
   )
 }
 

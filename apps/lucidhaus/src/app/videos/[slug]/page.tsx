@@ -4,12 +4,14 @@ import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
 import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
+import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
 
 export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
   const { collection, tokens, artist } = await onchainVideoFetch(video)
   const { data: albums } = await fetchBatchAlbums([video.associatedAlbum])
-  
+  const mintCommentEndpoints = generateMintCommentEndpoints(tokens)
+
   return (
     <VideoPage
       video={video}
@@ -17,6 +19,7 @@ export default async function Page(context: any) {
       token={tokens?.[0]}
       artist={artist}
       album={albums[0]}
+      mintCommentEndpoints={mintCommentEndpoints}
     />
   )
 }

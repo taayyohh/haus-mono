@@ -4,6 +4,7 @@ import { usePlayerStore } from '@/store/player'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { IArtist } from '@/models/Artist'
 import { IAlbum } from '@/models/Album'
+import { useMemo } from 'react'
 
 const Track = ({
   album,
@@ -51,12 +52,16 @@ const Track = ({
     }
   }
 
+  const isActiveTrack = useMemo(() => {
+    return queuedItem?.track.title === token?.metadata?.name && isPlaying
+  }, [token?.metadata?.name, queuedItem?.track.title, isPlaying, media])
+
   return (
     <li
       key={token.tokenId}
-      className={
-        'flex items-center justify-between border-solid border-t border-white-13 px-4 sm:px-8 text-white hover:bg-[#111]'
-      }
+      className={`flex items-center justify-between border-solid border-t border-white-13 px-4 sm:px-8 text-white hover:bg-[#111] ${
+        isActiveTrack && 'bg-black'
+      }`}
     >
       <div onClick={handleTrackClick} className={'flex cursor-pointer w-full py-5'}>
         <span className={'pr-6'}>{i < 10 ? `0${i}` : i}</span>

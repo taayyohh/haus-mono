@@ -17,36 +17,6 @@ body {
   background:#131313;
 }
 
-body.midnight {
-  background-color: #001F3F; /* Deep blue for late night */
-  color: #FFF;
-}
-
-body.dawn {
-  background-color: #FFDC00; /* Golden yellow for dawn */
-  color: #333;
-}
-
-body.morning {
-  background-color: #7FDBFF; /* Light blue for morning */
-  color: #333;
-}
-
-body.afternoon {
-  background-color: #01FF70; /* Bright green for afternoon */
-  color: #333;
-}
-
-body.dusk {
-  background-color: #FF851B; /* Orange for sunset */
-  color: #333;
-}
-
-body.night {
-  background-color: #111; /* Dark gray for early night */
-  color: #FFF;
-}
-
 p {
   margin-bottom: 12px !important;
 }

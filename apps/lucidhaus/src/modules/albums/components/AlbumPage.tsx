@@ -5,28 +5,31 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { IAlbum } from '@/models/Album'
 import { IArtist } from '@/models/Artist'
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
-import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 import { useResponsive } from '@/hooks/useResponsive'
 import Track from '@/modules/albums/components/Track'
 import DateFormatter from '@/components/DateFormatter'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import MintBatchButton from '@/components/MintBatchButton'
 import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
-import Pause from '../../../../public/icons/pause.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { PlayerState, usePlayerStore } from '@/store/player'
+import { useCursorFetch } from '@/hooks/useCursorInfiniteFetch'
+import { MintComment, MintCommentSchema } from '@/modules/comments/MintCommentSchema'
+import Comments from '@/modules/comments/Comments'
 
 const AlbumPage = ({
   album,
   collection,
   tokens,
   artist,
+  mintCommentEndpoints,
 }: {
   album: IAlbum
   collection: ZoraCreateContractQuery['zoraCreateContract'] | null | undefined
   tokens: ZoraCreateTokenQuery['zoraCreateTokens'] | null | undefined
   artist: IArtist
+  mintCommentEndpoints: string[] | undefined
 }) => {
   const { isMobile } = useResponsive()
   const currentTime = Math.floor(Date.now() / 1000)
@@ -101,6 +104,7 @@ const AlbumPage = ({
           >
             <Play fill={'#fff'} width={12} /> Play
           </div>
+          <Comments endpoints={mintCommentEndpoints} />
         </div>
       </div>
       <div className={'flex flex-col self-start w-full mt-4'}>
