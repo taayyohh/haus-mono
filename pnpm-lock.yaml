@@ -9,6 +9,9 @@ importers:
       eslint-config-turbo: latest
       lint-staged: ^13.0.3
       turbo: ^1.8.3
+      zod: 3.21.4
+    dependencies:
+      zod: 3.21.4
     devDependencies:
       dotenv-cli: 7.3.0
       eslint: 8.50.0
