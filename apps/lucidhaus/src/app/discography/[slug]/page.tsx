@@ -8,6 +8,8 @@ import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
 import { fetchCursorDataOnServer } from '@/hooks/fetchCursorDataOnServer'
 import { MintCommentSchema } from '@/modules/comments/MintCommentSchema'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page(context: any) {
   const { data: album } = await fetchAlbum(context.params.slug)
   const { collection, tokens, artist } = await onchainAlbumFetch(album)
