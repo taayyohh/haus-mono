@@ -1,0 +1,6 @@
+fragment Comment on MintComment {
+  timestamp
+  comment
+  sender
+  id
+}

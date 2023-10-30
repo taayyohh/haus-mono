@@ -33,7 +33,7 @@ export const Modal: React.FC<ModalProps> = ({ trigger, children }) => {
           <div className="z-10 relative p-4 bg-[#131313] border border-white-13 rounded shadow-lg max-h-[75vh] overflow-hidden overflow-y-scroll w-full md:w-auto">
             {children}
             <button
-              className="absolute top-3 right-5 mt-2 text-white bg-[#131313] rounded-full flex items-center justify-center border border-white-13 text-sm h-10 w-10"
+              className="absolute top-3 right-5 mt-2 text-white bg-[#131313] hover:bg-[#111] rounded-full flex items-center justify-center border border-white-13 text-sm h-10 w-10"
               onClick={() => setIsVisible(false)}
             >
               <div className={'mt-0'}>x</div>
