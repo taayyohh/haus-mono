@@ -123,7 +123,7 @@ export default function MintModal({
             </div>
           </div>
           <div className={'flex flex-col text-white py-2 mt-2'}>
-            <label htmlFor="comment" className={'text-xs font-bold uppercase'}>
+            <label htmlFor="comment" className={'text-xs uppercase'}>
               Comment
             </label>
             <textarea
