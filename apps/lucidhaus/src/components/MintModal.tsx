@@ -32,7 +32,6 @@ export default function MintModal({
   const { chain } = useNetwork()
   const saleStrategyAddress = token?.salesStrategies[0]?.fixedPrice?.configAddress!
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
-
   const [comment, setComment] = useState<string>('')
 
   let config

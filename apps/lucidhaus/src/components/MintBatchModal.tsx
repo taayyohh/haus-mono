@@ -19,7 +19,7 @@ import {
   UsePrepareContractWriteConfig,
   useWaitForTransaction,
 } from 'wagmi'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ZORA_CHAIN_ID } from '@/constants'
 import {
   zoraUniversalMinterABI,
@@ -34,10 +34,12 @@ function getMintBatchArgs({
   userAddress,
   tokens,
   collection,
+  comment,
 }: {
   userAddress?: `0x${string}`
   tokens: ZoraCreateTokenQuery['zoraCreateTokens']
   collection: ZoraCreateContractQuery['zoraCreateContract']
+  comment: string
 }) {
   if (!userAddress)
     return { targets: [], calldatas: [], values: [], totalTxnValue: BigInt(0) }
@@ -60,7 +62,7 @@ function getMintBatchArgs({
         userAddress as `0x${string}`,
         Number(token.tokenId),
         collection?.mintFeePerQuantity as string,
-        ''
+        comment
       )
     }
 
@@ -95,14 +97,16 @@ export default function MintBatchModal({
   const { address } = useAccount()
   const { chain } = useNetwork()
   const mintFee = BigInt(collection?.mintFeePerQuantity || 0)
+  const [comment, setComment] = useState<string>('')
 
   const { targets, values, calldatas, totalTxnValue } = useMemo(() => {
     return getMintBatchArgs({
       userAddress: address as `0x${string}`,
       tokens,
       collection,
+      comment,
     })
-  }, [address, tokens, collection])
+  }, [address, tokens, collection, comment])
 
   const prepareConfig = {
     chainId: ZORA_CHAIN_ID,
@@ -115,10 +119,6 @@ export default function MintBatchModal({
     typeof zoraUniversalMinterABI,
     'mintBatchWithoutFees'
   >
-  //
-  // const estimatedGas = useEstimatedGas(
-  //   prepareConfig as unknown as UsePrepareContractWriteConfig
-  // )
 
   const {
     config: writeConfig,
@@ -130,7 +130,6 @@ export default function MintBatchModal({
   } = usePrepareContractWrite({
     ...prepareConfig,
     enabled: !!address,
-    // gas: estimatedGas,
   })
 
   const {
@@ -143,11 +142,7 @@ export default function MintBatchModal({
     ...writeConfig,
   })
 
-  const {
-    data: txReceipt,
-    isSuccess,
-    isFetching,
-  } = useWaitForTransaction({
+  const { data: txReceipt } = useWaitForTransaction({
     hash: writeData?.hash,
   })
 
@@ -193,9 +188,17 @@ export default function MintBatchModal({
                 >
                   {shortenAddress(collection?.address)}
                 </a>
+                <div className={'flex flex-col text-white py-2 mt-2 text-sm'}>
+                  <div>{tokens.length} tracks</div>
+                  <div>
+                    <span className={'text-xs'}>Total:</span>{' '}
+                    {parseFloat(formatEther(mintFee)) * tokens.length} ETH
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <label className={'text-xs uppercase pb-2'}>Tokens</label>
           <div
             className={
               'flex flex-col max-h-[200px] overflow-y-scroll border border-white-13 p-2 px-6 rounded pb-4'
@@ -211,15 +214,26 @@ export default function MintBatchModal({
                 </div>
               ))}
           </div>
-          <div className={'flex flex-col text-white py-2 mt-12'}>
-            <div>{tokens.length} tracks</div>
-            <div>Total: {parseFloat(formatEther(mintFee)) * tokens.length} ETH</div>
+          <div className={'flex flex-col text-white py-2 mt-4'}>
+            <label htmlFor="comment" className={'text-xs uppercase'}>
+              Comment
+            </label>
+            <textarea
+              id="comment"
+              rows={4}
+              className={
+                'p-2 bg-[#1b1b1b] border border-white-13 rounded w-full mt-2 resize-none'
+              }
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="₊˚ʚ ᗢ₊˚✧ ﾟ. 𖤐⭒๋࣭ ⭑."
+            />
           </div>
         </div>
         <button
           className={`inline-flex items-center justify-center bg-[#1b1b1b] ${
             !isDisabled && 'hover:bg-[#111]'
-          } border border-white-13 text-white py-4 px-8 rounded w-full mt-8 text-sm uppercase`}
+          } border border-white-13 text-white py-4 px-8 rounded w-full mt-6 text-sm uppercase`}
           onClick={() => mintBatch?.()}
           disabled={isDisabled}
         >
