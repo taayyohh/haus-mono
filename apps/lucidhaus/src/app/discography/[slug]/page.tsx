@@ -5,11 +5,17 @@ import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { useMemo } from 'react'
 import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
+import { fetchCursorDataOnServer } from '@/hooks/fetchCursorDataOnServer'
+import { MintCommentSchema } from '@/modules/comments/MintCommentSchema'
 
 export default async function Page(context: any) {
   const { data: album } = await fetchAlbum(context.params.slug)
   const { collection, tokens, artist } = await onchainAlbumFetch(album)
-  const mintCommentEndpoints = generateMintCommentEndpoints(tokens)
+  const endpoints = generateMintCommentEndpoints(tokens)
+  const { data: comments, total } = await fetchCursorDataOnServer({
+    endpoints,
+    schema: MintCommentSchema,
+  })
 
   return (
     <AlbumPage
@@ -17,7 +23,8 @@ export default async function Page(context: any) {
       collection={collection}
       tokens={tokens}
       artist={artist}
-      mintCommentEndpoints={mintCommentEndpoints}
+      comments={comments}
+      commentTotal={total}
     />
   )
 }

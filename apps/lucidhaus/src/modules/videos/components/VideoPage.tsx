@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { IAlbum } from '@/models/Album'
 import AlbumCard from '@/modules/albums/components/AlbumCard'
 import Comments from '@/modules/comments/Comments'
+import { MintComment } from '@/modules/comments/MintCommentSchema'
 
 const VideoPage = ({
   video,
@@ -21,14 +22,16 @@ const VideoPage = ({
   token,
   artist,
   album,
-  mintCommentEndpoints,
+  comments,
+  commentTotal,
 }: {
   video: IMusicVideo
   collection: ZoraCreateContractQuery['zoraCreateContract'] | null | undefined
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0] | null | undefined
   artist: IArtist
   album: IAlbum
-  mintCommentEndpoints: string[]
+  comments: MintComment[]
+  commentTotal: number
 }) => {
   const { isMobile } = useResponsive()
 
@@ -72,7 +75,7 @@ const VideoPage = ({
               <MintButton collection={collection} token={token} type={'Video'} />
             )}
           </div>
-          <Comments endpoints={mintCommentEndpoints} />
+          <Comments comments={comments} commentTotal={commentTotal} />
         </div>
       </div>
       {album && (

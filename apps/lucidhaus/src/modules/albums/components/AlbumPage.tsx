@@ -14,7 +14,6 @@ import Link from 'next/link'
 import Play from '../../../../public/icons/play.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { PlayerState, usePlayerStore } from '@/store/player'
-import { useCursorFetch } from '@/hooks/useCursorInfiniteFetch'
 import { MintComment, MintCommentSchema } from '@/modules/comments/MintCommentSchema'
 import Comments from '@/modules/comments/Comments'
 
@@ -23,13 +22,15 @@ const AlbumPage = ({
   collection,
   tokens,
   artist,
-  mintCommentEndpoints,
+  comments,
+  commentTotal,
 }: {
   album: IAlbum
   collection: ZoraCreateContractQuery['zoraCreateContract'] | null | undefined
   tokens: ZoraCreateTokenQuery['zoraCreateTokens'] | null | undefined
   artist: IArtist
-  mintCommentEndpoints: string[] | undefined
+  comments: MintComment[]
+  commentTotal: number
 }) => {
   const { isMobile } = useResponsive()
   const currentTime = Math.floor(Date.now() / 1000)
@@ -104,7 +105,7 @@ const AlbumPage = ({
           >
             <Play fill={'#fff'} width={12} /> Play
           </div>
-          <Comments endpoints={mintCommentEndpoints} />
+          <Comments comments={comments} commentTotal={commentTotal} />
         </div>
       </div>
       <div className={'flex flex-col self-start w-full mt-4'}>

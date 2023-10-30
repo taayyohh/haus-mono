@@ -20,6 +20,10 @@ fragment ZoraCreateToken on ZoraCreateToken {
     ...SalesStrategy
   }
 
+  mintComments {
+   ...Comment
+  }
+
   royalties {
     id
     user

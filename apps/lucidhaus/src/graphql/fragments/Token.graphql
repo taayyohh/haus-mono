@@ -27,4 +27,7 @@ fragment Token on ZoraCreateToken {
   royalties {
     ...Royalties
   }
+  mintComments {
+    ...Comment
+  }
 }
