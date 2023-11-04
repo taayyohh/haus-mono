@@ -10,8 +10,26 @@ import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
 import { IAlbum } from '@/models/Album'
 import AlbumCard from '@/modules/albums/components/AlbumCard'
+import { Tabs, Tab } from '@/components/Tabs'
+import { IBlogPost } from '@/models/Blog'
+import BlogCard from '@/modules/blog/components/BlogCard'
+import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
 
-const ArtistPage = ({ artist, albums }: { artist: IArtist; albums: IAlbum[] }) => {
+const ArtistPage = ({
+  artist,
+  albums,
+  blog,
+}: {
+  artist: IArtist
+  albums: IAlbum[]
+  blog: {
+    post: IBlogPost
+    tokens: ZoraCreateTokenQuery['zoraCreateTokens']
+    collection: ZoraCreateContractQuery['zoraCreateContract']
+  }
+}) => {
+  const { tokens, collection, post } = blog
+
   return (
     <AnimatePresence>
       <motion.div
@@ -56,19 +74,36 @@ const ArtistPage = ({ artist, albums }: { artist: IArtist; albums: IAlbum[] }) =
               >
                 {artist.name}
               </div>
-              <div className={'mx-auto mb-20 w-11/12 sm:w-3/4 md:w-3/4 lg:w-1/2'}>
-                <div className={'gap-3 pb-12'}>
-                  <ReactMarkdown
-                    rehypePlugins={[rehypeRaw, rehypeSanitize]}
-                    remarkPlugins={[remarkGfm]}
-                  >
-                    {artist.bio}
-                  </ReactMarkdown>
-                </div>
+              <div className={'mx-auto mb-20 w-11/12'}>
+                <Tabs defaultTab={tokens ? 'Blog' : 'Bio'}>
+                  <Tab label="Bio">
+                    <ReactMarkdown
+                      rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                      remarkPlugins={[remarkGfm]}
+                    >
+                      {artist.bio}
+                    </ReactMarkdown>
+                  </Tab>
+                  {tokens && (
+                    <Tab label="Blog">
+                      {tokens.map((token) => (
+                        <BlogCard
+                          key={token.tokenId}
+                          post={post}
+                          token={token}
+                          collection={collection}
+                        />
+                      ))}
+                    </Tab>
+                  )}
+                </Tabs>
               </div>
+
               <div className={'flex flex-col'}>
                 <div className={'px-2 sm:px-8 uppercase text-lg py-4'}>Discography</div>
-                <div className={'grid grid-cols-1 sm:grid-cols-4 border-t border-white-13'}>
+                <div
+                  className={'grid grid-cols-1 sm:grid-cols-4 border-t border-white-13'}
+                >
                   {albums &&
                     albums.map((album) => (
                       <div key={album._id}>

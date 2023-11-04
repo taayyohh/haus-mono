@@ -2,8 +2,6 @@ import ProductPage from '@/modules/store/components/ProductPage'
 import { fetchProduct } from '@/modules/store/utils/fetchProduct'
 import { stripe } from '@/stripe/stripe-sdk'
 import { Metadata } from 'next'
-import { fetchVideo } from '@/modules/videos/utils/fetchVideo'
-import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
 type Props = {

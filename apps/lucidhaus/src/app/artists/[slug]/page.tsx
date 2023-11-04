@@ -3,12 +3,24 @@ import ArtistPage from '@/modules/artists/components/ArtistPage'
 import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
+import { fetchBlogsByArtist } from '@/modules/blog/utils/fetchBlogPostByArtist'
+import { onchainVideoFetch } from '@/modules/videos/utils/onchainVideoFetch'
+import { onchainAlbumFetch } from '@/modules/albums/utils/onchainAlbumFetch'
+import { onchainBlogFetch } from '@/modules/blog/utils/onchainBlogFetch'
 
 export default async function Page(context: any) {
   const { data: artist } = await fetchArtist(context.params.slug)
   const { data: albums } = await fetchBatchAlbums(artist.albums)
+  const { data: posts } = await fetchBlogsByArtist(artist._id)
+  const { collection, tokens } = await onchainBlogFetch(posts[0]) //TODO: change this
 
-  return <ArtistPage artist={artist} albums={albums} />
+  return (
+    <ArtistPage
+      artist={artist}
+      albums={albums}
+      blog={{ post: posts[0], collection, tokens }}
+    />
+  )
 }
 
 type Props = {

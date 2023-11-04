@@ -22,6 +22,9 @@ export default async function Page() {
           <li>
             <Link href={'/admin/products'}>Products</Link>
           </li>
+          <li>
+            <Link href={'/admin/blog'}>Blog</Link>
+          </li>
         </ul>
       </div>
     </div>
