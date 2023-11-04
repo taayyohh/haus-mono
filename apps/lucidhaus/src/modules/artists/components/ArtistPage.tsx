@@ -75,16 +75,18 @@ const ArtistPage = ({
                 {artist.name}
               </div>
               <div className={'mx-auto mb-20 w-11/12'}>
-                <Tabs defaultTab={tokens ? 'Blog' : 'Bio'}>
+                <Tabs defaultTab={!!tokens.length ? 'Blog' : 'Bio'}>
                   <Tab label="Bio">
-                    <ReactMarkdown
-                      rehypePlugins={[rehypeRaw, rehypeSanitize]}
-                      remarkPlugins={[remarkGfm]}
-                    >
-                      {artist.bio}
-                    </ReactMarkdown>
+                    <div className={'relative w-full sm:sm-3/4 mx-auto'}>
+                      <ReactMarkdown
+                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                        remarkPlugins={[remarkGfm]}
+                      >
+                        {artist.bio}
+                      </ReactMarkdown>
+                    </div>
                   </Tab>
-                  {tokens && (
+                  {!!tokens.length ? (
                     <Tab label="Blog">
                       {tokens.map((token) => (
                         <BlogCard
@@ -95,6 +97,8 @@ const ArtistPage = ({
                         />
                       ))}
                     </Tab>
+                  ) : (
+                    <></>
                   )}
                 </Tabs>
               </div>

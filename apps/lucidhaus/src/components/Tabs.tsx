@@ -30,8 +30,8 @@ export const Tabs: React.FC<TabsProps> = ({ children, defaultTab = '' }) => {
         onClick={() => setActiveTab(child.props.label)}
         className={`uppercase  px-6 py-2 ${
           activeTab === child.props.label
-            ? 'border border-white-13'
-            : 'opacity-60'
+            ? 'border border-white-13 bg-[#111]'
+            : 'opacity-60 hover:opacity-100'
         }`}
       >
         {child.props.label}
