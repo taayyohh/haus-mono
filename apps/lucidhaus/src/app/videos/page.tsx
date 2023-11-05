@@ -5,6 +5,10 @@ import { IMusicVideo } from '@/models/MusicVideo'
 import { IArtist } from '@/models/Artist'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { randomVideo } from '@/utils/randomVideo'
+import { MediaPlayer, MediaProvider } from '@vidstack/react'
+import MintButton from '@/components/MintButton'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
@@ -17,8 +21,8 @@ export const metadata: Metadata = {
         url: getIpfsGateway(
           'ipfs://bafkreictv3m2xnxqh7yvulrots3w3t3fbnqe32migivqonmxvwhh2qtbuy'
         ),
-       width: 1200,
-          height: 630,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',
@@ -43,9 +47,48 @@ export default async function Page() {
       return { ...video, artist } as IMusicVideo & { artist: IArtist }
     })
   )
+  const featuredVideo = await randomVideo(data)
 
   return (
     <div>
+      <div className={'border-t border-white-13'}>
+        <div
+          className={
+            'my-3 sm:mb-0 relative flex flex-col gap-2 items-center justify-center w-full sm:w-3/5 mx-auto py-8'
+          }
+        >
+          <MediaPlayer
+            title={`${featuredVideo.title}`}
+            src={{
+              src: getIpfsGateway(featuredVideo?.token?.metadata?.animationUrl || ''),
+              type: 'video/mp4',
+            }}
+            controls={true}
+            poster={getIpfsGateway(featuredVideo.image)}
+          >
+            <MediaProvider />
+          </MediaPlayer>
+          <div className={'self-start flex flex-col text-sm'}>
+            <div className={'uppercase'}>
+              <Link href={`/artists/${featuredVideo.artist.slug}`}>
+                {featuredVideo.artist.name}
+              </Link>
+            </div>
+            <div>
+              <Link href={`/videos/${featuredVideo.video.slug}`}>
+                {featuredVideo.title}
+              </Link>
+            </div>
+            <em>{featuredVideo.token.totalMinted} mints</em>
+            <div className={'mt-2'}>
+              <MintButton
+                token={featuredVideo?.token}
+                collection={featuredVideo?.collection}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         className={
           'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto justify-center border-t border-white-13'
