@@ -54,7 +54,7 @@ export default async function Page() {
       <div className={'border-t border-white-13'}>
         <div
           className={
-            'my-3 sm:mb-0 relative flex flex-col gap-2 items-center justify-center w-full sm:w-3/5 mx-auto py-8'
+            'my-3 sm:mb-0 relative flex flex-col gap-2 items-center justify-center w-full sm:w-3/5 mx-auto py-8 min-h-[auto] sm:min-h-[740px]'
           }
         >
           <MediaPlayer
@@ -68,7 +68,7 @@ export default async function Page() {
           >
             <MediaProvider />
           </MediaPlayer>
-          <div className={'self-start flex flex-col text-sm'}>
+          <div className={'self-start flex flex-col text-sm pl-4 sm:pl-0'}>
             <div className={'uppercase'}>
               <Link href={`/artists/${featuredVideo.artist.slug}`}>
                 {featuredVideo.artist.name}
