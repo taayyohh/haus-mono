@@ -43,13 +43,17 @@ const WhatPage = () => {
                 </div>
                 <div
                   className={
-                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase'
+                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase text-white'
                   }
                 >
                   Decentralized Media
                 </div>
               </div>
-              <div className={'border border-white-13 p-4 sm:p-8 w-full max-w-3xl'}>
+              <div
+                className={
+                  'border border-white-13 p-4 sm:p-8 w-full max-w-3xl text-white'
+                }
+              >
                 The audio and image files that power lucid.haus are stored on{' '}
                 <a
                   href="https://ipfs.tech/"
@@ -69,13 +73,17 @@ const WhatPage = () => {
                 </div>
                 <div
                   className={
-                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase'
+                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase text-white'
                   }
                 >
                   Artist Owned Distribution and Control
                 </div>
               </div>
-              <div className={'border border-white-13 p-4 sm:p-8 w-full max-w-3xl'}>
+              <div
+                className={
+                  'border border-white-13 p-4 sm:p-8 w-full max-w-3xl text-white'
+                }
+              >
                 Every song and video is an{' '}
                 <a
                   href={
@@ -135,13 +143,17 @@ const WhatPage = () => {
                 </div>
                 <div
                   className={
-                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase'
+                    'text-2xl sm:text-6xl w-full sm:w-[800px] font-bold uppercase text-white'
                   }
                 >
                   Online {'=>'} Onchain
                 </div>
               </div>
-              <div className={'border border-white-13 p-4 sm:p-8 w-full max-w-3xl'}>
+              <div
+                className={
+                  'border border-white-13 p-4 sm:p-8 w-full max-w-3xl text-white'
+                }
+              >
                 We believe in the power of blockchains, specifically Ethereum and its
                 ecosystem, as a promising solution to adequately and equitably value music
                 and pay artists!
