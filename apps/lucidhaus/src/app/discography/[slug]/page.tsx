@@ -3,10 +3,9 @@ import { fetchAlbum } from '@/modules/albums/utils/fetchAlbum'
 import { onchainAlbumFetch } from '@/modules/albums/utils/onchainAlbumFetch'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-import { useMemo } from 'react'
 import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
 import { fetchCursorDataOnServer } from '@/hooks/fetchCursorDataOnServer'
-import { MintCommentSchema } from '@/modules/comments/MintCommentSchema'
+import { MintComment, MintCommentSchema } from '@/modules/comments/MintCommentSchema'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,13 +18,25 @@ export default async function Page(context: any) {
     schema: MintCommentSchema,
   })
 
+  const filteredComments = comments.reduce((acc, current) => {
+    const isDuplicate = acc.some(
+      (item) =>
+        item.transaction_info.transaction_hash ===
+        current.transaction_info.transaction_hash
+    )
+    if (!isDuplicate) {
+      acc.push(current)
+    }
+    return acc
+  }, [] as MintComment[])
+
   return (
     <AlbumPage
       album={album}
       collection={collection}
       tokens={tokens}
       artist={artist}
-      comments={comments}
+      comments={filteredComments}
       commentTotal={total}
     />
   )
