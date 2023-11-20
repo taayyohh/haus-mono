@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation'
 
 const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   const router = useRouter()
-  const { login, logout, ready, authenticated, user } = usePrivy()
+  const { login, logout, ready, authenticated, user, exportWallet } = usePrivy()
   const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
   const { data: balance } = useBalance({
     address: activeWallet?.address as Address,
@@ -48,6 +48,8 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   }, [ready, authenticated])
 
   if (!ready || !authenticated) return null
+
+  console.log('u', user)
 
   return (
     <div className={'flex flex-col'}>
@@ -91,6 +93,23 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
         </div>
       )}
+
+      {wallet?.walletClientType === 'privy' && (
+        <div className={'flex flex-col py-2'}>
+          <label className={'text-xs font-bold uppercase pb-2'}>Export Wallet</label>
+          <div className={'flex flex-col gap-2'}>
+            <button
+              onClick={exportWallet}
+              className={
+                'flex w-full self-start items-center justify-center rounded py-3 px-6 bg-[#1b1b1b] text-white border border-white-13 hover:bg-[#111]'
+              }
+            >
+              Export
+            </button>
+          </div>
+        </div>
+      )}
+
       {onramp && stripeOnrampPromise && (
         <div className={'flex flex-col'}>
           <div className={'uppercase text-sm border-t pt-2 mt-8 mb-4 border-white-13'}>
