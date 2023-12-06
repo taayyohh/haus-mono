@@ -21,13 +21,17 @@ export default function BlogCard({
   return (
     <div
       className={
-        'flex flex-col items-center justify-center border-b pb-4 pb-4 border-white-13 h-full'
+        'flex flex-col items-center justify-center mb-4 pb-4 h-full'
       }
     >
       <div className={'relative flex flex-col w-full h-full rounded overflow-hidden'}>
         <div className={'flex flex-col text-sm mb-4 text-white'}>
-          <div className={'italic'}>{post.title}</div>
-          {post.publishedDate && <DateFormatter date={new Date(post.publishedDate)} />}
+          <div className={'italic'}>{token.metadata?.name}</div>
+          {post.publishedDate && (
+            <DateFormatter
+              date={new Date(Number(token.salesStrategies[0].fixedPrice?.saleStart) * 1000)}
+            />
+          )}
         </div>
         <div className={'mb-6 sm:mb-0 relative flex h-full items-center justify-center'}>
           <MediaPlayer
@@ -37,7 +41,7 @@ export default function BlogCard({
               type: 'video/mp4',
             }}
             controls={true}
-            poster={getIpfsGateway(post.thumbnailUri!)}
+            poster={getIpfsGateway(token.metadata?.image || '')}
           >
             <MediaProvider />
           </MediaPlayer>

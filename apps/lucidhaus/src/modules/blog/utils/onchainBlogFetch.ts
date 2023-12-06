@@ -31,7 +31,7 @@ export async function onchainBlogFetch(blogPost: IBlogPost) {
     perPage: 20,
     offset: 0,
     orderBy: ZoraCreateToken_OrderBy.Id,
-    orderDirection: OrderDirection.Asc,
+    orderDirection: OrderDirection.Desc,
   })
 
   const { data: artist } = await fetchArtist(blogPost.primaryArtist)

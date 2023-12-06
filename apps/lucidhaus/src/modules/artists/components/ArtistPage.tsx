@@ -88,14 +88,16 @@ const ArtistPage = ({
                   </Tab>
                   {!!tokens.length ? (
                     <Tab label="Blog">
-                      {tokens.map((token) => (
-                        <BlogCard
-                          key={token.tokenId}
-                          post={post}
-                          token={token}
-                          collection={collection}
-                        />
-                      ))}
+                      <div className={'grid grid-cols-1 sm:grid-cols-2 gap-4'}>
+                        {tokens.map((token) => (
+                          <BlogCard
+                            key={token.tokenId}
+                            post={post}
+                            token={token}
+                            collection={collection}
+                          />
+                        ))}
+                      </div>
                     </Tab>
                   ) : (
                     <></>

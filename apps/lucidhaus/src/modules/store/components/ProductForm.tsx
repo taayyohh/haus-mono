@@ -6,9 +6,16 @@ import Notification from '@/components/Notification'
 import SingleImageUpload from '@/components/SingleImageUpload'
 import { stripe } from '@/stripe/stripe-sdk'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import Input from '@/components/form/Input'
+import TextArea from '@/components/form/TexArea'
 
 interface ProductFormProps {
   // Add any additional props for the component here
+}
+
+interface StockItem {
+  size: string
+  quantity: number
 }
 
 export interface ProductFormData {
@@ -19,6 +26,8 @@ export interface ProductFormData {
   category: string
   imageUri: string
   stripeId: string
+  artists: string[]
+  stock: StockItem[]
 }
 
 const validationSchema = Yup.object().shape({
@@ -40,6 +49,8 @@ const ProductForm: React.FC<ProductFormProps> = () => {
     category: '',
     imageUri: '',
     stripeId: '',
+    artists: [],
+    stock: [],
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [errorMessage, setErrorMessage] = useState('')
@@ -80,6 +91,18 @@ const ProductForm: React.FC<ProductFormProps> = () => {
         ...formData,
         stripeId: stripeProduct.id,
       }
+
+      const stockItemSchema = Yup.object().shape({
+        size: Yup.string().oneOf(['XS', 'S', 'M', 'L', 'XL', 'XXL']).required(),
+        quantity: Yup.number().min(0).required(),
+      })
+
+      const validationSchema = Yup.object().shape({
+        // ...existing fields...
+        artists: Yup.array(Yup.string()).optional(),
+        stock: Yup.array(stockItemSchema).optional(),
+      })
+
       await validationSchema.validate(storedProduct, { abortEarly: false })
 
       const response = await fetch('/api/products', {
@@ -123,6 +146,38 @@ const ProductForm: React.FC<ProductFormProps> = () => {
   }
 
   const { name, price, quantity, description, category, imageUri } = formData
+  console.log('FOR', formData)
+
+  const handleArtistsChange = (selectedArtists: string[]) => {
+    setFormData((prev) => ({ ...prev, artists: selectedArtists }))
+  }
+
+  const handleAddStockItem = () => {
+    setFormData((prev) => ({
+      ...prev,
+      stock: [...prev.stock, { size: '', quantity: 0 }],
+    }))
+  }
+
+  const handleRemoveStockItem = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      stock: prev.stock.filter((_, idx) => idx !== index),
+    }))
+  }
+
+  const handleStockItemChange = (
+    index: number,
+    field: keyof StockItem,
+    value: string | number
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      stock: prev.stock.map((item, idx) =>
+        idx === index ? { ...item, [field]: value } : item
+      ),
+    }))
+  }
 
   return (
     <form
@@ -130,97 +185,58 @@ const ProductForm: React.FC<ProductFormProps> = () => {
       className="mt-12 px-6 pt-8 pb-20 flex flex-col space-y-4 overflow-y-scroll text-white"
     >
       <h2 className="text-right mb-8 border-b pb-2">Create Product</h2>
-      <div className="flex flex-col space-y-1">
-        <SingleImageUpload handleChange={setFormData} name="imageUri" value={imageUri} />
-        <label htmlFor="name" className="text-xs font-medium uppercase">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.name ? 'border-red-500' : 'border-gray-300'
-          }`}
-        />
-        {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
-      </div>
+      <SingleImageUpload handleChange={setFormData} name="imageUri" value={imageUri} />
 
-      <div className="flex flex-col space-y-1">
-        <label htmlFor="price" className="text-xs font-medium uppercase">
-          Price
-        </label>
-        <input
-          type="number"
-          id="price"
-          name="price"
-          value={price}
-          onChange={handleChange}
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.price ? 'border-red-500' : 'border-gray-300'
-          }`}
-        />
-        {errors.price && <span className="text-red-500 text-sm">{errors.price}</span>}
-      </div>
+      <Input
+        id="name"
+        name="name"
+        type="text"
+        value={name}
+        error={errors.name}
+        onChange={handleChange}
+        label="Name"
+      />
 
-      <div className="flex flex-col space-y-1">
-        <label htmlFor="quantity" className="text-xs font-medium uppercase">
-          Quantity
-        </label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          value={quantity}
-          onChange={handleChange}
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.quantity ? 'border-red-500' : 'border-gray-300'
-          }`}
-        />
-        {errors.quantity && (
-          <span className="text-red-500 text-sm">{errors.quantity}</span>
-        )}
-      </div>
+      <Input
+        id="price"
+        name="price"
+        type="number"
+        value={price}
+        error={errors.price}
+        onChange={handleChange}
+        label="Price"
+      />
 
-      <div className="flex flex-col space-y-1">
-        <label htmlFor="description" className="text-xs font-medium uppercase">
-          Description
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          value={description}
-          onChange={handleChange}
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.description ? 'border-red-500' : 'border-gray-300'
-          }`}
-        />
-        {errors.description && (
-          <span className="text-red-500 text-sm">{errors.description}</span>
-        )}
-      </div>
+      <Input
+        id="quantity"
+        name="quantity"
+        type="number"
+        value={quantity}
+        error={errors.quantity}
+        onChange={handleChange}
+        label="Quantity"
+      />
 
-      <div className="flex flex-col space-y-1">
-        <label htmlFor="category" className="text-xs font-medium uppercase">
-          Category
-        </label>
-        <input
-          type="text"
-          id="category"
-          name="category"
-          value={category}
-          onChange={handleChange}
-          className={`p-3 border-b bg-transparent focus:outline-none ${
-            errors.category ? 'border-red-500' : 'border-gray-300'
-          }`}
-        />
-        {errors.category && (
-          <span className="text-red-500 text-sm">{errors.category}</span>
-        )}
-      </div>
+      <TextArea
+        id="description"
+        name="description"
+        value={description}
+        error={errors.description}
+        onChange={handleChange}
+        label="Description"
+      />
 
+      <Input
+        id="category"
+        name="category"
+        type="text"
+        value={category}
+        error={errors.category}
+        onChange={handleChange}
+        label="Category"
+      />
+
+      {/* Slug field - consider if this should be a readonly FormInput or keep as is */}
       <div className="flex flex-col space-y-1">
         <label htmlFor="slug" className="text-xs font-medium uppercase">
           Slug
@@ -236,6 +252,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
           }`}
         />
       </div>
+
       <button
         type="submit"
         className="p-3 mt-8 bg-gray-50 hover:bg-gray-200 text-xs text-black uppercase font-bold focus:outline-none"

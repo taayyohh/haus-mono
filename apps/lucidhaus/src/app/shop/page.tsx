@@ -46,7 +46,9 @@ export default async function Page(context: any) {
       >
         Shop
       </div>
-      <div className={'bg-[#1b1b1b] h-[450px] w-full'}></div>
+      <div className={'bg-[#1b1b1b] h-[450px] w-full'}>
+
+      </div>
       <div className={'uppercase text-white py-3 px-4 sm:px-8'}>Latest Releases</div>
       <div
         className={

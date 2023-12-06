@@ -4,8 +4,10 @@ import { IArtist } from '@/models/Artist'
 import mongoose from 'mongoose'
 import slugify from 'slugify'
 
+type StockSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
+
 export interface Stock {
-  size: string // 'XS', 'S', 'M', 'L', 'XL', 'XXL'
+  size: StockSize
   quantity: number
 }
 
@@ -18,8 +20,8 @@ export interface IProduct extends Document {
   stripeId: string
   slug: string
   artists: IArtist[] | string[]
-  quantity?: number // For products without sizes
-  stock?: Stock[] // For products with sizes
+  quantity?: number
+  stock?: Stock[]
 }
 
 const stockSchema = new Schema({

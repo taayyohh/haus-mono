@@ -6,8 +6,18 @@ import Product, { IProduct } from '@/models/Product'
 
 export const POST = connectDb(
   protect(async (req: AuthenticatedRequest) => {
-    const { name, price, quantity, description, category, imageUri, stripeId } =
-      await req.json()
+    const {
+      name,
+      price,
+      quantity,
+      description,
+      category,
+      imageUri,
+      stripeId,
+      artists,
+      stock,
+    } = await req.json()
+
     try {
       const product = new Product({
         name,
@@ -17,6 +27,8 @@ export const POST = connectDb(
         category,
         imageUri,
         stripeId,
+        artists,
+        stock,
       })
       await product.save()
       return NextResponse.json(

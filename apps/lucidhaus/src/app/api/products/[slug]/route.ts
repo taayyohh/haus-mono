@@ -22,20 +22,42 @@ export const GET = connectDb(async (req: AuthenticatedRequest) => {
 export const PUT = connectDb(
   protect(async (req: AuthenticatedRequest) => {
     const productId = req.nextUrl.searchParams.get('id')
-    const { name, price } = await req.json()
+
+    // Retrieve all product fields from the request body
+    const {
+      name,
+      price,
+      description,
+      category,
+      imageUri,
+      stripeId,
+      artists,
+      quantity,
+      stock,
+    } = await req.json()
 
     try {
-      const product = await Product.findByIdAndUpdate(
-        productId,
-        { name, price },
-        { new: true }
-      )
+      const updateData = {
+        ...(name && { name }),
+        ...(price && { price }),
+        ...(description && { description }),
+        ...(category && { category }),
+        ...(imageUri && { imageUri }),
+        ...(stripeId && { stripeId }),
+        ...(artists && { artists }),
+        ...(quantity !== undefined && { quantity }), // Check for undefined as quantity can be 0
+        ...(stock && { stock }),
+      }
+
+      const product = await Product.findByIdAndUpdate(productId, updateData, {
+        new: true,
+      })
 
       if (!product) {
         return NextResponse.json({ error: 'Product not found' }, { status: 404 })
       }
 
-      return NextResponse.json(product , { status: 200 })
+      return NextResponse.json(product, { status: 200 })
     } catch (err) {
       return NextResponse.json({ error: 'Error updating product' }, { status: 500 })
     }
