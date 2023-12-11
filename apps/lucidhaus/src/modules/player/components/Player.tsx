@@ -3,141 +3,85 @@
 import Link from 'next/link'
 import { CurrentTime } from './CurrentTime'
 import slugify from 'slugify'
-import Play from '../../../../public/icons/play.svg'
-import Pause from '../../../../public/icons/pause.svg'
-import Next from '../../../../public/icons/nextStop.svg'
-import Prev from '../../../../public/icons/backStep.svg'
-import React from 'react'
-import { PlayerState, PlayerTrack, QueueItem, usePlayerStore } from '@/store/player'
-import { hhmmss } from '@/modules/player/utils'
+import Play from 'public/icons/play.svg'
+import Pause from 'public/icons/pause.svg'
+import Next from 'public/icons/nextStop.svg'
+import Prev from 'public/icons/backStep.svg'
+import React, { useEffect } from 'react'
 import MintButton from '@/components/MintButton'
 import { useResponsive } from '@/hooks/useResponsive'
+import { player } from '@/store/mobxPlayer'
+import { observer } from 'mobx-react'
 
-export const Player = () => {
+export const Player = observer(() => {
   const { isMobile } = useResponsive()
   const audioRef = React.useRef<null | HTMLAudioElement>(null)
-  const {
-    media,
-    setCurrentMedia,
-    setCurrentTime,
-    isPlaying,
-    setIsPlaying,
-    setDuration,
-    queue,
-    currentPosition,
-    setCurrentPosition,
-    queuedItem,
-  } = usePlayerStore((state: PlayerState) => state)
 
-  const handleQueueAndPlay = React.useCallback(
-    async (track: PlayerTrack) => {
-      if (!audioRef.current) return
-
-      setCurrentMedia(audioRef.current)
-      try {
-        await handlePlay()
-      } catch (error) {
-        setIsPlaying(false)
-        console.log('err', error)
-      }
-    },
-    [audioRef, media, setCurrentMedia]
-  )
-
-  const handleQueueFront = React.useCallback(async () => {
+  const handlePlay = () => {
     if (!audioRef.current) return
 
-    setCurrentMedia(audioRef.current)
-  }, [audioRef, media, setCurrentMedia])
+    player.play()
+  }
 
-  const handleQueueItem = (queuedItem: QueueItem) => {
-    switch (queuedItem.type) {
-      case 'play':
-        return handleQueueAndPlay(queuedItem.track)
-      case 'front':
-        return handleQueueFront()
-      case 'back':
-        return null
+  const handlePause = () => {
+    if (!audioRef.current) return
+    player.pause()
+  }
+  const handlePrev = () => {
+    handlePause()
+    player.prev()
+    try {
+      handlePlay()
+    } catch (error) {
+      console.error('Playback failed after track end:', error)
     }
   }
-
-  React.useEffect(() => {
-    if (queue.length && !!queuedItem) handleQueueItem(queuedItem)
-  }, [queue, queuedItem])
-
-  const handlePlay = async () => {
-    await media?.play()
-    setIsPlaying(true)
-  }
-
-  const handlePause = async () => {
-    media?.pause()
-    setIsPlaying(false)
-  }
-
-  const handleNext = async () => {
-    media?.pause()
-    setIsPlaying(false)
-    setCurrentPosition(queue.length - 1 > currentPosition ? currentPosition + 1 : 0)
-  }
-
-  const handlePrev = async () => {
-    media?.pause()
-    setIsPlaying(false)
-    setCurrentPosition(currentPosition > 1 ? currentPosition - 1 : queue.length - 1)
+  const handleNext = () => {
+    handlePause()
+    player.next()
+    try {
+      handlePlay()
+    } catch (error) {
+      console.error('Playback failed after track end:', error)
+    }
   }
 
   const handleTimeUpdate = () => {
-    // @ts-ignore
-    const time = hhmmss(Math.floor(media.currentTime).toString())
-    setCurrentTime(time)
+    if (!audioRef.current) return
+    player.setCurrentTime(audioRef.current.currentTime)
   }
-
-  const handleEnded = () => {
-    setIsPlaying(false)
-  }
-
   const handleOnDurationChange = () => {
-    // @ts-ignore
-    setDuration(hhmmss(media?.duration.toString()))
+    if (!audioRef.current) return
+
+    player.setDuration(player?.audioElement?.duration)
+  }
+  const handleEnded = () => {
+    if (player.currentPosition === player.queue.length - 1) {
+      return
+    }
+
+    if (!audioRef.current) return
+    handleNext()
   }
 
-  React.useEffect(() => {
-    const audioElement = audioRef.current
+  useEffect(() => {
+    if (!audioRef.current) return
+    player.setAudioElement(audioRef.current)
+  }, [audioRef.current])
 
-    if (!audioElement) return
+  useEffect(() => {
+    if (!player?.audioElement) return
 
     const handleAudioEnded = async () => {
-      const { queue } = usePlayerStore.getState()
-
-      if (queue.length === 1) {
-        // If there's only one song in the queue, stop the playback
-        audioElement.pause()
-        setIsPlaying(false)
-        return
-      }
-
-      const nextItem = queue[0]
-      audioElement.src = nextItem.track.audio
-      audioElement.load()
-      try {
-        await audioElement.play()
-        usePlayerStore.setState({
-          queue: queue.slice(1),
-          queuedItem: nextItem,
-        })
-      } catch (error) {
-        console.error('Playback failed after track end:', error)
-      }
+      handleNext()
     }
 
-    audioElement.addEventListener('ended', handleAudioEnded)
+    player?.audioElement.addEventListener('ended', handleAudioEnded)
 
-    // Cleanup function to remove event listeners when component unmounts.
     return () => {
-      audioElement.removeEventListener('ended', handleAudioEnded)
+      player?.audioElement?.removeEventListener('ended', handleAudioEnded)
     }
-  }, []) // Dependencies array is empty because the logic doesn't depend on any external values.
+  }, [])
 
   return (
     <div className="fixed bottom-2 right-0 flex w-full items-center justify-between px-4">
@@ -146,28 +90,28 @@ export const Player = () => {
           <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-4 shadow max-w-[200px] overflow-hidden whitespace-nowrap">
             <button
               type="button"
-              onClick={queue.length > 0 ? () => handlePrev() : () => {}}
+              onClick={player.queue.length > 1 ? () => handlePrev() : () => {}}
             >
               <Prev fill={'#FFF'} />
             </button>
-            {(isPlaying && (
+            {(player.isPlaying && (
               <button
                 type="button"
-                onClick={queue.length > 0 ? () => handlePause() : () => {}}
+                onClick={player.queue.length > 0 ? () => handlePause() : () => {}}
               >
                 <Pause fill={'#FFF'} />
               </button>
             )) || (
               <button
                 type="button"
-                onClick={queue.length > 0 ? () => handlePlay() : () => {}}
+                onClick={player.queue.length > 0 ? () => handlePlay() : () => {}}
               >
                 <Play fill={'#FFF'} />
               </button>
             )}
             <button
               type="button"
-              onClick={queue.length > 0 ? () => handleNext() : () => {}}
+              onClick={player.queue.length > 1 ? () => handleNext() : () => {}}
             >
               <Next fill={'#FFF'} />
             </button>
@@ -175,7 +119,7 @@ export const Player = () => {
           <audio
             crossOrigin="anonymous"
             preload={'auto'}
-            src={queue[currentPosition]?.track.audio}
+            src={player.queue[player.currentPosition]?.audio}
             ref={audioRef}
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleEnded}
@@ -183,30 +127,32 @@ export const Player = () => {
           />
         </div>
 
-        {queue[currentPosition]?.track.title && (
+        {player.queue[player.currentPosition]?.title && (
           <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 max-w-[150px] sm:max-w-[200px] overflow-hidden whitespace-nowrap">
-            <Link href={`/discography/${queue[currentPosition]?.track.album.slug}`}>
-              <div>{queue[currentPosition]?.track.title}</div>
+            <Link
+              href={`/discography/${player.queue[player.currentPosition]?.album.slug}`}
+            >
+              <div>{player.queue[player.currentPosition]?.title}</div>
             </Link>
           </div>
         )}
-        {!isMobile && queue[currentPosition]?.track.artist && (
+        {!isMobile && player.queue[player.currentPosition]?.artist && (
           <div className="inline-flex self-start items-center bg-[#1b1b1b] text-white border border-white-13 rounded py-2 px-4 uppercase text-sm h-10 gap-2 max-w-[200px] overflow-hidden whitespace-nowrap">
             <Link
               href={`/artists/${slugify(
-                queue[currentPosition]?.track.artist
+                player.queue[player.currentPosition]?.artist
               ).toLowerCase()}`}
             >
-              {queue[currentPosition]?.track.artist}
+              {player.queue[player.currentPosition]?.artist}
             </Link>
           </div>
         )}
 
-        {queue[currentPosition]?.track.token &&
-          queue[currentPosition]?.track.collection && (
+        {player.queue[player.currentPosition]?.token &&
+          player.queue[player.currentPosition]?.collection && (
             <MintButton
-              token={queue[currentPosition]?.track.token}
-              collection={queue[currentPosition]?.track.collection}
+              token={player.queue[player.currentPosition]?.token}
+              collection={player.queue[player.currentPosition]?.collection}
               clean={true}
             />
           )}
@@ -215,4 +161,4 @@ export const Player = () => {
       <CurrentTime />
     </div>
   )
-}
+})

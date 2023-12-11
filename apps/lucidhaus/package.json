@@ -42,6 +42,8 @@
     "keen-slider": "^6.8.6",
     "media-icons": "^1.0.0",
     "micro": "^10.0.1",
+    "mobx": "^6.12.0",
+    "mobx-react": "^9.1.0",
     "mongoose": "^7.2.3",
     "next": "13.4.5",
     "nft.storage": "^7.1.0",
