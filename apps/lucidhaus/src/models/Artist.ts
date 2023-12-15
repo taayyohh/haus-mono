@@ -20,7 +20,6 @@ export interface IArtist extends Document {
     walletAddresses: string[] // Ethereum wallet addresses, format as `0x${string}`
     ensName: string // ENS (Ethereum Name Service) name for easy address lookup
   }
-  // ... additional fields as needed
 }
 
 const artistSchema = new Schema<IArtist>({

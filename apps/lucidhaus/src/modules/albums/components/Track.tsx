@@ -4,7 +4,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { IArtist } from '@/models/Artist'
 import { IAlbum } from '@/models/Album'
 import { useMemo } from 'react'
-import { player } from '@/store/mobxPlayer'
+import { player } from '@/store/player'
 import { observer } from 'mobx-react'
 
 const Track = observer(
@@ -21,6 +21,8 @@ const Track = observer(
     collection: ZoraCreateContractQuery['zoraCreateContract']
     i: number
   }) => {
+    const { queue, isPlaying, play, pause, queueFront, currentPosition, audioElement } =
+      player
     const handleTrackClick = () => {
       const currentTrack = {
         artist: artist.name || '',
@@ -34,25 +36,21 @@ const Track = observer(
       }
 
       // If the same track is being clicked and it's currently playing, pause it
-      if (
-        player.queue[player.currentPosition]?.audio === currentTrack.audio &&
-        player.isPlaying
-      ) {
-        console.log('pause')
-        player.pause()
+      if (queue[currentPosition]?.audio === currentTrack.audio && isPlaying) {
+        pause()
       } else {
-        if (player.isPlaying) {
-          player.pause()
+        if (isPlaying) {
+          pause()
         }
 
-        player.queueFront([currentTrack])
-        player.play()
+        queueFront([currentTrack])
+        play()
       }
     }
 
     const isActiveTrack = useMemo(() => {
-      return player.queue[player.currentPosition]?.title === token?.metadata?.name
-    }, [token?.metadata?.name, player.isPlaying, player.audioElement, player.queue])
+      return queue[currentPosition]?.title === token?.metadata?.name
+    }, [token?.metadata?.name, isPlaying, audioElement, queue, currentPosition])
 
     return (
       <li

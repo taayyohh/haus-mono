@@ -15,7 +15,7 @@ import Play from '../../../../public/icons/play.svg'
 import { convertToPlayerTracks } from '@/utils/convertToPlayerTracks'
 import { MintComment, MintCommentSchema } from '@/modules/comments/MintCommentSchema'
 import Comments from '@/modules/comments/Comments'
-import { player } from '@/store/mobxPlayer'
+import { player } from '@/store/player'
 import { observer } from 'mobx-react'
 
 const AlbumPage = observer(
@@ -34,6 +34,9 @@ const AlbumPage = observer(
     comments: MintComment[]
     commentTotal: number
   }) => {
+    const { isPlaying, pause, queueFront, currentPosition, play, setCurrentPosition } =
+      player
+
     const { isMobile } = useResponsive()
     const currentTime = Math.floor(Date.now() / 1000)
     const sortedTokens = useMemo(() => {
@@ -52,12 +55,12 @@ const AlbumPage = observer(
     }, [tokens])
 
     const handlePlayAlbum = () => {
-      if (!tokens) return
+      if (!sortedTokens) return
 
-      if (player.isPlaying) player.pause()
-      player.queueFront(convertToPlayerTracks(tokens, collection, album, artist))
-      player.currentPosition = 0
-      player.play()
+      if (isPlaying) pause()
+      queueFront(convertToPlayerTracks(sortedTokens, collection, album, artist))
+      setCurrentPosition(0)
+      play()
     }
 
     const totalMints = useMemo(() => {

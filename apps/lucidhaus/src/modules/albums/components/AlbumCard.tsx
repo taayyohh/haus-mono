@@ -8,14 +8,18 @@ import { IArtist } from '@/models/Artist'
 export default function AlbumCard({
   album,
   type = 'dark',
+  link
 }: {
   album: IAlbum & { artist: IArtist }
+  link: string,
   type?: 'light' | 'dark'
 }) {
+
+
   return (
     <>
       <Link
-        href={`/discography/${album.slug}`}
+        href={link}
         key={album.slug}
         className={`flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 hover:bg-[#111] hover:text-white ${
           type === 'dark' ? 'text-white border-white-13' : 'text-black border'

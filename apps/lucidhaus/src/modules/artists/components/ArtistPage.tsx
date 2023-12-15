@@ -115,6 +115,7 @@ const ArtistPage = ({
                       <div key={album._id}>
                         <AlbumCard
                           album={{ ...album, artist } as IAlbum & { artist: IArtist }}
+                          link={`/discography/${album.slug}`}
                         />
                       </div>
                     ))}

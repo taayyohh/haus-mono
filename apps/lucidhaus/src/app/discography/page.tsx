@@ -17,8 +17,8 @@ export const metadata: Metadata = {
         url: getIpfsGateway(
           'ipfs://bafkreictv3m2xnxqh7yvulrots3w3t3fbnqe32migivqonmxvwhh2qtbuy'
         ),
-       width: 1200,
-          height: 630,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',
@@ -51,7 +51,10 @@ export default async function Page() {
         'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8 w-full mx-auto border-t border-white-13'
       }
     >
-      {albums && albums.map((album) => <AlbumCard album={album} key={album._id} />)}
+      {albums &&
+        albums.map((album) => (
+          <AlbumCard album={album} key={album._id} link={`/discography/${album.slug}`} />
+        ))}
     </div>
   )
 }

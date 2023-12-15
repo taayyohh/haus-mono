@@ -8,9 +8,12 @@ import { fetchAlbums } from '@/modules/albums/utils/fetchAlbums'
 import AsyncSelect from 'react-select/async'
 import { IAlbum } from '@/models/Album'
 import { MultiValue } from 'react-select'
+import artist, { IArtist } from '@/models/Artist'
+import { ArtistSchemaType } from '@/modules/artists/schema'
 
 interface ArtistEditFormProps {
   slug: string
+  artist: ArtistSchemaType
 }
 
 interface FormData {
@@ -49,24 +52,8 @@ const validationSchema = Yup.object().shape({
   }),
 })
 
-const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    bio: '',
-    albums: [],
-    heroImage: '',
-    socialLinks: {
-      twitter: '',
-      instagram: '',
-      zora: '',
-      futureTape: '',
-      warpcast: '',
-    },
-    ethereum: {
-      walletAddresses: [],
-      ensName: '',
-    },
-  })
+const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug, artist }) => {
+  const [formData, setFormData] = useState<ArtistSchemaType>(artist)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [errorMessage, setErrorMessage] = useState('')
   const [showNotification, setShowNotification] = useState(false)
@@ -160,13 +147,6 @@ const ArtistEditForm: React.FC<ArtistEditFormProps> = ({ slug }) => {
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const slugify = (text: string) => {
-    return text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)+/g, '')
   }
 
   const { name, heroImage, bio, socialLinks, ethereum } = formData

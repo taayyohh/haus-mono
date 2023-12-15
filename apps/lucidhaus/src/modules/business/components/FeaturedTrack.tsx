@@ -9,7 +9,7 @@ import Play from '../../../../public/icons/play.svg'
 import Pause from '../../../../public/icons/pause.svg'
 import MintButton from '@/components/MintButton'
 import { useResponsive } from '@/hooks/useResponsive'
-import { player, PlayerTrack } from '@/store/mobxPlayer'
+import { player, PlayerTrack } from '@/store/player'
 import { observer } from 'mobx-react'
 
 export const FeaturedTrack: React.FC<{ track: PlayerTrack }> = observer(({ track }) => {

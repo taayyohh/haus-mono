@@ -1,8 +1,7 @@
-import { create } from 'zustand'
+import { makeAutoObservable } from 'mobx'
+import { hhmmss } from '@/modules/player/utils'
 import { IAlbum } from '@/models/Album'
 import { ZoraCreateContractQuery, ZoraCreateTokenQuery } from '@/graphql/sdk.generated'
-
-export type PlayerQueueType = 'play' | 'front' | 'back'
 
 export interface PlayerTrack {
   artist: string
@@ -15,64 +14,156 @@ export interface PlayerTrack {
   token: ZoraCreateTokenQuery['zoraCreateTokens'][0]
 }
 
-export interface QueueItem {
-  track: PlayerTrack
-  type: PlayerQueueType
-}
+/**
+ * Class representing the state and functionality of a music player.
+ */
+class PlayerStore {
+  /**
+   * Current playback time of the audio track.
+   */
+  currentTime: string = ''
 
-export interface PlayerState {
-  queuedItem: QueueItem | null
-  addToQueue: (track: PlayerTrack, type: PlayerQueueType) => void
-  addMultipleToQueue: (tracks: PlayerTrack[], type: PlayerQueueType) => void
-  media: HTMLAudioElement | undefined
-  setCurrentMedia: (media: HTMLAudioElement) => void
-  isPlaying: boolean
-  setIsPlaying: (is: boolean) => void
-  duration: string
-  setDuration: (duration: string) => void
-  currentTime: string
-  setCurrentTime: (duration: string) => void
-  queue: QueueItem[]
-  clearQueueItem: () => void
-  currentPosition: number
-  setCurrentPosition: (position: number) => void
-}
+  /**
+   * Current position or index in the queue of tracks.
+   */
+  currentPosition: number = 0
 
-export const usePlayerStore = create<PlayerState>((set) => ({
-  isPlaying: false,
-  setIsPlaying: (is: boolean) => {
-    set({
-      isPlaying: is,
-    })
-  },
-  addToQueue: (track: PlayerTrack, type: PlayerQueueType) => {
-    set((state) => ({
-      queue: [{ track, type }, ...state.queue],
-      queuedItem: { track, type },
-    }))
-  },
-  addMultipleToQueue: (tracks: PlayerTrack[], type: PlayerQueueType) => {
-    const newQueueItems = tracks.map((track) => ({ track, type }))
-    set((state) => {
-      const combinedQueue = [...newQueueItems, ...state.queue]
+  /**
+   * Duration of the current track.
+   */
+  duration: string = ''
 
-      return {
-        queue: combinedQueue,
-        queuedItem: newQueueItems[0],
+  /**
+   * Audio element used for playing music.
+   */
+  audioElement: HTMLAudioElement | undefined = undefined
+
+  /**
+   * Indicates whether the music is currently playing.
+   */
+  isPlaying = false
+
+  /**
+   * Queue of tracks to be played.
+   */
+  queue: PlayerTrack[] = []
+
+  constructor() {
+    makeAutoObservable(this, {}, { autoBind: true })
+  }
+
+  /**
+   * Sets the audio element for playback.
+   * @param {HTMLAudioElement} audioElement - The audio element.
+   */
+  setAudioElement(audioElement: HTMLAudioElement) {
+    this.audioElement = audioElement
+  }
+
+  /**
+   * Sets the current time of the audio track.
+   * @param {number} currentTime - The current time in seconds.
+   */
+  setCurrentTime(currentTime: number) {
+    this.currentTime = hhmmss(currentTime.toString())
+  }
+
+  /**
+   * Sets the duration of the audio track.
+   * @param {number | undefined} duration - The duration in seconds.
+   */
+  setDuration(duration: number | undefined) {
+    if (!duration) return
+    this.duration = hhmmss(duration.toString())
+  }
+
+  /**
+   * Sets the current position in the queue
+   * @param {number} position - The duration in seconds.
+   */
+  setCurrentPosition(position: number) {
+    if (!position) return
+    this.currentPosition = position
+  }
+
+  /**
+   * Plays the audio track.
+   */
+  play() {
+    if (!this.audioElement) return
+
+    this.audioElement.load() // Load the audio element
+
+    const attemptPlay = () => {
+      this.audioElement
+        ?.play()
+        .then(() => {
+          this.isPlaying = true
+        })
+        .catch((error) => {
+          console.error('Playback failed:', error)
+          this.isPlaying = false
+        })
+    }
+
+    if (this.audioElement.readyState >= 3) {
+      attemptPlay()
+    } else {
+      const handleCanPlay = () => {
+        attemptPlay()
+        this.audioElement?.removeEventListener('canplay', handleCanPlay)
       }
-    })
-  },
-  setCurrentMedia: (media: HTMLAudioElement) => {
-    set({ media })
-  },
-  media: undefined,
-  duration: '',
-  setDuration: (duration: string) => set({ duration }),
-  currentTime: '',
-  setCurrentTime: (currentTime: string) => set({ currentTime }),
-  queue: [],
-  queuedItem: null,
-  clearQueueItem: () => set({ queuedItem: null }),
-  currentPosition: 0,
-  setCurrentPosition: (currentPosition: number) => set({ currentPosition }),
-}))
+      this.audioElement.addEventListener('canplay', handleCanPlay)
+    }
+  }
+
+  /**
+   * Pauses the audio track.
+   */
+  pause() {
+    this.audioElement?.pause()
+    this.isPlaying = false
+  }
+
+  /**
+   * Adds tracks to the end of the queue.
+   * @param {PlayerTrack[]} tracks - An array of tracks to be added.
+   */
+  queueBack(tracks: PlayerTrack[]) {
+    this.queue = [...this.queue, ...tracks]
+  }
+
+  /**
+   * Adds tracks to the front of the queue.
+   * @param {PlayerTrack[]} tracks - An array of tracks to be added.
+   */
+  queueFront(tracks: PlayerTrack[]) {
+    this.queue = [...tracks, ...this.queue]
+  }
+
+  /**
+   * Advances to the next track in the queue.
+   */
+  next() {
+    if (this.currentPosition === this.queue.length - 1) {
+      this.currentPosition = 0
+    } else {
+      this.currentPosition += 1
+    }
+    this.play() // Play next track after updating position
+  }
+
+  /**
+   * Moves to the previous track in the queue.
+   */
+  prev() {
+    if (this.currentPosition === 0) {
+      this.currentPosition = this.queue.length - 1
+    } else {
+      this.currentPosition -= 1
+    }
+    this.play() // Play previous track after updating position
+  }
+}
+
+export const player = new PlayerStore()
