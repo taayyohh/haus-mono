@@ -83,7 +83,10 @@ const VideoPage = ({
           <div className={'uppercase mt-4 py-2'}>
             <div className={'px-4 sm:px-8'}>Off the album</div>
           </div>
-          <AlbumCard album={{ ...album, artist } as IAlbum & { artist: IArtist }} />
+          <AlbumCard
+            album={{ ...album, artist } as IAlbum & { artist: IArtist }}
+            link={`/discography/${album.slug}`}
+          />
         </div>
       )}
 

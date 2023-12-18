@@ -5,5 +5,6 @@ export default async function Page(context: any) {
   const { data: artist } = await fetchArtist(context.params.slug)
   console.log('AR', artist)
 
-  return <ArtistEditForm slug={context.params.slug} artist={artist} />
+  // return <ArtistEditForm slug={context.params.slug} artist={artist} />
+  return null
 }
