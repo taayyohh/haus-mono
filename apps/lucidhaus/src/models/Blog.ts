@@ -1,7 +1,7 @@
-import mongoose, { Schema, model, Document, ObjectId } from 'mongoose'
+import mongoose, { Schema, model, ObjectId } from 'mongoose'
 import slugify from 'slugify'
 
-export interface IBlogPost extends Document {
+export interface IBlogPost {
   title: string
   publishedDate: Date
   description: string
@@ -23,15 +23,13 @@ const blogPostSchema = new Schema<IBlogPost>({
   slug: { type: String, unique: true },
 })
 
-// Pre-save hook to automatically generate the slug based on the title
-blogPostSchema.pre<IBlogPost>('save', function (next) {
+blogPostSchema.pre('save', function (next) {
   if (this.isModified('title')) {
     this.slug = slugify(this.title, { lower: true, remove: /[*+~.()'"!:@]/g })
   }
   next()
 })
 
-// Check if the model is already compiled
-const BlogPost = mongoose.models.BlogPost || model<IBlogPost>('BlogPost', blogPostSchema)
+const BlogPost = model('BlogPost', blogPostSchema)
 
 export default BlogPost

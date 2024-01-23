@@ -1,25 +1,23 @@
-import { Document, model, Schema } from 'mongoose'
-import * as mongoose from 'mongoose'
+import { model, Schema } from 'mongoose'
 import slugify from 'slugify'
-import { IGenre } from '@/models/Genre'
 
-export interface ICategory extends Document {
+export interface ICategory {
   name: string
   slug: string
 }
 
-const categorySchema = new Schema<ICategory>({
+const categorySchema = new Schema({
   name: { type: String, required: true },
   slug: { type: String, unique: true },
 })
 
-categorySchema.pre<ICategory>('save', function (next) {
+categorySchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = slugify(this.name, { lower: true, remove: /[*+~.()'"!:@]/g })
   }
   next()
 })
 
-const Category = mongoose.models.Category || model<ICategory>('Category', categorySchema)
+const Category = model('Category', categorySchema)
 
 export default Category

@@ -49,8 +49,6 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
 
   if (!ready || !authenticated) return null
 
-  console.log('u', user)
-
   return (
     <div className={'flex flex-col'}>
       <div className={'flex w-full items-center justify-center mb-8'}>

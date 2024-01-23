@@ -1,27 +1,27 @@
-import { Document, model, Schema } from 'mongoose'
-import * as mongoose from 'mongoose'
-import slugify from 'slugify' // Ensure the path is correct
+import { model, Schema } from 'mongoose'
+import slugify from 'slugify'
 
-export interface IGenre extends Document {
-  name: string // Name of the genre e.g., Rock, Jazz, etc.
-  slug: string // URL-friendly version of the genre name
-  description?: string // Optional description for the genre
+export interface IGenre {
+  _id: string
+  name: string
+  slug: string
+  description?: string
 }
 
-const genreSchema = new Schema<IGenre>({
+const genreSchema = new Schema({
   name: { type: String, required: true, unique: true },
   slug: { type: String, unique: true },
   description: String,
 })
 
 // Pre-save hook to automatically generate the slug based on the name field
-genreSchema.pre<IGenre>('save', function (next) {
+genreSchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = slugify(this.name, { lower: true, remove: /[*+~.()'"!:@]/g })
   }
   next()
 })
 
-const Genre = mongoose.models.Genre || model<IGenre>('Genre', genreSchema)
+const Genre = model<IGenre>('Genre', genreSchema)
 
 export default Genre

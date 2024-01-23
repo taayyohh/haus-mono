@@ -1,15 +1,15 @@
-import { Document, model, ObjectId, Schema, Types } from 'mongoose'
+import { model, ObjectId, Schema } from 'mongoose'
 import * as mongoose from 'mongoose'
-import slugify from 'slugify' // Adjust path as needed
+import slugify from 'slugify'
 
-export interface IArtist extends Document {
-  name: string // Artist's full name or stage name
+export interface IArtist {
+  _id: string
+  name: string
   slug: string
-  bio: string // Short biography or description
-  albums: ObjectId[] // List of album names/IDs associated with this artist
-  heroImage: string // URL of the artist's primary promotional image
+  bio: string
+  albums: ObjectId[]
+  heroImage: string
   socialLinks: {
-    // Links to various social platforms
     twitter?: string
     instagram?: string
     zora?: string
@@ -17,8 +17,8 @@ export interface IArtist extends Document {
     warpcast?: string
   }
   ethereum: {
-    walletAddresses: string[] // Ethereum wallet addresses, format as `0x${string}`
-    ensName: string // ENS (Ethereum Name Service) name for easy address lookup
+    walletAddresses: string[]
+    ensName: string
   }
 }
 
@@ -39,11 +39,10 @@ const artistSchema = new Schema<IArtist>({
     walletAddresses: [{ type: String, match: /^0x[a-fA-F0-9]{40}$/ }], // Using a regex to ensure valid Ethereum addresses
     ensName: { type: String },
   },
-  // ... additional schema fields as needed
 })
 
 // Pre-save hook to automatically generate the slug based on the name field
-artistSchema.pre<IArtist>('save', function (next) {
+artistSchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = slugify(this.name, { lower: true, remove: /[*+~.()'"!:@]/g })
   }

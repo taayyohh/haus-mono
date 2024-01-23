@@ -1,7 +1,7 @@
-import mongoose, { Schema, model, Document, Types, ObjectId } from 'mongoose'
+import { Schema, model, ObjectId } from 'mongoose'
 import slugify from 'slugify'
 
-export interface IMusicVideo extends Document {
+export interface IMusicVideo {
   title: string
   releaseDate: Date
   song: string
@@ -23,7 +23,7 @@ export interface IMusicVideo extends Document {
   slug: string
 }
 
-const musicVideoSchema = new Schema<IMusicVideo>({
+const musicVideoSchema = new Schema({
   title: { type: String, required: true },
   releaseDate: { type: Date, required: true },
   song: { type: String },
@@ -45,16 +45,13 @@ const musicVideoSchema = new Schema<IMusicVideo>({
   slug: { type: String, unique: true },
 })
 
-// Pre-save hook to automatically generate the slug based on the title and primaryArtists fields
-musicVideoSchema.pre<IMusicVideo>('save', function (next) {
+musicVideoSchema.pre('save', function (next) {
   if (this.isModified('title') || this.isModified('primaryArtists')) {
-    this.slug = slugify(this.title, { lower: true, remove: /[*+~.()'"!:@]/g})
+    this.slug = slugify(this.title, { lower: true, remove: /[*+~.()'"!:@]/g })
   }
   next()
 })
 
-// Check if the model is already compiled
-const MusicVideo =
-  mongoose.models.MusicVideo || model<IMusicVideo>('MusicVideo', musicVideoSchema)
+const MusicVideo = model<IMusicVideo>('MusicVideo', musicVideoSchema)
 
 export default MusicVideo

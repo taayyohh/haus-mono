@@ -1,7 +1,8 @@
-import mongoose, { Schema, model, Document, Types, ObjectId } from 'mongoose'
+import mongoose, { Schema, model, ObjectId } from 'mongoose'
 import slugify from 'slugify'
 
-export interface IAlbum extends Document {
+export interface IAlbum {
+  _id: string
   title: string
   releaseDate: Date
   genre: ObjectId
@@ -31,7 +32,7 @@ interface ITrack {
   tokenId: string
 }
 
-const albumSchema = new Schema<IAlbum>({
+const albumSchema = new Schema({
   title: { type: String, required: true },
   releaseDate: { type: Date },
   genre: { type: Schema.Types.ObjectId, ref: 'Genre' }, // Referencing the Genre model
@@ -58,11 +59,11 @@ const albumSchema = new Schema<IAlbum>({
   studios: [{ type: String }],
   additionalMusicians: [{ type: String }],
   albumNotes: { type: String },
-  catalogNumber: { type: String}
+  catalogNumber: { type: String },
 })
 
 // Pre-save hook to automatically generate the slug based on the title field
-albumSchema.pre<IAlbum>('save', function (next) {
+albumSchema.pre('save', function (next) {
   if (this.isModified('title')) {
     this.slug = slugify(this.title, { lower: true, remove: /[*+~.()'"!:@]/g })
   }

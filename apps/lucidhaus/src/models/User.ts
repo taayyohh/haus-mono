@@ -1,14 +1,14 @@
-import mongoose, { Document, Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { User as PrivyUser } from '@privy-io/react-auth'
 
-export interface IUser extends Document {
+export interface IUser {
   privyId: string
   customer: any
   privyUser: PrivyUser
   role: string
 }
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema({
   privyId: { type: String, unique: true, required: true },
   customer: { type: Object },
   privyUser: { type: Object },
@@ -16,6 +16,6 @@ const userSchema = new Schema<IUser>({
 })
 
 // Check if the model is already registered
-const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
 export default User

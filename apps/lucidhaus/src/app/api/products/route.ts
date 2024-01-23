@@ -19,12 +19,24 @@ export const POST = connectDb(
     } = await req.json()
 
     try {
+      console.log(
+        'AAA',
+        name,
+        price,
+        // quantity,
+        description,
+        // category,
+        imageUri,
+        stripeId,
+        artists,
+        stock
+      )
       const product = new Product({
         name,
         price,
         quantity,
         description,
-        category,
+        // category,
         imageUri,
         stripeId,
         artists,
@@ -37,7 +49,7 @@ export const POST = connectDb(
       )
     } catch (err) {
       console.log('err', err)
-      return NextResponse.json({ error: 'Error creating product' }, { status: 500 })
+      return NextResponse.json({ error: err }, { status: 500 })
     }
   })
 )
@@ -48,7 +60,7 @@ export const GET = connectDb(async (req) => {
   const skip = (page - 1) * limit
 
   try {
-    const products: IProduct[] = await Product.find({}).skip(skip).limit(limit).exec()
+    const products = await Product.find({}).skip(skip).limit(limit).exec()
     return NextResponse.json(products, { status: 200 })
   } catch (err) {
     return NextResponse.json({ error: 'Error fetching products' }, { status: 500 })

@@ -1,25 +1,24 @@
-import { Schema, model, Document, Types } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 import { ICategory } from '@/models/Category'
 import { IArtist } from '@/models/Artist'
-import mongoose from 'mongoose'
 import slugify from 'slugify'
 
-type StockSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
+export type StockSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
 
 export interface Stock {
   size: StockSize
   quantity: number
 }
 
-export interface IProduct extends Document {
+export interface IProduct {
   name: string
   price: number
   description: string
-  category: ICategory
-  imageUri: string
+  category?: ICategory
+  imageUri: string[]
   stripeId: string
   slug: string
-  artists: IArtist[] | string[]
+  artists:  string[]
   quantity?: number
   stock?: Stock[]
 }
@@ -29,12 +28,12 @@ const stockSchema = new Schema({
   quantity: { type: Number, required: true },
 })
 
-const productSchema = new Schema<IProduct>({
+const productSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
   category: { type: Types.ObjectId, ref: 'Category' },
-  imageUri: { type: String, required: true },
+  imageUri: { type: [String], required: true },
   stripeId: { type: String, required: true },
   slug: { type: String, unique: true },
   artists: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
@@ -42,15 +41,13 @@ const productSchema = new Schema<IProduct>({
   stock: [stockSchema],
 })
 
-// Pre-save hook to automatically generate the slug based on the name field
-productSchema.pre<IProduct>('save', function (next) {
+productSchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = slugify(this.name, { lower: true, remove: /[*+~.()'"!:@]/g })
   }
   next()
 })
 
-// Check if the model is already compiled
-const Product = mongoose.models.Product || model<IProduct>('Product', productSchema)
+const Product = model('Product', productSchema)
 
 export default Product

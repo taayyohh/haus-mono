@@ -22,7 +22,7 @@ export const POST = connectDb(
     try {
       // Decrement product quantities
       for (let orderedProduct of products) {
-        const dbProduct: IProduct | null = await Product.findById(
+        const dbProduct = await Product.findById(
           orderedProduct.product._id
         )
 

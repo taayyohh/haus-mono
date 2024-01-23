@@ -45,6 +45,7 @@
     "micro": "^10.0.1",
     "mobx": "^6.12.0",
     "mobx-react": "^9.1.0",
+    "mobx-zod-form-store": "^0.4.1",
     "mongoose": "^7.2.3",
     "next": "13.4.5",
     "nft.storage": "^7.1.0",
@@ -67,6 +68,7 @@
     "vitest": "0.33.0",
     "wagmi": "^1.4.5",
     "yup": "^1.2.0",
+    "zod": "^3.22.4",
     "zustand": "^4.3.3"
   },
   "devDependencies": {

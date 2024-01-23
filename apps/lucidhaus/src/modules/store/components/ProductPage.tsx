@@ -23,7 +23,7 @@ const ProductPage = ({
       >
         <div className={'mb-6 sm:mb-0 relative flex h-full items-center justify-center'}>
           <Image
-            src={getIpfsGateway(product.haus.imageUri || '')}
+            src={getIpfsGateway(product.haus.imageUri[0] || '')}
             alt={`image for ${product.haus.name}`}
             width={700}
             height={700}

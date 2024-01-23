@@ -1,24 +1,24 @@
-import mongoose, { Schema, model, Document, Types } from 'mongoose'
+import mongoose, { Schema, model, Types } from 'mongoose'
 import { IProduct } from '@/models/Product'
 
 export interface OrderProduct {
   product: IProduct
   quantity: number
-  size?: string // This is optional, as not all products will have sizes
+  size?: string
 }
 
-export interface IOrder extends Document {
-  user: Types.ObjectId // Reference to User model if you have one
-  email: string,
+export interface IOrder {
+  user: Types.ObjectId
+  email: string
   products: OrderProduct[]
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'canceled'
   totalPrice: number
   dateOrdered: Date
-  dateShipped?: Date // This is optional as the order might not be shipped immediately
+  dateShipped?: Date
   shippingAddress: {
     street: string
     city: string
-    state?: string // If applicable
+    state?: string
     postalCode: string
     country: string
   }
@@ -32,7 +32,7 @@ const orderProductSchema = new Schema({
   size: { type: String, enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
 })
 
-const orderSchema = new Schema<IOrder>({
+const orderSchema = new Schema({
   email: { type: String },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   products: [orderProductSchema],

@@ -206,7 +206,7 @@ const AlbumForm = () => {
       >
         <option value="">Select a primary artist</option>
         {artists?.map((artist) => (
-          <option key={artist.id} value={artist._id}>
+          <option key={artist._id} value={artist._id}>
             {artist.name}
           </option>
         ))}
