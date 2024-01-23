@@ -157,7 +157,7 @@ const BlogForm: React.FC<BlogFormProps> = () => {
       >
         <option value="">Select an primaryArtist</option>
         {artists?.map((artist) => (
-          <option key={artist.id} value={artist._id}>
+          <option key={artist._id} value={artist._id}>
             {artist.name}
           </option>
         ))}

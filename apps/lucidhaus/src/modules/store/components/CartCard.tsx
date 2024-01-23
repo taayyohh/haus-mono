@@ -23,7 +23,7 @@ export default function CartCard({
     >
       <Link href={`/shop/${product.haus.slug}`}>
         <Image
-          src={getIpfsGateway(product.haus.imageUri || '')}
+          src={getIpfsGateway(product.haus.imageUri[0] || '')}
           alt={`image for ${product.haus.name}`}
           width={120}
           height={120}

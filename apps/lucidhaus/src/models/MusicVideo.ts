@@ -2,6 +2,7 @@ import { Schema, model, ObjectId } from 'mongoose'
 import slugify from 'slugify'
 
 export interface IMusicVideo {
+  _id?: string
   title: string
   releaseDate: Date
   song: string

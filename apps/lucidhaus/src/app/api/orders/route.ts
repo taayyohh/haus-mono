@@ -22,9 +22,7 @@ export const POST = connectDb(
     try {
       // Decrement product quantities
       for (let orderedProduct of products) {
-        const dbProduct = await Product.findById(
-          orderedProduct.product._id
-        )
+        const dbProduct = await Product.findById(orderedProduct.product._id)
 
         if (!dbProduct) {
           return NextResponse.json(
@@ -36,7 +34,7 @@ export const POST = connectDb(
         if (orderedProduct.size) {
           // Product has sizes and uses the stock array
           const stockItem = dbProduct.stock?.find(
-            (s: Stock) => s.size === orderedProduct.size
+            (stockItem) => stockItem.size === orderedProduct.size
           )
 
           if (!stockItem) {
