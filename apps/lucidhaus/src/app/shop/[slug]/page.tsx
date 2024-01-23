@@ -29,7 +29,7 @@ export async function generateMetadata({
       description: product.description || 'Timeless, post-genre, Black music.',
       images: [
         {
-          url: getIpfsGateway(product.imageUri[0]),
+          url: getIpfsGateway(product.imageUri?.[0]),
           width: 1200,
           height: 630,
         },
@@ -43,7 +43,7 @@ export async function generateMetadata({
       description: 'Timeless, post-genre, Black music.',
       site: '@lucidhaus',
       creator: '@lucidhaus',
-      images: getIpfsGateway(product.imageUri[0]),
+      images: getIpfsGateway(product.imageUri?.[0]),
     },
   }
 }
