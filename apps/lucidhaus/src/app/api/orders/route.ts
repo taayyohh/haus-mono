@@ -34,7 +34,7 @@ export const POST = connectDb(
         if (orderedProduct.size) {
           // Product has sizes and uses the stock array
           const stockItem = dbProduct.stock?.find(
-            (stockItem) => stockItem.size === orderedProduct.size
+            (stockItem: { size: string }) => stockItem.size === orderedProduct.size
           )
 
           if (!stockItem) {
