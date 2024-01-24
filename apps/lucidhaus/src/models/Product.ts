@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { model, Schema } from 'mongoose'
 import slugify from 'slugify'
 import { z } from 'zod'
 
@@ -58,6 +58,6 @@ productSchema.pre('save', function (next) {
 
 // Creating a Mongoose model from the product schema.
 // This model will be used to interact with the 'products' collection in MongoDB.
-const Product = model('Product', productSchema)
+const Product = mongoose.models?.Product || model('Product', productSchema)
 
 export default Product

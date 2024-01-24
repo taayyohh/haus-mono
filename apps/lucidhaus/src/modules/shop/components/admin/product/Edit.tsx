@@ -1,49 +1,61 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, generateInitialFields } from 'mobx-zod-form-store'
 import { IProduct, zodProductSchema } from '@/models/Product'
-import { createStripeProduct } from '@/modules/shop'
 import { productFields } from '@/modules/shop/components/admin/product/fields'
+import useSWR from 'swr'
 
-const EditProductForm = () => {
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+const EditProductForm = ({ slug }: { slug: string }) => {
+  const { data: initialFields, error } = useSWR<IProduct>(
+    `/api/products/${slug}`,
+    fetcher
+  )
+
+  if (error) return <div>Failed to load product</div>
+  if (!initialFields) return <div>Loading...</div>
+
   const handleSubmit = async (fields: IProduct) => {
-    // Creating a Stripe product
-    const stripeProduct = await createStripeProduct({
-      name: fields.name,
-      description: fields.description,
-      imageUri: fields.imageUri,
-      price: fields.price * 100,
-    })
+    // Prepare product data
+    const productToUpdate: IProduct = { ...fields }
 
-    // Preparing the product data
-    const product: IProduct = { ...fields, stripeId: stripeProduct.id }
+    try {
+      const response = await fetch(`/api/products/${slug}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productToUpdate),
+      })
 
-    const response = await fetch('/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(product),
-    })
+      const data = await response.json()
 
-    const data = await response.json()
-
-    if (!response.ok) {
-      console.log('failed')
-    } else {
-      console.log('Product created successfully:', data)
+      if (!response.ok) {
+        console.log('Product update failed')
+      } else {
+        console.log('Product updated successfully:', data)
+      }
+    } catch (error) {
+      console.error('Error updating product:', error)
     }
   }
 
   return (
-    <Form<IProduct>
-      validationSchema={zodProductSchema}
-      initialFields={generateInitialFields(productFields)}
-      fieldsConfig={productFields}
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-2"
-    />
+    <div>
+      {initialFields ? (
+        <Form<IProduct>
+          validationSchema={zodProductSchema}
+          initialFields={initialFields}
+          fieldsConfig={productFields}
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-2"
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   )
 }
 

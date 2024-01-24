@@ -21,14 +21,13 @@ export const GET = connectDb(async (req: AuthenticatedRequest) => {
 
 export const PUT = connectDb(
   protect(async (req: AuthenticatedRequest) => {
-    const productId = req.nextUrl.searchParams.get('id')
-
     // Retrieve all product fields from the request body
     const {
+      _id,
       name,
       price,
       description,
-      category,
+      // category,
       imageUri,
       stripeId,
       artists,
@@ -41,7 +40,7 @@ export const PUT = connectDb(
         ...(name && { name }),
         ...(price && { price }),
         ...(description && { description }),
-        ...(category && { category }),
+        // ...(category && { category }),
         ...(imageUri && { imageUri }),
         ...(stripeId && { stripeId }),
         ...(artists && { artists }),
@@ -49,7 +48,7 @@ export const PUT = connectDb(
         ...(stock && { stock }),
       }
 
-      const product = await Product.findByIdAndUpdate(productId, updateData, {
+      const product = await Product.findByIdAndUpdate(_id, updateData, {
         new: true,
       })
 
