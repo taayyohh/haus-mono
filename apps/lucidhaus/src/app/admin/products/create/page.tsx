@@ -1,5 +1,4 @@
-import ProductForm from '@/modules/store/components/ProductForm'
-import CreateForm from '@/modules/store/components/form/CreateForm'
+import CreateForm from '@/modules/shop/components/admin/product/Create'
 
 export default async function Page() {
   return <CreateForm />

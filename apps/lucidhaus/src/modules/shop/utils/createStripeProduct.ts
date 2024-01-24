@@ -5,7 +5,7 @@ import { stripe } from '@/stripe/stripe-sdk'
 interface FormData {
   name: string
   description: string
-  imageUri: string
+  imageUri: string[]
   price: number
 }
 
@@ -16,7 +16,7 @@ export const createStripeProduct = async (
     return await stripe.products.create({
       name: formData.name,
       description: formData.description,
-      images: [getIpfsGateway(formData.imageUri)],
+      images: formData.imageUri,
       default_price_data: {
         currency: 'USD',
         unit_amount: formData.price,

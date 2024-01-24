@@ -1,9 +1,9 @@
-import { fetchProducts } from '@/modules/store/utils/fetchProducts'
+import { fetchProducts } from '@/modules/shop/utils/fetchProducts'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { Metadata } from 'next'
-import ProductCard from '@/modules/store/components/ProductCard'
+import ProductCard from '@/modules/shop/components/ProductCard'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
         url: getIpfsGateway(
           'ipfs://bafkreictv3m2xnxqh7yvulrots3w3t3fbnqe32migivqonmxvwhh2qtbuy'
         ),
-       width: 1200,
-          height: 630,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',
@@ -46,9 +46,7 @@ export default async function Page(context: any) {
       >
         Shop
       </div>
-      <div className={'bg-[#1b1b1b] h-[450px] w-full'}>
-
-      </div>
+      <div className={'bg-[#1b1b1b] h-[450px] w-full'}></div>
       <div className={'uppercase text-white py-3 px-4 sm:px-8'}>Latest Releases</div>
       <div
         className={

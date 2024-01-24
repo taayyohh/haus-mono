@@ -2,8 +2,8 @@ import connectDb from '@/modules/auth/utils/db'
 import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
-import Order, { IOrder, OrderProduct } from '@/models/Order'
-import Product, { IProduct, Stock } from '@/models/Product'
+import Order, { IOrder } from '@/models/Order'
+import Product from '@/models/Product'
 import orderProtect from '@/modules/auth/utils/protectOrder' // Importing the Order model
 
 // Create a new order

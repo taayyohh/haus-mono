@@ -19,18 +19,7 @@ export const POST = connectDb(
     } = await req.json()
 
     try {
-      console.log(
-        'AAA',
-        name,
-        price,
-        // quantity,
-        description,
-        // category,
-        imageUri,
-        stripeId,
-        artists,
-        stock
-      )
+
       const product = new Product({
         name,
         price,

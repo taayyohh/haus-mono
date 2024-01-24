@@ -1,7 +1,7 @@
 import {
   CryptoElements,
   OnrampElement,
-} from '@/modules/store/components/StripeCryptoElements'
+} from '@/modules/shop/components/StripeCryptoElements'
 import React from 'react'
 import { StripeOnramp } from '@stripe/crypto'
 import { OnrampSessionResult } from '@stripe/crypto/types/api/onramp'

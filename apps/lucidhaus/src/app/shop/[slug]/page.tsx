@@ -1,5 +1,5 @@
-import ProductPage from '@/modules/store/components/ProductPage'
-import { fetchProduct } from '@/modules/store/utils/fetchProduct'
+import ProductPage from '@/modules/shop/components/ProductPage'
+import { fetchProduct } from '@/modules/shop/utils/fetchProduct'
 import { stripe } from '@/stripe/stripe-sdk'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
@@ -10,7 +10,9 @@ type Props = {
 }
 export default async function Page(context: any) {
   const { data: product } = await fetchProduct(context.params.slug)
-  const stripeProduct = await stripe.products.retrieve(product.stripeId)
+  const stripeProduct = product.stripeId
+    ? await stripe.products.retrieve(product.stripeId)
+    : undefined
 
   return <ProductPage product={{ haus: product, stripe: stripeProduct }} />
 }

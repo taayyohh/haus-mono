@@ -5,7 +5,7 @@ import { packToBlob } from 'ipfs-car/pack/blob'
 import { NFTStorage } from 'nft.storage'
 import React, { ChangeEvent } from 'react'
 import urlJoin from 'url-join'
-import { ProductFormData } from '@/modules/store/components/ProductForm'
+import { ProductFormData } from '@/modules/shop/components/ProductForm'
 
 interface SingleImageUploadProps {
   handleChange: any //TODO: fix

@@ -1,5 +1,5 @@
 import Me from '@/modules/auth/components/Me'
-import { fetchOnrampSession } from '@/modules/store/utils/fetchOnrampSession'
+import { fetchOnrampSession } from '@/modules/shop/utils/fetchOnrampSession'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { loadStripeOnramp } from '@stripe/crypto'

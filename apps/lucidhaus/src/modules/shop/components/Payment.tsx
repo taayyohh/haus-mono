@@ -9,7 +9,7 @@ import {
 import useCartStore from '@/store/shop'
 import Stripe from 'stripe'
 import config from '@/constants/config'
-import PaymentModal from '@/modules/store/components/PaymentModal'
+import PaymentModal from '@/modules/shop/components/PaymentModal'
 import { useState } from 'react'
 import * as Yup from 'yup'
 import { afterPaymentSuccess } from '@/modules/auth/utils/afterPaymentSuccess'

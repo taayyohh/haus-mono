@@ -3,7 +3,7 @@ import useCartStore from '@/store/shop'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import Image from 'next/image'
 import Link from 'next/link'
-import CartCard from '@/modules/store/components/CartCard'
+import CartCard from '@/modules/shop/components/CartCard'
 
 export default function Cart() {
   const items = useCartStore((state) => state.items)

@@ -36,14 +36,14 @@ export default function CartCard({
         <div className={'absolute right-6 bottom-3'}>
           {product.haus.price} <span className={'text-xs'}>USD</span>
         </div>
-        {options && (
+        {options &&  (
           <div className={'flex flex-col absolute top-3 right-6'}>
             <div className={'grid grid-cols-3'}>
-              <button onClick={() => options?.increment(product.haus.stripeId)}>+</button>
+              <button onClick={() => options?.increment(product.haus.stripeId!)}>+</button>
               <button>{product.quantity}</button>
-              <button onClick={() => options?.decrement(product.haus.stripeId)}>-</button>
+              <button onClick={() => options?.decrement(product.haus.stripeId!)}>-</button>
             </div>
-            <button onClick={() => options.remove(product.haus.stripeId)}>remove</button>
+            <button onClick={() => options.remove(product.haus.stripeId!)}>remove</button>
           </div>
         )}
       </div>

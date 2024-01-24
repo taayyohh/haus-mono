@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { fetchProducts } from '@/modules/store/utils/fetchProducts'
+import { fetchProducts } from '@/modules/shop/utils/fetchProducts'
 import { fetchGenres } from '@/modules/albums/utils/fetchGenres'
 
 export default async function Page() {

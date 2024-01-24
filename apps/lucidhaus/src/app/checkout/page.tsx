@@ -1,6 +1,6 @@
-import { CheckoutForm } from '@/modules/store/components/CheckoutForm'
-import Cart from '@/modules/store/components/Cart'
-import Payment from '@/modules/store/components/Payment'
+import { CheckoutForm } from '@/modules/shop/components/CheckoutForm'
+import Cart from '@/modules/shop/components/Cart'
+import Payment from '@/modules/shop/components/Payment'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 

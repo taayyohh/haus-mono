@@ -1,6 +1,6 @@
 import { Modal } from '@/components/Modal'
 import { CartItem } from '@/store/shop'
-import CartCard from '@/modules/store/components/CartCard'
+import CartCard from '@/modules/shop/components/CartCard'
 
 export default function PaymentModal({
   handlePurchase,

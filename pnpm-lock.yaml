@@ -129,8 +129,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
       mobx-zod-form-store:
-        specifier: ^0.4.1
-        version: 0.4.1(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4)
+        specifier: ^0.4.3
+        version: 0.4.3(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4)
       mongoose:
         specifier: ^7.2.3
         version: 7.5.3
@@ -11825,8 +11825,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /mobx-zod-form-store@0.4.1(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4):
-    resolution: {integrity: sha512-yOi/yZTRiHEpeiZdzsrl5K+gn91A3PmLrvk68QO7TQDSATWSrbfSMF/Pez42IZ7m2SrspHqwlQ4fU8gEKRnOSA==}
+  /mobx-zod-form-store@0.4.3(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4):
+    resolution: {integrity: sha512-UXtBvbs1udyMjG6a54y7XieW8d1FFOTQ97dD6bcOA8atujGO2YxHO/wrxLvV+tk77nGdV4hkQ5Ee2wgu3FDPeg==}
     peerDependencies:
       zod: ^3.22.4
     dependencies:
