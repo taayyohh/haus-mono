@@ -7,7 +7,7 @@ export type CartItem = {
   haus: IProduct
   stripe: Stripe.Product | undefined
   quantity: number
-  size?: string
+  size?: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
 }
 
 type CartState = {

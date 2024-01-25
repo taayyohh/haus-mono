@@ -47,6 +47,9 @@ importers:
       '@types/node':
         specifier: 20.2.6
         version: 20.2.6
+      '@types/nodemailer':
+        specifier: ^6.4.14
+        version: 6.4.14
       '@types/react':
         specifier: 18.2.11
         version: 18.2.11
@@ -129,8 +132,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
       mobx-zod-form-store:
-        specifier: ^0.4.3
-        version: 0.4.3(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4)
+        specifier: ^0.4.4
+        version: 0.4.4(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4)
       mongoose:
         specifier: ^7.2.3
         version: 7.5.3
@@ -140,6 +143,9 @@ importers:
       nft.storage:
         specifier: ^7.1.0
         version: 7.1.1(node-fetch@3.3.2)
+      nodemailer:
+        specifier: ^6.9.8
+        version: 6.9.8
       package.json:
         specifier: ^2.0.1
         version: 2.0.1
@@ -4709,6 +4715,12 @@ packages:
   /@types/node@20.4.5:
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
 
+  /@types/nodemailer@6.4.14:
+    resolution: {integrity: sha512-fUWthHO9k9DSdPCSPRqcu6TWhYyxTBg382vlNIttSe9M7XfsT06y0f24KHXtbnijPGGRIcVvdKHTNikOI6qiHA==}
+    dependencies:
+      '@types/node': 20.2.6
+    dev: false
+
   /@types/normalize-package-data@2.4.2:
     resolution: {integrity: sha512-lqa4UEhhv/2sjjIQgjX8B+RBjj47eo0mzGasklVJ78UKGQY1r0VpB9XHDaZZO9qzEFDdy4MrXLuEaSmPrPSe/A==}
     dev: false
@@ -4803,14 +4815,14 @@ packages:
   /@types/whatwg-url@8.2.2:
     resolution: {integrity: sha512-FtQu10RWgn3D9U4aazdwIE2yzphmTJREDqNdODHrbrZmmMqI0vMheC/6NE/J1Yveaj8H+ela+YwWTjq5PGmuhA==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.2.6
       '@types/webidl-conversions': 7.0.1
     dev: false
 
   /@types/ws@7.4.7:
     resolution: {integrity: sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==}
     dependencies:
-      '@types/node': 20.4.5
+      '@types/node': 20.2.6
     dev: false
 
   /@types/ws@8.5.6:
@@ -11825,8 +11837,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /mobx-zod-form-store@0.4.3(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4):
-    resolution: {integrity: sha512-UXtBvbs1udyMjG6a54y7XieW8d1FFOTQ97dD6bcOA8atujGO2YxHO/wrxLvV+tk77nGdV4hkQ5Ee2wgu3FDPeg==}
+  /mobx-zod-form-store@0.4.4(@types/react@18.2.11)(node-fetch@3.3.2)(react-dom@18.2.0)(zod@3.22.4):
+    resolution: {integrity: sha512-WEmRFqNc5EjoCfEMkldhxiVfBENuHNAmIac9EO6Bwoa8pcWjVpCKEIBuH8b7oT60bcl1h81loVCMDqr+BWo6Tw==}
     peerDependencies:
       zod: ^3.22.4
     dependencies:
@@ -12170,6 +12182,11 @@ packages:
   /node-status-codes@1.0.0:
     resolution: {integrity: sha512-1cBMgRxdMWE8KeWCqk2RIOrvUb0XCwYfEsY5/y2NlXyq4Y/RumnOZvTj4Nbr77+Vb2C+kyBoRTdkNOS8L3d/aQ==}
     engines: {node: '>=0.10.0'}
+    dev: false
+
+  /nodemailer@6.9.8:
+    resolution: {integrity: sha512-cfrYUk16e67Ks051i4CntM9kshRYei1/o/Gi8K1d+R34OIs21xdFnW7Pt7EucmVKA0LKtqUGNcjMZ7ehjl49mQ==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /noop6@1.0.9:
@@ -13112,7 +13129,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.4.5
+      '@types/node': 20.2.6
       long: 4.0.0
     dev: false
 

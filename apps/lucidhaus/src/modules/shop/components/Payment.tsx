@@ -12,8 +12,10 @@ import config from '@/constants/config'
 import PaymentModal from '@/modules/shop/components/PaymentModal'
 import { useState } from 'react'
 import * as Yup from 'yup'
-import { afterPaymentSuccess } from '@/modules/auth/utils/afterPaymentSuccess'
 import { usePrivy } from '@privy-io/react-auth'
+import { IOrder, zodShippingAddressSchema } from '@/models/Order'
+import { z } from 'zod'
+import { StripeAddressElementChangeEvent } from '@stripe/stripe-js'
 
 export default function Payment() {
   const stripe = useStripe()
@@ -21,11 +23,22 @@ export default function Payment() {
   const total = useCartStore((state) => state.cartTotal)
   const items = useCartStore((state) => state.items)
   const totalItems = useCartStore((state) => state.totalItems)
-  const { user } = usePrivy()
+  const { user: privyUser } = usePrivy()
 
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+
+  // handle address
+  type addressType = z.infer<typeof zodShippingAddressSchema>
+  const [address, setAddress] = useState<undefined | addressType>(undefined)
+  const handleAddressChange = (event: StripeAddressElementChangeEvent) => {
+    if (event.complete) {
+      setAddress(event.value.address)
+      setName(event.value.name)
+    }
+  }
 
   const emailValidationSchema = Yup.string()
     .email('Invalid email address')
@@ -94,6 +107,21 @@ export default function Payment() {
       throw error // or handle the error as you see fit
     }
 
+    const order: IOrder = {
+      privyId: privyUser?.id,
+      email,
+      name,
+      products: items.map((item) => ({
+        product: item.haus,
+        quantity: item.quantity,
+        size: item?.size,
+      })),
+      status: 'pending',
+      totalPrice: total,
+      dateOrdered: new Date().toISOString(),
+      shippingAddress: address,
+    }
+
     const response = await fetch('/api/orders', {
       method: 'POST',
       headers: {
@@ -101,19 +129,7 @@ export default function Payment() {
         Authorization: `Bearer ${token}`, // Sending the token in the Authorization header
       },
       // you can also send other data in the body if required
-      body: JSON.stringify({
-        user,
-        email,
-        products: items.map((item) => ({
-          product: item.haus,
-          quantity: item.quantity,
-          size: item?.size,
-        })),
-        status: 'pending',
-        totalPrice: total,
-        dateOrdered: Date.now(),
-        shippingAddress: '',
-      }),
+      body: JSON.stringify(order),
     })
 
     if (response.ok) {
@@ -141,7 +157,7 @@ export default function Payment() {
         <div className={'m-8'} />
         <div className={'w-full'}>
           <div className={'text-xs uppercase font-bold mb-2'}>Shipping Details</div>
-          <AddressElement options={{ mode: 'shipping' }} />
+          <AddressElement options={{ mode: 'shipping' }} onChange={handleAddressChange} />
         </div>
         <div className={'m-8'} />
         <div className={'text-xs uppercase font-bold mb-2'}>Payment Details</div>

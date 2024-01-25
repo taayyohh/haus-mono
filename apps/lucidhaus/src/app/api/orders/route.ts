@@ -4,13 +4,13 @@ import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
 import Order, { IOrder } from '@/models/Order'
 import Product from '@/models/Product'
-import orderProtect from '@/modules/auth/utils/protectOrder' // Importing the Order model
+import orderProtect from '@/modules/auth/utils/protectOrder'
 
-// Create a new order
 export const POST = connectDb(
   orderProtect(async (req: AuthenticatedRequest) => {
     const {
-      user,
+      privyId,
+      name,
       email,
       products, // Assume this is an array of objects with { id, quantity, size? }
       status,
@@ -76,6 +76,8 @@ export const POST = connectDb(
       }
 
       const order = new Order({
+        name,
+        privyId,
         email,
         products,
         status,

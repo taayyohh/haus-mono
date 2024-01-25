@@ -5,7 +5,6 @@ import { packToBlob } from 'ipfs-car/pack/blob'
 import { NFTStorage } from 'nft.storage'
 import React, { ChangeEvent } from 'react'
 import urlJoin from 'url-join'
-import { ProductFormData } from '@/modules/shop/components/ProductForm'
 
 interface SingleImageUploadProps {
   handleChange: any //TODO: fix
@@ -55,7 +54,7 @@ const SingleImageUpload: React.FC<SingleImageUploadProps> = ({
       const url = encodeURI(urlJoin('https://ipfs.io/ipfs/', cid, input.name))
       setPreview(url)
       setImageUri(uri)
-      handleChange((prevFormData: ProductFormData) => ({
+      handleChange((prevFormData: any) => ({
         ...prevFormData,
         [name]: uri,
       }))

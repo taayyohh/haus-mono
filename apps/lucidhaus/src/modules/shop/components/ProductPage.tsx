@@ -15,6 +15,8 @@ const ProductPage = ({
   const { isMobile } = useResponsive()
   const addProduct = useCartStore((state) => state.addProduct)
 
+  console.log('pr', product)
+
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
       <div

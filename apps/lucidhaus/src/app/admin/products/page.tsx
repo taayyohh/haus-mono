@@ -1,12 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import { fetchArtists } from '@/modules/artists/utils/fetchArtists'
 import { fetchProducts } from '@/modules/shop'
 
 export default async function Page() {
   const { data: products } = await fetchProducts()
 
-  console.log('PR', products)
   return (
     <div>
       <h2 className="text-right mb-8 border-b pb-2">Manage | Products</h2>
