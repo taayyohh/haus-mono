@@ -7,11 +7,21 @@ import config from '@/constants/config'
 
 const secretKey = process.env.JWT_SECRET || ''
 
+export type AuthUser = {
+  privyId: string
+  role: 'user' | 'superadmin'
+}
+
 const generateToken = (user: PrivyUser) => {
   const role =
     String(user?.wallet?.address) === String(config.adminWallet) ? 'superadmin' : 'user'
 
-  return jwt.sign({ username: user.id, role }, secretKey, {
+  const authUser: AuthUser = {
+    privyId: user.id,
+    role,
+  }
+
+  return jwt.sign(authUser, secretKey, {
     expiresIn: '1h', // Set an expiration time for the token
   })
 }

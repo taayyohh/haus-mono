@@ -1,25 +1,33 @@
-import { IUser } from '@/models/User'
-import jwt from 'jsonwebtoken'
-import { NextRequest, NextResponse } from 'next/server'
-
-export interface AuthenticatedRequest extends NextRequest {
-  user?: IUser
-}
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import { NextRequest } from 'next/server'
+import { AuthUser } from '@/app/api/auth/login/route'
 
 const secretKey = process.env.JWT_SECRET || ''
 
-export const verifyToken = (req: AuthenticatedRequest) => {
-  const token = req.headers.get('authorization')?.split(' ')[1]
+export interface AuthenticatedRequest extends NextRequest {
+  user?: AuthUser
+}
 
-  if (!token) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export const verifyToken = async (cookie?: RequestCookie): Promise<AuthUser | null> => {
+  if (!cookie) {
+    // If the cookie is not present, return null
+    return null
   }
 
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
+  let decodedToken: string | JwtPayload
+  try {
+    decodedToken = jwt.verify(cookie.value, secretKey) // Verify the token
+    console.log('DDD', decodedToken)
+  } catch (err) {
+    // If the token is invalid, return null
+    return null
+  }
 
-    req.user = user as IUser
-  })
+  // Check if decodedToken is an object and cast it to AuthUser
+  if (typeof decodedToken === 'object' && 'privyId' in decodedToken) {
+    return decodedToken as AuthUser
+  }
+
+  return null
 }

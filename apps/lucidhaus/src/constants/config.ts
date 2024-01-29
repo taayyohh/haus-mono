@@ -9,7 +9,8 @@ const productionConfig = {
   adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
   orderSecret: process.env.ORDER_SECRET_KEY,
   graphClient: process.env.GRAPH_CLIENT,
-  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY
+  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY,
+  forwardEmail: process.env.FORWARD_EMAIL,
 }
 
 const developmentConfig = {
@@ -23,9 +24,9 @@ const developmentConfig = {
   adminWallet: process.env.NEXT_PUBLIC_ADMIN_WALLET,
   orderSecret: process.env.ORDER_SECRET_KEY,
   graphClient: process.env.GRAPH_CLIENT,
-  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY
+  infura: process.env.NEXT_PUBLIC_INFURA_API_KEY,
+  forwardEmail: process.env.FORWARD_EMAIL,
 }
-
 
 const config =
   process.env.NODE_ENV === 'production' ? productionConfig : developmentConfig

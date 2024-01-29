@@ -168,6 +168,11 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
           </div>
         </div>
       )}
+      <div className={'flex flex-col'}>
+        <div className={'uppercase text-sm border-t pt-2 mt-8 mb-4 border-white-13'}>
+          <Link href={'/me/orders'}>Your Orders</Link>
+        </div>
+      </div>
       <Login />
     </div>
   )

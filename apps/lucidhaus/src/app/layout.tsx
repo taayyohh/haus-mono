@@ -16,6 +16,7 @@ import { Player } from '@/modules/player'
 import Footer from '@/components/Footer'
 import { Analytics } from '@vercel/analytics/react'
 import { infuraProvider } from 'wagmi/providers/infura'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -69,6 +70,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   }
                 >
                   <Player />
+                  <Toaster
+                    toastOptions={{
+                      unstyled: true,
+                      classNames: {
+                        toast: 'bg-[#1b1b1b]',
+                        title: 'text-white',
+                      },
+                    }}
+                  />
                   <Footer />
                   <div>&copy; {new Date().getFullYear()} LucidHaus</div>
                 </div>

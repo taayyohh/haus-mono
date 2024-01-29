@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
 import Order, { IOrder } from '@/models/Order'
 import Product from '@/models/Product'
-import orderProtect from '@/modules/auth/utils/protectOrder'
+import orderProtect from '@/modules/auth/utils/protectOrderAdmin'
 
 export const POST = connectDb(
   orderProtect(async (req: AuthenticatedRequest) => {
@@ -88,7 +88,7 @@ export const POST = connectDb(
 
       await order.save()
 
-      return NextResponse.json({ message: 'Order created successfully' }, { status: 201 })
+      return NextResponse.json({ ok: true, order }, { status: 201 })
     } catch (err) {
       console.error(err)
       return NextResponse.json({ error: 'Error creating order' }, { status: 500 })

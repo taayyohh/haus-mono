@@ -7,15 +7,14 @@ export default function PaymentModal({
   items,
   total,
   totalItems,
-  email
+  email,
 }: {
   handlePurchase: () => void
   items: CartItem[]
-  total: number,
-  totalItems: number,
+  total: number
+  totalItems: number
   email: string
 }) {
-
   return (
     <div>
       <Modal
@@ -34,15 +33,19 @@ export default function PaymentModal({
             <div className={'flex flex-col'}>
               <div className={'flex flex-col'}>
                 <div className={'flex flex-col mb-4'}>
-                  <div>Total: {total} <span className={'text-sm'}>USD</span></div>
+                  <div>
+                    Total: {total} <span className={'text-sm'}>USD</span>
+                  </div>
                   <div className={'italic'}>{totalItems} items</div>
                   <div>{email}</div>
                 </div>
                 <div
-                  className={'flex flex-col max-h-[300px] gap-2 overflow-y-scroll p-2 border border-white-13'}
+                  className={
+                    'flex flex-col max-h-[300px] gap-2 overflow-y-scroll p-2 border border-white-13'
+                  }
                 >
-                  {items.map((product) => (
-                    <CartCard key={product.haus._id} product={product} />
+                  {items.map((cartItem) => (
+                    <CartCard key={cartItem.haus.stripeId} cartItem={cartItem} />
                   ))}
                 </div>
 

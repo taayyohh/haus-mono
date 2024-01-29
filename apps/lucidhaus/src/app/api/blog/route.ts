@@ -1,5 +1,5 @@
 import connectDb from '@/modules/auth/utils/db'
-import { AuthenticatedRequest, verifyToken } from '@/modules/auth/utils/verifyToken'
+import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
 import BlogPost, { IBlogPost } from '@/models/Blog'

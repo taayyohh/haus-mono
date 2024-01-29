@@ -9,6 +9,7 @@ const getCookie = async (name: string) => {
 
 export async function fetchOrders(page = 1, limit = 50): Promise<{ data: IOrder[] }> {
   const cookie = await getCookie(LOGIN_COOKIE_NAME)
+
   let response
   try {
     response = await fetch(`${config.BASE_URL}api/orders?page=${page}&limit=${limit}`, {

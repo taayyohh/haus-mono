@@ -1,5 +1,5 @@
 import connectDb from '@/modules/auth/utils/db'
-import { AuthenticatedRequest, verifyToken } from '@/modules/auth/utils/verifyToken'
+import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
 import Album, { IAlbum } from '@/models/Album' // Importing the Album model
@@ -71,4 +71,3 @@ export const GET = connectDb(async (req) => {
     return NextResponse.json({ error: 'Error fetching albums' }, { status: 500 })
   }
 })
-

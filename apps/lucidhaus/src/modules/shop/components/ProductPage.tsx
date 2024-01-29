@@ -6,6 +6,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import Stripe from 'stripe'
 import useCartStore from '@/store/shop'
 import { useResponsive } from '@/hooks/useResponsive'
+import { CartQuantitySelector } from '@/modules/shop/components/CartQuantitySelector'
 
 const ProductPage = ({
   product,
@@ -14,8 +15,8 @@ const ProductPage = ({
 }) => {
   const { isMobile } = useResponsive()
   const addProduct = useCartStore((state) => state.addProduct)
-
-  console.log('pr', product)
+  const items = useCartStore((state) => state.items)
+  const itemInCart = items.filter((item) => item.haus.stripeId === product.haus.stripeId)
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
@@ -37,13 +38,21 @@ const ProductPage = ({
           <div className={'text-2xl uppercase'}>
             <div>{product.haus.name}</div>
           </div>
-          <button
-            className={`mt-12 inline-flex self-start justify-center w-full px-6 py-2 border border-white-13 rounded text-white bg-[#1b1b1b] hover:bg-[#111]`}
-            style={{ boxShadow: '1px 3px 3px 0px #141418' }}
-            onClick={() => addProduct(product)}
-          >
-            Add to Cart
-          </button>
+          <div className="mt-12">
+            {(itemInCart.length === 0 && (
+              <button
+                className={`w-full px-6 py-2 border border-white-13 rounded text-white bg-[#1b1b1b] hover:bg-[#111]`}
+                style={{ boxShadow: '1px 3px 3px 0px #141418' }}
+                onClick={() => addProduct(product)}
+              >
+                Add to Cart
+              </button>
+            )) || (
+              <div className="px-6 py-2 rounded text-white bg-[#1b1b1b]">
+                <CartQuantitySelector cartItem={itemInCart[0]} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

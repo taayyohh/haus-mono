@@ -10,7 +10,7 @@ export default async function Page() {
       <h2 className="text-right mb-8 border-b pb-2">Manage | Orders</h2>
       <div className={'flex flex-col gap-6'}>
         {orders &&
-          orders.map((order) => (
+          orders?.map((order) => (
             <div key={order._id} className={'flex flex-col border rounded border-white-13'}>
               <Link href={`/admin/orders/${order._id}`} className='p-4'>
                 <div>Id:{order._id}</div>

@@ -1,5 +1,5 @@
 import connectDb from '@/modules/auth/utils/db'
-import { AuthenticatedRequest, verifyToken } from '@/modules/auth/utils/verifyToken'
+import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 import { NextResponse } from 'next/server'
 import protect from '@/modules/auth/utils/protect'
 import Product, { IProduct } from '@/models/Product'
@@ -19,7 +19,6 @@ export const POST = connectDb(
     } = await req.json()
 
     try {
-
       const product = new Product({
         name,
         price,
@@ -49,7 +48,11 @@ export const GET = connectDb(async (req) => {
   const skip = (page - 1) * limit
 
   try {
-    const products = await Product.find({}).skip(skip).limit(limit).exec()
+    // Updated query to filter products with quantity greater than 0
+    const products = await Product.find({ quantity: { $gt: 0 } })
+      .skip(skip)
+      .limit(limit)
+      .exec()
     return NextResponse.json(products, { status: 200 })
   } catch (err) {
     return NextResponse.json({ error: 'Error fetching products' }, { status: 500 })

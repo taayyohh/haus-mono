@@ -1,9 +1,8 @@
 import { fetchProducts } from '@/modules/shop/utils/fetchProducts'
-import Link from 'next/link'
-import Image from 'next/image'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { Metadata } from 'next'
 import ProductCard from '@/modules/shop/components/ProductCard'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
@@ -35,6 +34,8 @@ export const metadata: Metadata = {
   },
 }
 export default async function Page(context: any) {
+  notFound()
+
   const { data: products } = await fetchProducts(1, 10)
 
   return (
