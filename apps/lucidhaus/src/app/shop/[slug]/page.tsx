@@ -3,6 +3,7 @@ import { fetchProduct } from '@/modules/shop/utils/fetchProduct'
 import { stripe } from '@/stripe/stripe-sdk'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { fetchStripePrices } from '@/modules/shop/utils/fetchStripePrices'
 
 type Props = {
   params: { slug: string }

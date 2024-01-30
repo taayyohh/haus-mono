@@ -35,7 +35,6 @@ export const metadata: Metadata = {
 }
 export default async function Page(context: any) {
   const { data: products } = await fetchProducts(1, 10)
-  notFound()
 
   return (
     <div>

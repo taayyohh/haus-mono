@@ -28,7 +28,7 @@ const EditOrderForm = ({ orderId }: { orderId: string }) => {
     notes: order?.notes || '',
   })
   const onSubmit = async (fields: IPartialOrder) => {
-    const updatedOrder = { ...order, ...fields }
+    const updatedOrder = { ...order, ...fields, dateShipped: new Date().toISOString() }
 
     try {
       const response = await fetch(`/api/orders/${orderId}`, {
@@ -58,8 +58,6 @@ const EditOrderForm = ({ orderId }: { orderId: string }) => {
               toast.message(`Order updated and email to ${updatedOrder.email} sent!`)
             }
           }
-
-
         } catch (err) {
           console.log('err', err)
         }

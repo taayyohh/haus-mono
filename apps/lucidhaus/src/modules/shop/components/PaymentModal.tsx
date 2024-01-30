@@ -15,10 +15,12 @@ export default function PaymentModal({
   address,
   validateBeforeOpen,
   isLoading,
+  internationalTotal,
 }: {
   handlePurchase: () => void
   items: CartItem[]
   total: number
+  internationalTotal: number
   totalItems: number
   email: string
   name: string
@@ -57,8 +59,13 @@ export default function PaymentModal({
               <div className={'flex flex-col'}>
                 <div className={'flex flex-col mb-4'}>
                   <div className={'text-3xl'}>
-                    Total: {total} <span className={'text-sm'}>USD</span>
+                    Total: {internationalTotal} <span className={'text-sm'}>USD</span>
                   </div>
+                  {internationalTotal !== total && (
+                    <div className={'flex flex-col text-sm py-1 italic'}>
+                      International Shipping: {internationalTotal - total} USD
+                    </div>
+                  )}
                   <div className={'italic'}>{totalItems} items</div>
                   <div className="flex flex-col mt-4 gap-2">
                     <div>

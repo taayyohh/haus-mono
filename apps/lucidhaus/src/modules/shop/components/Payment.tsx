@@ -21,8 +21,33 @@ import { getSuccessToken } from '@/modules/shop/utils/getSuccessToken'
 import { createOrder } from '@/modules/shop/utils/createOrder'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { fetchStripePrices } from '@/modules/shop/utils/fetchStripePrices'
 
 export type addressType = z.infer<typeof zodShippingAddressSchema>
+
+// Define types for Price and Product
+type Price = {
+  id: string
+  nickname: string | null
+  unit_amount: number
+}
+
+type ProductWithQuantity = {
+  priceData: Price[]
+  quantity: number
+}
+
+function sumUnitAmountForNickname(
+  productsWithQuantity: ProductWithQuantity[],
+  nickname: string
+): number {
+  return productsWithQuantity.reduce((total, { priceData, quantity }) => {
+    const sum = priceData.reduce((acc, price) => {
+      return price.nickname === nickname ? acc + price.unit_amount * quantity : acc
+    }, 0)
+    return total + sum
+  }, 0)
+}
 
 export default function Payment() {
   const router = useRouter()
@@ -49,18 +74,31 @@ export default function Payment() {
 
     return await validatePurchaseDetails(stripe, elements, email, setEmailError)
   }, [validatePurchaseDetails, stripe, elements, email, setEmailError, user])
-
-  const handleAddressChange = (event: StripeAddressElementChangeEvent) => {
+  const [internationalTotal, setInternationalTotal] = useState(total)
+  const handleAddressChange = async (event: StripeAddressElementChangeEvent) => {
     if (event.complete) {
       setAddress(event.value.address)
       setName(event.value.name)
+
+      if (event.value.address.country !== 'US') {
+        const promises = items.map((item) =>
+          fetchStripePrices(item?.stripe?.id || '').then((prices) => ({
+            priceData: prices.data,
+            quantity: item.quantity,
+          }))
+        )
+        const productsWithQuantity = await Promise.all(promises)
+        setInternationalTotal(
+          sumUnitAmountForNickname(productsWithQuantity, 'international') / 100
+        )
+      }
     }
   }
 
   const handlePurchase = async () => {
     try {
       setIsPurchasing(true)
-      const paymentIntent = await createStripePaymentIntent(total, email)
+      const paymentIntent = await createStripePaymentIntent(internationalTotal, email)
 
       const confirmError = await confirmStripePayment(
         stripe,
@@ -86,15 +124,12 @@ export default function Payment() {
             size: item?.size,
           })),
           status: 'pending',
-          totalPrice: total,
+          totalPrice: internationalTotal,
           dateOrdered: new Date().toISOString(),
           shippingAddress: address,
         },
         token
       )
-
-      const _email = '<div>' + '<div>' + '</div></div>'
-
 
       if (createOrderResponse.ok) {
         const emailConfirmationResponse = await sendEmailConfirmation({
@@ -152,6 +187,7 @@ export default function Payment() {
           address={address}
           validateBeforeOpen={validatePayment}
           isLoading={isPurchasing}
+          internationalTotal={internationalTotal}
         />
       </div>
     </div>
