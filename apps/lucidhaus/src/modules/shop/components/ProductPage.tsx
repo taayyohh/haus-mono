@@ -6,17 +6,17 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import Stripe from 'stripe'
 import useCartStore from '@/store/shop'
 import { useResponsive } from '@/hooks/useResponsive'
-import { CartQuantitySelector } from '@/modules/shop/components/CartQuantitySelector'
+import { CartSelector } from '@/modules/shop/components/CartSelector'
 
-const ProductPage = ({
-  product,
-}: {
-  product: { haus: IProduct; stripe: Stripe.Product | undefined }
-}) => {
+export type combinedProduct = {
+  haus: IProduct
+  stripe: Stripe.Product | undefined
+}
+
+const ProductPage = ({ product }: { product: combinedProduct }) => {
   const { isMobile } = useResponsive()
-  const addProduct = useCartStore((state) => state.addProduct)
   const items = useCartStore((state) => state.items)
-  const itemInCart = items.filter((item) => item.haus.stripeId === product.haus.stripeId)
+  const itemsInCart = items.filter((item) => item.haus.stripeId === product.haus.stripeId)
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
@@ -34,62 +34,17 @@ const ProductPage = ({
           />
         </div>
 
-        <div className={'flex flex-col px-4 sm:px-6'}>
-          <div className={'text-2xl uppercase'}>
-            <div>{product.haus.name}</div>
-          </div>
-          <div className="mt-12">
-            {(itemInCart.length === 0 && (
-              <button
-                className={`w-full px-6 py-2 border border-white-13 rounded text-white bg-[#1b1b1b] hover:bg-[#111]`}
-                style={{ boxShadow: '1px 3px 3px 0px #141418' }}
-                onClick={() => addProduct(product)}
-              >
-                Add to Cart
-              </button>
-            )) || (
-              <div className="px-6 py-2 rounded text-white bg-[#1b1b1b]">
-                <CartQuantitySelector cartItem={itemInCart[0]} />
-              </div>
-            )}
-          </div>
+        <div
+          className={
+            'flex flex-col items-center h-full justify-center w-full sm:w-[300px] md:w-[380px] mx-auto px-4 sm:px-6'
+          }
+        >
+          <div className={'text-2xl py-6 text-center'}>{product.haus.name}</div>
+          <div className={'text-sm'}>{product.haus.description}</div>
+          <div className="py-6 text-xl">{product.haus.price} USD</div>
+          <CartSelector itemsInCart={itemsInCart} product={product} />
         </div>
       </div>
-
-      {/*<div*/}
-      {/*  className={'flex flex-col text-white w-full mx-auto items-center'}*/}
-      {/*>*/}
-      {/*  <div className="text-3xl sm:text-4xl font-bold mb-2 sm:mb-12 text-center">*/}
-      {/*    {product.haus.name}*/}
-      {/*  </div>*/}
-
-      {/*  <div*/}
-      {/*    className={*/}
-      {/*      'flex flex-col mx-auto w-full gap-12 justify-center items-center'*/}
-      {/*    }*/}
-      {/*  >*/}
-      {/*    <div className={'flex flex-col'}>*/}
-      {/*      <div*/}
-      {/*        className={'flex rounded-3xl overflow-hidden h-[500px] w:full sm:w-[400px]'}*/}
-      {/*      >*/}
-      {/*        <Image*/}
-      {/*          src={getIpfsGateway(product.haus.imageUri || '')}*/}
-      {/*          alt={`image for ${product.haus.name}`}*/}
-      {/*          width={400}*/}
-      {/*          height={500}*/}
-      {/*          style={{ objectFit: 'contain' }}*/}
-      {/*        />*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*    <div className={'flex flex-col'}>*/}
-      {/*      /!*<div>{product.category}</div>*!/*/}
-      {/*      <div>{product.haus.description}</div>*/}
-      {/*      <div>{product.haus.price}</div>*/}
-      {/*      <div>{product.haus.quantity}</div>*/}
-
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Stripe, StripeElements } from '@stripe/stripe-js'
+import { Dispatch, SetStateAction } from 'react'
 
 const emailValidationSchema = z
   .string()
@@ -10,7 +11,7 @@ export async function validatePurchaseDetails(
   stripe: Stripe | null,
   elements: StripeElements | null,
   email: string,
-  setEmailError: (error: string) => void
+  setEmailError: Dispatch<SetStateAction<string | undefined>>
 ): Promise<boolean> {
   if (!stripe || !elements) return false
 
@@ -19,6 +20,8 @@ export async function validatePurchaseDetails(
     const firstErrorMessage = validationResult.error.issues[0].message
     setEmailError(firstErrorMessage)
     return false
+  } else {
+    setEmailError(undefined)
   }
 
   try {

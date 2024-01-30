@@ -15,22 +15,38 @@ export default function CartCard({
   return (
     <div
       className={
-        'flex flex-col lg:flex-row relative border border-white-13 rounded p-4 gap-4'
+        'flex items-center flex-row relative border border-white-13 rounded p-4 gap-4'
       }
       key={cartItem.haus.stripeId}
     >
-      <Link href={`/shop/${cartItem.haus.slug}`}>
-        <Image
-          src={getIpfsGateway(cartItem.haus.imageUri[0] || '')}
-          alt={`image for ${cartItem.haus.name}`}
-          width={120}
-          height={120}
-          style={{ objectFit: 'contain' }}
-        />
-      </Link>
+      <div className={'min-w-[120px] min-h-[120px]'}>
+        <Link href={`/shop/${cartItem.haus.slug}`}>
+          <Image
+            src={getIpfsGateway(cartItem.haus.imageUri[0] || '')}
+            alt={`image for ${cartItem.haus.name}`}
+            width={120}
+            height={120}
+            style={{ objectFit: 'contain' }}
+          />
+        </Link>
+      </div>
+
       <div className={'flex flex-col py-4'}>
         <div className={'text-2xl font-bold'}>{cartItem.haus.name}</div>
-        <div className={'italic'}>{cartItem.haus.description}</div>
+        <div
+          className={'italic max-w-[85%]'}
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            lineHeight: '1.2em',
+            maxHeight: '2.4em',
+          }}
+        >
+          {cartItem.haus.description}
+        </div>{' '}
         <div className={'absolute right-6 bottom-3'}>
           {cartItem.haus.price} <span className={'text-xs'}>USD</span>
         </div>

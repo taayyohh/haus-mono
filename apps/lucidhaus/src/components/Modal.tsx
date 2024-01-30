@@ -1,13 +1,16 @@
-'use client'
-
 import React, { useRef, useState, useEffect } from 'react'
 
 interface ModalProps {
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   children?: React.ReactNode
+  validateBeforeOpen?: () => Promise<boolean>
 }
 
-export const Modal: React.FC<ModalProps> = ({ trigger, children }) => {
+export const Modal: React.FC<ModalProps> = ({
+  trigger,
+  children,
+  validateBeforeOpen,
+}) => {
   const [isVisible, setIsVisible] = useState(false)
   const modalRef = useRef<HTMLDivElement | null>(null)
 
@@ -24,9 +27,18 @@ export const Modal: React.FC<ModalProps> = ({ trigger, children }) => {
     }
   }, [])
 
+  const handleTriggerClick = async () => {
+    if (validateBeforeOpen) {
+      const shouldOpen = await validateBeforeOpen()
+      setIsVisible(shouldOpen)
+    } else {
+      setIsVisible(true)
+    }
+  }
+
   return (
     <div ref={modalRef} className="relative">
-      <div onClick={() => setIsVisible(!isVisible)}>{trigger}</div>
+      {trigger && <div onClick={handleTriggerClick}>{trigger}</div>}
       {isVisible && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
           <div className="absolute w-full h-full bg-[#131313] opacity-50"></div>
@@ -44,3 +56,5 @@ export const Modal: React.FC<ModalProps> = ({ trigger, children }) => {
     </div>
   )
 }
+
+export default Modal

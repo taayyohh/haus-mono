@@ -6,6 +6,7 @@ import { IProduct, zodProductSchema } from '@/models/Product'
 import { createStripeProduct } from '@/modules/shop'
 import { productFields } from '@/modules/shop/components/admin/product/fields'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import { toast } from 'sonner'
 
 const CreateProductForm = () => {
   const handleSubmit = async (fields: IProduct) => {
@@ -46,6 +47,7 @@ const CreateProductForm = () => {
       console.log('failed')
     } else {
       console.log('Product created successfully:', data)
+      toast.message(`${product.name} created successfully`)
     }
   }
 

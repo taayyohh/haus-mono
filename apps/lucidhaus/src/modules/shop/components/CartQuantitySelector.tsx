@@ -6,7 +6,7 @@ export const CartQuantitySelector = ({ cartItem }: { cartItem: CartItem }) => {
   const increment = useCartStore((state) => state.incrementProductQuantity)
   const decrement = useCartStore((state) => state.decrementProductQuantity)
   const lastItemInCart = cartItem.quantity <= 1
-  const supplyAvailable = cartItem.quantity < (cartItem.haus.quantity || 0)
+  const hasSupply = cartItem.quantity < (cartItem.haus.quantity || 0)
 
   const handleDecrement = useCallback(() => {
     if (!lastItemInCart) {
@@ -17,7 +17,7 @@ export const CartQuantitySelector = ({ cartItem }: { cartItem: CartItem }) => {
   }, [cartItem.quantity])
 
   const handleIncrement = useCallback(() => {
-    if (supplyAvailable) increment(cartItem.haus.stripeId!)
+    if (hasSupply) increment(cartItem.haus.stripeId!)
   }, [cartItem.quantity])
 
   const handleRemove = useCallback(() => {
@@ -28,7 +28,7 @@ export const CartQuantitySelector = ({ cartItem }: { cartItem: CartItem }) => {
     <div className={'grid grid-cols-3 gap-2'}>
       <button onClick={handleDecrement}>-</button>
       <button>{cartItem.quantity}</button>
-      <button onClick={handleIncrement} className={!supplyAvailable ? 'opacity-30' : ''}>
+      <button onClick={handleIncrement} className={!hasSupply ? 'opacity-30' : ''}>
         +
       </button>
     </div>

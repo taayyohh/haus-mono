@@ -5,8 +5,8 @@ export interface EmailOptions {
   from: string
   to: string
   subject: string
-  text: string
-  html: string
+  text?: string
+  html?: string
 }
 
 export const sendEmail = async (options: EmailOptions): Promise<void> => {
