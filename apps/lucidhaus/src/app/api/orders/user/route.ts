@@ -1,7 +1,7 @@
 import { authenticateUser } from '@/modules/auth/utils/authenticateUser'
 import connectDb from '@/modules/auth/utils/db'
 import Order from '@/models/Order'
-import { NextResponse, NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { AuthenticatedRequest } from '@/modules/auth/utils/verifyToken'
 
 export const GET = connectDb(

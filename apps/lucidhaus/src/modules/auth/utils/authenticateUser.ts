@@ -6,7 +6,7 @@ export function authenticateUser(
 ) {
   return async function protectedRouteHandler(req: NextRequest) {
     if (!(await isUser(req))) {
-      return NextResponse.json([], { status: 403 })
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
     return routeHandler(req)
   }

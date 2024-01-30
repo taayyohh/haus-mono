@@ -76,6 +76,6 @@ const orderSchema = new Schema({
   notes: String,
 })
 
-const Order = mongoose.models?.Order || model<IOrder>('Order', orderSchema)
+const Order = mongoose.models.Order || model<IOrder>('Order', orderSchema)
 
 export default Order

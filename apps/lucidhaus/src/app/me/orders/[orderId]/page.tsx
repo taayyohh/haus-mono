@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-import { fetchUserOrders } from '@/modules/shop/utils/fetchUserOrders'
 import Link from 'next/link'
 import React from 'react'
 import { fetchUserOrder } from '@/modules/shop/utils/fetchUserOrder'
