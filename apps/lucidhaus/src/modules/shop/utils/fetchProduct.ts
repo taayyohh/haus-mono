@@ -7,7 +7,7 @@ export async function fetchProduct(slug: string): Promise<{ data: IProduct & { s
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: {} as IProduct & { slug: string } }
   }
 }

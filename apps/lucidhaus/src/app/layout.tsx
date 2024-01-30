@@ -60,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         priority
                       />
                     </Link>
+
                     <Navigation />
                   </div>
                 </div>

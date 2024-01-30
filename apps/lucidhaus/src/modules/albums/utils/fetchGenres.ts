@@ -8,7 +8,7 @@ export async function fetchGenres(page = 1, limit = 10): Promise<{ data: IGenre[
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

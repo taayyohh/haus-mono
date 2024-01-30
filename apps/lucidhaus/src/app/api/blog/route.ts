@@ -32,7 +32,6 @@ export const POST = connectDb(
         { status: 201 }
       )
     } catch (err) {
-      console.log('err', err)
       return NextResponse.json({ error: 'Error creating blog post' }, { status: 500 })
     }
   })

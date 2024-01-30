@@ -60,8 +60,6 @@ export const PUT = connectDb(
 
     const { name, bio, albums, heroImage } = await req.json()
 
-    console.log('name', name)
-
     try {
       const artist = await Artist.findOneAndUpdate(query, { name, bio, albums, heroImage  }, { new: true })
 

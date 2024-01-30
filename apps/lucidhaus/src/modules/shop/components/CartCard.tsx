@@ -19,7 +19,7 @@ export default function CartCard({
       }
       key={cartItem.haus.stripeId}
     >
-      <div className={'min-w-[120px] min-h-[120px]'}>
+      <div className={'min-w-[70px] :min-h-[70px] sm:min-w-[120px] sm:min-h-[120px]'}>
         <Link href={`/shop/${cartItem.haus.slug}`}>
           <Image
             src={getIpfsGateway(cartItem.haus.imageUri[0] || '')}
@@ -32,9 +32,9 @@ export default function CartCard({
       </div>
 
       <div className={'flex flex-col py-4'}>
-        <div className={'text-2xl font-bold'}>{cartItem.haus.name}</div>
+        <div className={'text-lg sm:text-2xl font-bold'}>{cartItem.haus.name}</div>
         <div
-          className={'italic max-w-[85%]'}
+          className={'text-xs sm:text-md italic max-w-[85%]'}
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -47,7 +47,7 @@ export default function CartCard({
         >
           {cartItem.haus.description}
         </div>{' '}
-        <div className={'absolute right-6 bottom-3'}>
+        <div className={'absolute right-4 sm:right-6 bottom-1 sm:bottom-3'}>
           {cartItem.haus.price} <span className={'text-xs'}>USD</span>
         </div>
         {controls && (

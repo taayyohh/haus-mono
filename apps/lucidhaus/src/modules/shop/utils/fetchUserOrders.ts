@@ -19,10 +19,14 @@ export async function fetchUserOrders(page = 1, limit = 50): Promise<{ data: IOr
         headers: { Cookie: `${LOGIN_COOKIE_NAME}=${cookie}` },
       }
     )
+
     const data = await response.json()
+    if (data.error) {
+      return { data: [] }
+    }
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

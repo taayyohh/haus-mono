@@ -25,7 +25,6 @@ export const POST = connectDb(
         { status: 201 }
       )
     } catch (err) {
-      console.log('err', err)
       return NextResponse.json({ error: 'Error creating artist' }, { status: 500 })
     }
   })

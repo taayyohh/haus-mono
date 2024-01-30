@@ -18,8 +18,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ data: session }, { status: 200 })
   } catch (e) {
-    console.log('err', e)
-
     return NextResponse.json({ data: e }, { status: 500 })
   }
 }

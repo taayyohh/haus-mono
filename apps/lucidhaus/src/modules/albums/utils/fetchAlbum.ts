@@ -7,7 +7,7 @@ export async function fetchAlbum(slugOrId: string): Promise<{ data: IAlbum }> {
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: {} as IAlbum }
   }
 }

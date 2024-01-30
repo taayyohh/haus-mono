@@ -18,7 +18,6 @@ export const verifyToken = async (cookie?: RequestCookie): Promise<AuthUser | nu
   let decodedToken: string | JwtPayload
   try {
     decodedToken = jwt.verify(cookie.value, secretKey) // Verify the token
-    console.log('DDD', decodedToken)
   } catch (err) {
     // If the token is invalid, return null
     return null

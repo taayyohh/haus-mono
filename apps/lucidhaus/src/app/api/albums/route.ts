@@ -49,7 +49,6 @@ export const POST = connectDb(
       await album.save()
       return NextResponse.json({ message: 'Album created successfully' }, { status: 201 })
     } catch (err) {
-      console.log('err', err)
       return NextResponse.json({ error: 'Error creating album' }, { status: 500 })
     }
   })

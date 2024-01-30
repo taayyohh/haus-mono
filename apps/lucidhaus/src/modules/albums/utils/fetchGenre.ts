@@ -7,7 +7,7 @@ export async function fetchGenre(slug: string): Promise<{ data: IGenre }> {
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: {} as IGenre }
   }
 }

@@ -10,7 +10,7 @@ export async function fetchArtist(
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: {} as IArtist }
   }
 }

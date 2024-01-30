@@ -11,7 +11,7 @@ export async function fetchVideos(
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

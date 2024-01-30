@@ -16,7 +16,7 @@ export const POST = connectDb(
       await genre.save()
       return NextResponse.json({ message: 'Genre created successfully' }, { status: 201 })
     } catch (err) {
-      console.log('err', err)
+
       return NextResponse.json({ error: 'Error creating genre' }, { status: 500 })
     }
   })

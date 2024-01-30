@@ -19,7 +19,7 @@ export async function fetchOrders(page = 1, limit = 50): Promise<{ data: IOrder[
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

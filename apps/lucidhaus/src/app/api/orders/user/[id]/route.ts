@@ -9,7 +9,7 @@ export const GET = connectDb(
     const orderId = req.nextUrl.pathname.split('/')[4]
 
     try {
-      const order = await Order.findById(orderId)
+      const order = await Order.findById(orderId).populate('products.product')
       if (!order) {
         return NextResponse.json({ error: 'Order not found' }, { status: 404 })
       }

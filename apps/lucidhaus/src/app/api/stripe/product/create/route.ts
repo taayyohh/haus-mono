@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
   try {
     const formData: FormData = await req.json()
 
-    console.log('F', formData)
     const product = await stripe.products.create({
       name: formData.name,
       description: formData.description,

@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 }
 export default async function Page() {
   const { data: orders } = await fetchUserOrders()
+  console.log('OR', orders)
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,9 +43,13 @@ export default async function Page() {
         orders?.map((order) => (
           <div key={order._id} className={'flex flex-col border rounded border-white-13'}>
             <Link href={`/me/orders/${order._id}`} className="p-4">
-              <div>Id:{order._id}</div>
-              <div>{order.email}</div>
-              <div>{order.status}</div>
+              <div>orderId: #{order._id}</div>
+              <div>
+                <div>{order.name}</div>
+                <div>{order.email}</div>
+                <div>{order.status}</div>
+              </div>
+
             </Link>
           </div>
         ))}

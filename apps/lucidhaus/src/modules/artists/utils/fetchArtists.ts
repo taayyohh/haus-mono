@@ -8,7 +8,7 @@ export async function fetchArtists(page = 1, limit = 10): Promise<{ data: IArtis
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

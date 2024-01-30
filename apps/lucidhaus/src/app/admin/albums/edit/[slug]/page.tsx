@@ -8,8 +8,6 @@ export const dynamic = 'force-dynamic'
 export default async function Page(context: any) {
   const { data: album } = await fetchAlbum(context.params.slug)
 
-  console.log('al', album)
-
   return <div>hi</div>
 }
 

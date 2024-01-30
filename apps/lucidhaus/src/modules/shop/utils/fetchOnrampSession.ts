@@ -23,7 +23,7 @@ export async function fetchOnrampSession() {
     const data = response.data
     return { ...data }
   } catch (err) {
-    console.log('err', err)
+
     return { data: [] }
   }
 }

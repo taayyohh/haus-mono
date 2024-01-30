@@ -8,7 +8,6 @@ export async function fetchProducts(page = 1, limit = 10): Promise<{ data: IProd
     const data = await response.json()
     return { data }
   } catch (err) {
-    console.log('err', err)
     return { data: [] }
   }
 }
