@@ -99,7 +99,6 @@ export default function Payment() {
     try {
       setIsPurchasing(true)
       const paymentIntent = await createStripePaymentIntent(internationalTotal, email)
-
       const confirmError = await confirmStripePayment(
         stripe,
         elements,
