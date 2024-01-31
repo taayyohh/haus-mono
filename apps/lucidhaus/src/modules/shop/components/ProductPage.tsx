@@ -42,6 +42,7 @@ const ProductPage = ({ product }: { product: combinedProduct }) => {
           <div className={'text-2xl py-6 text-center'}>{product.haus.name}</div>
           <div className={'text-sm'}>{product.haus.description}</div>
           <div className="py-6 text-xl">{product.haus.price} USD</div>
+
           <CartSelector itemsInCart={itemsInCart} product={product} />
         </div>
       </div>
