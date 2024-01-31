@@ -112,7 +112,6 @@ export default function Payment() {
       }
 
       const { token } = await getSuccessToken(email)
-
       const createOrderResponse = await createOrder(
         {
           privyId: user?.id,
