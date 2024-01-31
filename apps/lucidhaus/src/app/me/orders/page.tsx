@@ -35,7 +35,6 @@ export const metadata: Metadata = {
 }
 export default async function Page() {
   const { data: orders } = await fetchUserOrders()
-  console.log('OR', orders)
 
   return (
     <div className="flex flex-col gap-4">

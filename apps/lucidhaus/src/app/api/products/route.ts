@@ -36,7 +36,6 @@ export const POST = connectDb(
         { status: 201 }
       )
     } catch (err) {
-
       return NextResponse.json({ error: err }, { status: 500 })
     }
   })
@@ -53,6 +52,17 @@ export const GET = connectDb(async (req) => {
       .skip(skip)
       .limit(limit)
       .exec()
+
+    // Updated query to filter products with quantity greater than 0
+    // const products = await Product.find({
+    //   $or: [
+    //     { quantity: { $gt: 0 } },
+    //     { 'stock.quantity': { $gt: 0 } },
+    //   ],
+    // })
+    //   .skip(skip)
+    //   .limit(limit)
+    //   .exec()
     return NextResponse.json(products, { status: 200 })
   } catch (err) {
     return NextResponse.json({ error: 'Error fetching products' }, { status: 500 })
