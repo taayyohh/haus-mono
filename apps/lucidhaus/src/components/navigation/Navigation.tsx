@@ -14,7 +14,7 @@ const Navigation = () => {
           <Link href={'/artists'}>Artists</Link>
           <Link href={'/discography'}>Discography</Link>
           <Link href={'/videos'}>Videos</Link>
-          <Link href={'/shop'}>Shop</Link>
+          {/*<Link href={'/shop'}>Shop</Link>*/}
         </div>
         <Cart />
       </PopOut>
