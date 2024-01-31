@@ -11,7 +11,6 @@ export function CheckoutForm({ children }: { children: ReactElement }) {
   const total = useCartStore((state) => state.cartTotal)
 
   if (!total) return null
-
   const options: StripeElementsOptions = {
     mode: 'payment' as 'payment',
     currency: 'usd',
