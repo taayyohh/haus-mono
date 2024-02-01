@@ -1,5 +1,6 @@
 'use client'
 
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </PrivyProvider>
         </div>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

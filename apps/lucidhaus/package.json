@@ -24,6 +24,7 @@
     "@types/react-dom": "18.2.4",
     "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.9",
+    "@vercel/speed-insights": "^1.0.9",
     "@vidstack/react": "^1.1.11",
     "@zoralabs/universal-minter": "^0.2.12",
     "@zoralabs/zora-1155-contracts": "^2.0.3",
