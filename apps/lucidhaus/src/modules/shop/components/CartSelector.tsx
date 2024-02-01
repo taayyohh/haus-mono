@@ -10,7 +10,6 @@ export const CartSelector = ({
   product: combinedProduct
 }) => {
   const addProduct = useCartStore((state) => state.addProduct)
-  console.log('HI')
 
   return (
     <>
