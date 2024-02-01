@@ -23,7 +23,6 @@ export async function sendEmailConfirmation({
       },
       body: JSON.stringify(emailOptions),
     })
-
     return await response.json()
   } catch (err) {
     console.error('Error calling mailer API:', err)
