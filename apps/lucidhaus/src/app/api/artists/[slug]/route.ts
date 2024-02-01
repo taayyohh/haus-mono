@@ -23,7 +23,7 @@ export const GET = connectDb(async (req) => {
       } else {
         query = { slug: slugOrId }
       }
-
+      console.log('ar', artist)
       const artist: IArtist | null = await Artist.findOne(query).exec()
       if (!artist) {
         return NextResponse.json({ error: 'Artist not found' }, { status: 404 })
