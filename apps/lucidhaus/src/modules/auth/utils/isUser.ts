@@ -14,6 +14,7 @@ async function isUser(
   }
 
   let decodedToken: string | JwtPayload
+
   try {
     decodedToken = jwt.verify(cookie.value, secretKey) // Verify the token
     return (req.user = decodedToken as AuthUser)

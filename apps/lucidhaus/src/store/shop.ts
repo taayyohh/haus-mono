@@ -3,21 +3,30 @@ import { IProduct } from '@/models/Product'
 import Stripe from 'stripe'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
+export type ProductSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
+
 export type CartItem = {
   haus: IProduct
   stripe: Stripe.Product | undefined
   quantity: number
-  size?: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL'
+  size?: ProductSize
 }
 
 type CartState = {
   items: CartItem[]
   totalItems: number
   cartTotal: number
-  addProduct: (product: { haus: IProduct; stripe: Stripe.Product | undefined }) => void
-  removeProduct: (stripeId: string) => void
-  incrementProductQuantity: (stripeId: string) => void
-  decrementProductQuantity: (stripeId: string) => void
+  internationalShipping: number
+  addProduct: (
+    product: {
+      haus: IProduct
+      stripe: Stripe.Product | undefined
+    },
+    size?: ProductSize
+  ) => void
+  removeProduct: (stripeId: string, size?: ProductSize) => void
+  incrementProductQuantity: (stripeId: string, size?: ProductSize) => void
+  decrementProductQuantity: (stripeId: string, size?: ProductSize) => void
   clearCart: () => void
 }
 
@@ -27,21 +36,22 @@ const useCartStore = create(
       items: [],
       totalItems: 0,
       cartTotal: 0,
+      internationalShipping: 0,
 
-      addProduct: (product) => {
+      addProduct: (product, size = undefined) => {
         set((state) => {
           const existingProduct = state.items.find(
-            (item) => item.haus.stripeId === product.haus.stripeId
+            (item) => item.haus.stripeId === product.haus.stripeId && item.size === size
           )
           let newItems
           if (existingProduct) {
             newItems = state.items.map((item) =>
-              item.haus.stripeId === product.haus.stripeId
+              item.haus.stripeId === product.haus.stripeId && item.size === size
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
             )
           } else {
-            newItems = [...state.items, { ...product, quantity: 1 }]
+            newItems = [...state.items, { ...product, quantity: 1, size }]
           }
 
           const newTotal = newItems.reduce((accumulator, currentValue) => {
@@ -56,21 +66,15 @@ const useCartStore = create(
         })
       },
 
-      removeProduct: (stripeId) => {
+      removeProduct: (stripeId, size = undefined) => {
         set((state) => {
-          const existingProduct = state.items.find(
-            (item) => item.haus.stripeId === stripeId
+          const newItems = state.items.filter(
+            (item) =>
+              !(
+                item.haus.stripeId === stripeId &&
+                (size === undefined || item.size === size)
+              )
           )
-          let newItems
-          if (existingProduct && existingProduct.quantity > 1) {
-            newItems = state.items.map((item) =>
-              item.haus.stripeId === stripeId
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            )
-          } else {
-            newItems = state.items.filter((item) => item.haus.stripeId !== stripeId)
-          }
 
           const newTotal = newItems.reduce((accumulator, currentValue) => {
             return accumulator + currentValue.haus.price * currentValue.quantity
@@ -78,16 +82,16 @@ const useCartStore = create(
 
           return {
             items: newItems,
-            totalItems: state.totalItems - 1,
+            totalItems: state.totalItems - (state.items.length - newItems.length),
             cartTotal: newTotal,
           }
         })
       },
 
-      incrementProductQuantity: (stripeId) => {
+      incrementProductQuantity: (stripeId, size = undefined) => {
         set((state) => {
           const newItems = state.items.map((item) =>
-            item.haus.stripeId === stripeId
+            item.haus.stripeId === stripeId && (size === undefined || item.size === size)
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )
@@ -104,17 +108,12 @@ const useCartStore = create(
         })
       },
 
-      decrementProductQuantity: (stripeId) => {
+      decrementProductQuantity: (stripeId, size = undefined) => {
         set((state) => {
-          const existingProduct = state.items.find(
-            (item) => item.haus.stripeId === stripeId
-          )
-          if (!existingProduct || existingProduct.quantity <= 1) {
-            return state // Do not reduce if quantity is 0 or 1
-          }
-
           const newItems = state.items.map((item) =>
-            item.haus.stripeId === stripeId
+            item.haus.stripeId === stripeId &&
+            (size === undefined || item.size === size) &&
+            item.quantity > 1
               ? { ...item, quantity: item.quantity - 1 }
               : item
           )
@@ -125,7 +124,14 @@ const useCartStore = create(
 
           return {
             items: newItems,
-            totalItems: state.totalItems - 1,
+            totalItems:
+              state.totalItems -
+              newItems.filter(
+                (item) =>
+                  item.haus.stripeId === stripeId &&
+                  (size === undefined || item.size === size) &&
+                  item.quantity <= 1
+              ).length,
             cartTotal: newTotal,
           }
         })

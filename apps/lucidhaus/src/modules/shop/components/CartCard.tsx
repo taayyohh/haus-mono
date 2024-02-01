@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-import useCartStore, { CartItem } from '@/store/shop'
-import { useCallback } from 'react'
+import { CartItem } from '@/store/shop'
 import { CartQuantitySelector } from '@/modules/shop/components/CartQuantitySelector'
 
 export default function CartCard({
@@ -12,6 +11,7 @@ export default function CartCard({
   cartItem: CartItem
   controls?: boolean
 }) {
+
   return (
     <div
       className={
@@ -19,8 +19,12 @@ export default function CartCard({
       }
       key={cartItem.haus.stripeId}
     >
-      <div className={'min-w-[70px] :min-h-[70px] sm:min-w-[120px] sm:min-h-[120px]'}>
-        <Link href={`/shop/${cartItem.haus.slug}`}>
+      <div
+        className={
+          'inline-flex min-w-[70px] :min-h-[70px] sm:min-w-[120px] sm:min-h-[120px]'
+        }
+      >
+        <Link href={`/shop/${cartItem.haus.slug}`} className="flex">
           <Image
             src={getIpfsGateway(cartItem.haus.imageUri[0] || '')}
             alt={`image for ${cartItem.haus.name}`}
@@ -31,10 +35,10 @@ export default function CartCard({
         </Link>
       </div>
 
-      <div className={'flex flex-col py-4'}>
+      <div className={'flex flex-col gap-1 py-4'}>
         <div className={'text-lg sm:text-2xl font-bold'}>{cartItem.haus.name}</div>
         <div
-          className={'text-xs sm:text-md italic max-w-[85%]'}
+          className={'text-xs sm:text-md italic max-w-[85%] opacity-80'}
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -46,7 +50,12 @@ export default function CartCard({
           }}
         >
           {cartItem.haus.description}
-        </div>{' '}
+        </div>
+        <div className={'flex gap-1 text-xs opacity-80 font-bold'}>
+          {cartItem.size && <div>{cartItem.size}</div>}
+          <div>({cartItem.quantity})</div>
+        </div>
+
         <div className={'absolute right-4 sm:right-6 bottom-1 sm:bottom-3'}>
           {cartItem.haus.price} <span className={'text-xs'}>USD</span>
         </div>

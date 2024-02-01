@@ -7,9 +7,7 @@ const getCookie = async (name: string) => {
   return cookies().get(name)?.value ?? ''
 }
 
-export async function fetchUserOrder(
-  orderId: string
-): Promise<{ data: IOrder | undefined }> {
+export async function fetchUserOrder(orderId: string): Promise<{ data: IOrder }> {
   const cookie = await getCookie(LOGIN_COOKIE_NAME)
 
   let response
@@ -24,7 +22,6 @@ export async function fetchUserOrder(
     const data = await response.json()
     return { data }
   } catch (err) {
-
-    return { data: undefined }
+    return { data: {} as IOrder }
   }
 }

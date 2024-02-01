@@ -3,6 +3,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { fetchUserOrders } from '@/modules/shop/utils/fetchUserOrders'
 import Link from 'next/link'
 import React from 'react'
+import Orders from '@/modules/orders/components/Orders'
 
 export const metadata: Metadata = {
   title: 'LUCIDHAUS',
@@ -36,22 +37,5 @@ export const metadata: Metadata = {
 export default async function Page() {
   const { data: orders } = await fetchUserOrders()
 
-  return (
-    <div className="flex flex-col gap-4">
-      {orders &&
-        orders?.map((order) => (
-          <div key={order._id} className={'flex flex-col border rounded border-white-13'}>
-            <Link href={`/me/orders/${order._id}`} className="p-4">
-              <div>orderId: #{order._id}</div>
-              <div>
-                <div>{order.name}</div>
-                <div>{order.email}</div>
-                <div>{order.status}</div>
-              </div>
-
-            </Link>
-          </div>
-        ))}
-    </div>
-  )
+  return <Orders initialData={orders} />
 }

@@ -3,17 +3,18 @@ import useCartStore, { CartItem } from '@/store/shop'
 import { combinedProduct } from '@/modules/shop/components/ProductPage'
 
 export const CartSelector = ({
-  itemsInCart,
+  cart,
   product,
 }: {
-  itemsInCart: CartItem[]
+  cart: CartItem[]
   product: combinedProduct
 }) => {
   const addProduct = useCartStore((state) => state.addProduct)
+  console.log('HI')
 
   return (
     <>
-      {(itemsInCart.length === 0 && (
+      {(cart.length === 0 && (
         <button
           className={`w-full px-6 py-2 border border-white-13 rounded text-white bg-[#1b1b1b] hover:bg-[#111]`}
           style={{ boxShadow: '1px 3px 3px 0px #141418' }}
@@ -23,7 +24,7 @@ export const CartSelector = ({
         </button>
       )) || (
         <div className="px-6 py-2 rounded text-white bg-[#1b1b1b]">
-          <CartQuantitySelector cartItem={itemsInCart[0]} />
+          <CartQuantitySelector cartItem={cart[0]} />
         </div>
       )}
     </>

@@ -7,7 +7,7 @@ const getCookie = async (name: string) => {
   return cookies().get(name)?.value ?? ''
 }
 
-export async function fetchOrders(page = 1, limit = 50): Promise<{ data: IOrder[] }> {
+export async function fetchOrders(page = 1, limit = 100): Promise<{ data: IOrder[] }> {
   const cookie = await getCookie(LOGIN_COOKIE_NAME)
 
   let response

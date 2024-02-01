@@ -24,6 +24,7 @@ const productSchema = new Schema({
 
 // Defining a Zod schema for stock items for runtime validation.
 const zodStockItemSchema = z.object({
+  _id: z.string().optional(),
   size: z.enum(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
   quantity: z.number().min(0),
 })
@@ -45,6 +46,7 @@ export const zodProductSchema = z.object({
 
 // Infer a TypeScript type from the Zod schema for static type checking.
 export type IProduct = z.infer<typeof zodProductSchema>
+export type IStock = z.infer<typeof zodStockItemSchema>
 
 // Pre-save middleware for the product schema.
 // Automatically generates and updates the slug before saving the product.

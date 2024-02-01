@@ -6,9 +6,9 @@ import {
   useStripe,
   AddressElement,
 } from '@stripe/react-stripe-js'
-import useCartStore from '@/store/shop'
+import useCartStore, { CartItem } from '@/store/shop'
 import PaymentModal from '@/modules/shop/components/PaymentModal'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 import { zodShippingAddressSchema } from '@/models/Order'
 import { z } from 'zod'
@@ -49,6 +49,30 @@ function sumUnitAmountForNickname(
   }, 0)
 }
 
+async function fetchPricesForUniqueProducts(items: CartItem[]) {
+  const uniqueProductIds = new Set(items.map((item) => item.haus.stripeId || ''))
+
+  const promises = Array.from(uniqueProductIds).map((id) =>
+    fetchStripePrices(id).then((prices) => {
+      const relevantItems = items.filter((item) => item.haus.stripeId === id)
+
+      const totalQuantity = relevantItems.reduce((sum, item) => sum + item.quantity, 0)
+
+      return {
+        priceData: prices.data,
+        quantity: totalQuantity,
+      }
+    })
+  )
+
+  return await Promise.all(promises)
+}
+
+const calculateTotalPrice = async (items: CartItem[], nickname: string) => {
+  const productsWithQuantity = await fetchPricesForUniqueProducts(items)
+  return sumUnitAmountForNickname(productsWithQuantity, nickname) / 100 // Dividing by 100 for currency formatting
+}
+
 export default function Payment() {
   const router = useRouter()
   const stripe = useStripe()
@@ -81,19 +105,19 @@ export default function Payment() {
       setName(event.value.name)
 
       if (event.value.address.country !== 'US') {
-        const promises = items.map((item) =>
-          fetchStripePrices(item?.stripe?.id || '').then((prices) => ({
-            priceData: prices.data,
-            quantity: item.quantity,
-          }))
-        )
-        const productsWithQuantity = await Promise.all(promises)
-        setInternationalTotal(
-          sumUnitAmountForNickname(productsWithQuantity, 'international') / 100
-        )
+        const internationalTotal = await calculateTotalPrice(items, 'international')
+        setInternationalTotal(internationalTotal)
       }
     }
   }
+
+  useEffect(() => {
+    const calculate = async () => {
+      const internationalTotal = await calculateTotalPrice(items, 'international')
+      setInternationalTotal(internationalTotal)
+    }
+    calculate()
+  }, [items])
 
   const handlePurchase = async () => {
     try {
@@ -133,11 +157,18 @@ export default function Payment() {
         const emailConfirmationResponse = await sendEmailConfirmation({
           from: '"LucidHaus" <no-reply@ifthen.club>',
           to: email,
-          subject: 'Payment Confirmation',
-          html: '<p>Your payment was successful!</p>',
+          subject: `Hi, ${name}, Your Order from LucidHaus has been placed!`,
+          html: '<p>Your order was successful! Thanks so much for your support <3</p>',
         })
 
-        if (emailConfirmationResponse.ok) {
+        const hausEmailConfirmationResponse = await sendEmailConfirmation({
+          from: '"LucidHaus" <no-reply@ifthen.club>',
+          to: 'team@lucid.haus',
+          subject: `Order placed by ${name}!`,
+          html: '<p>An order was placed</p>',
+        })
+
+        if (emailConfirmationResponse.ok && hausEmailConfirmationResponse.ok) {
           setIsPurchasing(false)
           clearCart()
           toast.message('Your purchase was successful!', {

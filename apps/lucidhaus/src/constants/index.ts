@@ -1,4 +1,4 @@
-export const LOGIN_COOKIE_NAME = 'Login-Cookie'
+export const LOGIN_COOKIE_NAME = 'lucidhaus-account-session'
 export const isClientSide = typeof window !== 'undefined'
 
 export const NULL_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000000000'

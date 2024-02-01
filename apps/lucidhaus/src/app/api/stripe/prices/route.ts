@@ -9,14 +9,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Product ID is required' }, { status: 400 })
     }
 
-    // Fetch the prices associated with the product
     const prices = await stripe.prices.list({
       product: productId,
     })
 
-    console.log('OPRA', prices)
-
-    // Return the prices
     return NextResponse.json(prices, { status: 200 })
   } catch (error: any) {
     console.error('Error fetching Stripe prices:', error)

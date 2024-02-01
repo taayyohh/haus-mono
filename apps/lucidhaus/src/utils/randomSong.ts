@@ -6,8 +6,9 @@ import { OrderDirection, ZoraCreateToken_OrderBy } from '@/graphql/sdk.generated
 import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
 import { PlayerTrack } from '@/store/player'
 
+export  const random = (max: any[]) => Math.floor(Math.random() * max.length)
 export const randomSong = async (songs: IAlbum[]): Promise<PlayerTrack> => {
-  const random = (max: any[]) => Math.floor(Math.random() * max.length)
+
   const album = songs[random(songs)]
 
   if (!album) return {} as Promise<PlayerTrack>

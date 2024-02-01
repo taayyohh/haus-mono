@@ -62,12 +62,13 @@ export default function PaymentModal({
                     Total: {internationalTotal} <span className={'text-sm'}>USD</span>
                   </div>
                   {internationalTotal !== total && (
-                    <div className={'flex flex-col text-sm py-1 italic'}>
-                      International Shipping: {internationalTotal - total} USD
+                    <div className={'flex gap-1 text-sm py-1 italic'}>
+                      {total} USD + ({internationalTotal - total}{' '}
+                      <span className={'xs'}>USD</span> international shipping)
                     </div>
                   )}
                   <div className={'italic'}>{totalItems} items</div>
-                  <div className="flex flex-col mt-4 gap-2">
+                  <div className="flex flex-col mt-4 gap-2 bg-[#1b1b1b] px-4 py-2">
                     <div>
                       <div>{name}</div>
                       <div>{email}</div>
@@ -92,11 +93,13 @@ export default function PaymentModal({
                     'flex flex-col max-h-[300px] gap-2 overflow-y-scroll p-2 border border-white-13'
                   }
                 >
-                  {items.map((cartItem) => (
-                    <CartCard key={cartItem.haus.stripeId} cartItem={cartItem} />
+                  {items.map((cartItem, i) => (
+                    <CartCard
+                      key={`${cartItem.haus.stripeId}-${i}`}
+                      cartItem={cartItem}
+                    />
                   ))}
                 </div>
-
                 <button
                   onClick={handlePurchase}
                   className={`px-6 py-4 flex items-center justify-center border ${

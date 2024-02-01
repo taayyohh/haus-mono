@@ -16,6 +16,6 @@ const userSchema = new Schema({
 })
 
 // Check if the model is already registered
-const User = mongoose.model('User', userSchema)
+const User = mongoose.models.User || mongoose.model('User', userSchema)
 
 export default User

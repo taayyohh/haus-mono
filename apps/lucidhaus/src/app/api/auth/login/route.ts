@@ -21,9 +21,7 @@ const generateToken = (user: PrivyUser) => {
     role,
   }
 
-  return jwt.sign(authUser, secretKey, {
-    expiresIn: '1h', // Set an expiration time for the token
-  })
+  return jwt.sign(authUser, secretKey) // adjust expiry
 }
 
 export const POST = connectDb(async (req: NextRequest) => {

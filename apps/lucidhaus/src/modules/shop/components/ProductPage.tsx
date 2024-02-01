@@ -7,6 +7,7 @@ import Stripe from 'stripe'
 import useCartStore from '@/store/shop'
 import { useResponsive } from '@/hooks/useResponsive'
 import { CartSelector } from '@/modules/shop/components/CartSelector'
+import { CartStockSelector } from '@/modules/shop/components/CartStockSelector'
 
 export type combinedProduct = {
   haus: IProduct
@@ -16,7 +17,7 @@ export type combinedProduct = {
 const ProductPage = ({ product }: { product: combinedProduct }) => {
   const { isMobile } = useResponsive()
   const items = useCartStore((state) => state.items)
-  const itemsInCart = items.filter((item) => item.haus.stripeId === product.haus.stripeId)
+  const cart = items.filter((item) => item.haus.stripeId === product.haus.stripeId)
 
   return (
     <div className={'flex flex-col text-white w-full mx-auto items-center'}>
@@ -43,7 +44,11 @@ const ProductPage = ({ product }: { product: combinedProduct }) => {
           <div className={'text-sm'}>{product.haus.description}</div>
           <div className="py-6 text-xl">{product.haus.price} USD</div>
 
-          <CartSelector itemsInCart={itemsInCart} product={product} />
+          {!!product.haus.stock?.length ? (
+            <CartStockSelector cart={cart} product={product} />
+          ) : (
+            <CartSelector cart={cart} product={product} />
+          )}
         </div>
       </div>
     </div>

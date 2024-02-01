@@ -24,8 +24,12 @@ export default function Cart() {
           }
         >
           {items &&
-            items.map((cartItem) => (
-              <CartCard key={cartItem.haus._id} cartItem={cartItem} controls={true} />
+            items.map((cartItem, i) => (
+              <CartCard
+                key={`${cartItem.haus._id}-${i}`}
+                cartItem={cartItem}
+                controls={true}
+              />
             ))}
         </div>
       </div>

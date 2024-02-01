@@ -148,8 +148,8 @@ const EditOrderForm = ({ orderId }: { orderId: string }) => {
         }
       >
         {order?.products &&
-          order.products.map((product) => (
-            <div key={product.product._id}>
+          order.products.map((product, i) => (
+            <div key={`${product.product._id}-${i}`}>
               <ProductCard product={product.product} />
             </div>
           ))}

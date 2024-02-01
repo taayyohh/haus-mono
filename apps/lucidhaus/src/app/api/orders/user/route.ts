@@ -13,21 +13,10 @@ export const GET = connectDb(
     const page = pageParam ? parseInt(pageParam, 10) : 1
     const limit = limitParam ? parseInt(limitParam, 10) : 10
 
-    if (isNaN(page) || page < 1) {
-      return NextResponse.json({ error: 'Invalid page number' }, { status: 400 })
-    }
-    if (isNaN(limit) || limit < 1) {
-      return NextResponse.json({ error: 'Invalid limit' }, { status: 400 })
-    }
-
     try {
       const orders = await Order.find({ privyId })
         .limit(limit)
         .skip((page - 1) * limit)
-
-      if (!orders || orders.length === 0) {
-        return NextResponse.json({ error: 'No orders found' }, { status: 404 })
-      }
 
       return NextResponse.json(orders, { status: 200 })
     } catch (err) {
