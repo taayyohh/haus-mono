@@ -22,6 +22,7 @@ import { createOrder } from '@/modules/shop/utils/createOrder'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { fetchStripePrices } from '@/modules/shop/utils/fetchStripePrices'
+import { generateEmailHtml } from '@/modules/shop/utils/generateHtmlEmail'
 
 export type addressType = z.infer<typeof zodShippingAddressSchema>
 
@@ -116,7 +117,10 @@ export default function Payment() {
       const internationalTotal = await calculateTotalPrice(items, 'international')
       setInternationalTotal(internationalTotal)
     }
-    calculate()
+
+    if (!!address?.country && address?.country !== 'US') {
+      calculate()
+    }
   }, [items])
 
   const handlePurchase = async () => {
@@ -157,15 +161,15 @@ export default function Payment() {
         const emailConfirmationResponse = await sendEmailConfirmation({
           from: '"LucidHaus" <no-reply@ifthen.club>',
           to: email,
-          subject: `Hi, ${name}, Your Order from LucidHaus has been placed!`,
-          html: '<p>Your order was successful! Thanks so much for your support <3</p>',
+          subject: `Hi, ${name}, Your Order from Lucidhaus has been placed!`,
+          html: generateEmailHtml(name, items),
         })
 
         const hausEmailConfirmationResponse = await sendEmailConfirmation({
           from: '"LucidHaus" <no-reply@ifthen.club>',
           to: 'team@lucid.haus',
           subject: `Order placed by ${name}!`,
-          html: '<p>An order was placed</p>',
+          html: generateEmailHtml(name, items),
         })
 
         if (emailConfirmationResponse.ok && hausEmailConfirmationResponse.ok) {
