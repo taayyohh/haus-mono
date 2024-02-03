@@ -4,8 +4,7 @@ import useSWR from 'swr'
 import { IOrder } from '@/models/Order'
 import React from 'react'
 import ProductCard from '@/modules/shop/components/ProductCard'
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+import { authGetFetcher } from '@/utils/authGetFetcher'
 
 interface OrderProps {
   orderId: string
@@ -13,14 +12,16 @@ interface OrderProps {
 }
 
 function Order({ orderId, initialData }: OrderProps) {
-  const { data: order, error } = useSWR<IOrder>(`/api/orders/user/${orderId}`, fetcher, {
-    fallbackData: initialData,
-  })
+  const { data: order, error } = useSWR<IOrder>(
+    `/api/orders/user/${orderId}`,
+    authGetFetcher,
+    {
+      fallbackData: initialData,
+    }
+  )
 
   if (error) return <div>Failed to load order</div>
   if (!order) return <div>Loading...</div>
-
-  console.log('or', order)
 
   return (
     <div className="flex flex-col gap-4">

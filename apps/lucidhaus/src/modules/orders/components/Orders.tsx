@@ -4,11 +4,10 @@ import useSWR from 'swr'
 import { IOrder } from '@/models/Order'
 import Link from 'next/link'
 import React from 'react'
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+import { authGetFetcher } from '@/utils/authGetFetcher'
 
 function Orders({ initialData }: { initialData: IOrder[] }) {
-  const { data: orders, error } = useSWR<IOrder[]>('/api/orders/user', fetcher, {
+  const { data: orders, error } = useSWR<IOrder[]>('/api/orders/user', authGetFetcher, {
     fallbackData: initialData,
   })
 
