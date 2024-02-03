@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import Products from '@/modules/shop/Products'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.lucid.haus'),
+  metadataBase: new URL('https://lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

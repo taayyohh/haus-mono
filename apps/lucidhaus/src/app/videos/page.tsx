@@ -11,7 +11,7 @@ import MintButton from '@/components/MintButton'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.lucid.haus'),
+  metadataBase: new URL('https://lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

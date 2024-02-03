@@ -5,7 +5,7 @@ import { fetchUserOrder } from '@/modules/shop/utils/fetchUserOrder'
 import Order from '@/modules/orders/components/Order'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.lucid.haus'),
+  metadataBase: new URL('https://lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

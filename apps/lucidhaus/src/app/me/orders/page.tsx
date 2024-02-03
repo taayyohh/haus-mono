@@ -5,7 +5,7 @@ import React from 'react'
 import Orders from '@/modules/orders/components/Orders'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.lucid.haus'),
+  metadataBase: new URL('https://lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {
