@@ -11,6 +11,7 @@ interface OrderProps {
 }
 
 function Order({ initialData }: OrderProps) {
+  console.log('IT', initialData)
   const { data: order, error } = useSWR<IOrder>(
     `/api/orders/user/${initialData._id}`,
     authGetFetcher,
