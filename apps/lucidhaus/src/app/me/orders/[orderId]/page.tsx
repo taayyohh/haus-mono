@@ -37,6 +37,5 @@ export const metadata: Metadata = {
 export default async function Page(context: any) {
   const { data: order } = await fetchUserOrder(context.params.orderId)
 
-
-  return <Order orderId={order._id as string} initialData={order} />
+  return <Order initialData={order} />
 }

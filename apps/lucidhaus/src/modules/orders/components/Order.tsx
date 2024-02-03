@@ -7,13 +7,12 @@ import ProductCard from '@/modules/shop/components/ProductCard'
 import { authGetFetcher } from '@/utils/authGetFetcher'
 
 interface OrderProps {
-  orderId: string
   initialData: IOrder
 }
 
-function Order({ orderId, initialData }: OrderProps) {
+function Order({ initialData }: OrderProps) {
   const { data: order, error } = useSWR<IOrder>(
-    `/api/orders/user/${orderId}`,
+    `/api/orders/user/${initialData._id}`,
     authGetFetcher,
     {
       fallbackData: initialData,

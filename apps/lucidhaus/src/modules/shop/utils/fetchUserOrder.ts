@@ -20,6 +20,9 @@ export async function fetchUserOrder(orderId: string): Promise<{ data: IOrder }>
       }
     )
     const data = await response.json()
+    if (data.error) {
+      return { data: {} as IOrder }
+    }
     return { data }
   } catch (err) {
     return { data: {} as IOrder }
