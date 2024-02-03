@@ -16,7 +16,6 @@ export default function Products({ initialData }: { initialData: IProduct[] }) {
   if (!products) return <div>Loading...</div>
 
   const randomProduct = random(products)
-
   return (
     <div>
       <div
