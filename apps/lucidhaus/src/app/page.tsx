@@ -6,6 +6,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
         url: getIpfsGateway(
           'ipfs://bafkreictv3m2xnxqh7yvulrots3w3t3fbnqe32migivqonmxvwhh2qtbuy'
         ),
-       width: 1200,
-          height: 630,
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',

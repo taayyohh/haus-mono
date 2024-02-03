@@ -4,6 +4,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import WhatPage from '@/modules/business/components/WhatPage'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'BUT LIKE WHAT IS THIS? AND WHY IS THIS? AND HOW DO I USE IT??',
   openGraph: {

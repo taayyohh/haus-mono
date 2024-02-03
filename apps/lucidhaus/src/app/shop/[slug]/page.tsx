@@ -25,6 +25,7 @@ export async function generateMetadata({
   const { data: product } = await fetchProduct(params.slug)
 
   return {
+    metadataBase: new URL('https://www.lucid.haus'),
     title: `LUCIDHAUS - ${product.name}`,
     description: product.description || 'Timeless, post-genre, Black music.',
     openGraph: {

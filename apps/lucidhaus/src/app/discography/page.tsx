@@ -7,6 +7,7 @@ import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

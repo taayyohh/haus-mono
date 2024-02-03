@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { fetchUserOrders } from '@/modules/shop/utils/fetchUserOrders'
-import Link from 'next/link'
 import React from 'react'
 import Orders from '@/modules/orders/components/Orders'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

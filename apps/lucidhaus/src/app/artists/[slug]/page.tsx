@@ -32,6 +32,7 @@ export async function generateMetadata({
   const { data: artist } = await fetchArtist(params.slug)
 
   return {
+    metadataBase: new URL('https://www.lucid.haus'),
     title: `${artist.name} - LUCIDHAUS`,
     description: artist.bio || 'Timeless, post-genre, Black music.',
     openGraph: {

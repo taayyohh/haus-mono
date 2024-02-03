@@ -1,10 +1,10 @@
 import { fetchProducts } from '@/modules/shop/utils/fetchProducts'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { Metadata } from 'next'
-import ProductCard from '@/modules/shop/components/ProductCard'
 import Products from '@/modules/shop/Products'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.lucid.haus'),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

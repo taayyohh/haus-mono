@@ -43,6 +43,7 @@ export async function generateMetadata({
   const { collection, tokens, artist } = await onchainVideoFetch(video)
 
   return {
+    metadataBase: new URL('https://www.lucid.haus'),
     title: `LUCIDHAUS - ${video.title}`,
     description:
       collection?.metadata?.description || 'Timeless, post-genre, Black music.',
