@@ -23,7 +23,7 @@ export default function ArtistsList({ artists }: { artists: IArtist[] }) {
       )}
       <div className="flex flex-col w-full mx-auto mt-12 z-10">
         {artists.map((artist) => (
-          <Link href={`/artists/${artist.slug}`} key={artist._id}>
+          <Link href={`/artists/${artist.slug}`} key={artist._id} prefetch={false}>
             <div
               className="relative uppercase px-4 text-4xl md:text-7xl lg:text-8xl font-bold hover:text-black hover:bg-white"
               key={artist.slug}

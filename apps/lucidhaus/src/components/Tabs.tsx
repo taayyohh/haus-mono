@@ -6,7 +6,7 @@ type TabsContextType = {
 }
 
 type TabsProps = {
-  children: React.ReactElement<TabProps>[]
+  children: React.ReactElement<TabProps>[] | React.ReactElement<TabProps>
   defaultTab?: string
 }
 

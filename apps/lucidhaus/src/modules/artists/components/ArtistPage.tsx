@@ -75,18 +75,18 @@ const ArtistPage = ({
                 {artist.name}
               </div>
               <div className={'mx-auto mb-20 w-11/12'}>
-                <Tabs defaultTab={!!tokens.length ? 'Blog' : 'Bio'}>
-                  <Tab label="Bio">
-                    <div className={'relative w-full sm:sm-3/4 mx-auto'}>
-                      <ReactMarkdown
-                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
-                        remarkPlugins={[remarkGfm]}
-                      >
-                        {artist.bio}
-                      </ReactMarkdown>
-                    </div>
-                  </Tab>
-                  {!!tokens.length ? (
+                {!!tokens.length ? (
+                  <Tabs defaultTab={!!tokens.length ? 'Blog' : 'Bio'}>
+                    <Tab label="Bio">
+                      <div className={'relative w-full sm:sm-3/4 mx-auto'}>
+                        <ReactMarkdown
+                          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                          remarkPlugins={[remarkGfm]}
+                        >
+                          {artist.bio}
+                        </ReactMarkdown>
+                      </div>
+                    </Tab>
                     <Tab label="Blog">
                       <div className={'grid grid-cols-1 sm:grid-cols-2 gap-4'}>
                         {tokens.map((token) => (
@@ -99,10 +99,21 @@ const ArtistPage = ({
                         ))}
                       </div>
                     </Tab>
-                  ) : (
-                    <></>
-                  )}
-                </Tabs>
+                  </Tabs>
+                ) : (
+                  <Tabs defaultTab={'Bio'}>
+                    <Tab label="Bio">
+                      <div className={'relative w-full sm:sm-3/4 mx-auto'}>
+                        <ReactMarkdown
+                          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                          remarkPlugins={[remarkGfm]}
+                        >
+                          {artist.bio}
+                        </ReactMarkdown>
+                      </div>
+                    </Tab>
+                  </Tabs>
+                )}
               </div>
 
               <div className={'flex flex-col'}>
