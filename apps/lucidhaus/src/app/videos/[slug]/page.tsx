@@ -7,6 +7,7 @@ import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
 import { generateMintCommentEndpoints } from '@/modules/comments/utils/comments'
 import { fetchCursorDataOnServer } from '@/hooks/fetchCursorDataOnServer'
 import { MintCommentSchema } from '@/modules/comments/MintCommentSchema'
+import config from '@/constants/config'
 
 export default async function Page(context: any) {
   const { data: video } = await fetchVideo(context.params.slug)
@@ -43,7 +44,7 @@ export async function generateMetadata({
   const { collection, tokens, artist } = await onchainVideoFetch(video)
 
   return {
-    metadataBase: new URL('https://lucid.haus'),
+    metadataBase: new URL(config.BASE_URL as string),
     title: `LUCIDHAUS - ${video.title}`,
     description:
       collection?.metadata?.description || 'Timeless, post-genre, Black music.',

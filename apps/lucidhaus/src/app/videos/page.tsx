@@ -9,9 +9,10 @@ import { randomVideo } from '@/utils/randomVideo'
 import { MediaPlayer, MediaProvider } from '@vidstack/react'
 import MintButton from '@/components/MintButton'
 import Link from 'next/link'
+import config from '@/constants/config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lucid.haus'),
+  metadataBase: new URL(config.BASE_URL as string),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

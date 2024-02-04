@@ -2,10 +2,10 @@ import Me from '@/modules/auth/components/Me'
 import { fetchOnrampSession } from '@/modules/shop/utils/fetchOnrampSession'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-import { loadStripeOnramp } from '@stripe/crypto'
 import config from '@/constants/config'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(config.BASE_URL as string),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

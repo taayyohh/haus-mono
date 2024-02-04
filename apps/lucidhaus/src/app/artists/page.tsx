@@ -2,9 +2,10 @@ import { fetchArtists } from '@/modules/artists/utils/fetchArtists'
 import ArtistsList from '@/modules/artists/components/ArtistsList'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import config from '@/constants/config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lucid.haus'),
+  metadataBase: new URL(config.BASE_URL as string),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {

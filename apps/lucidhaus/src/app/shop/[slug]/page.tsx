@@ -3,7 +3,7 @@ import { fetchProduct } from '@/modules/shop/utils/fetchProduct'
 import { stripe } from '@/stripe/stripe-sdk'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
-import { fetchStripePrices } from '@/modules/shop/utils/fetchStripePrices'
+import config from '@/constants/config'
 
 type Props = {
   params: { slug: string }
@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { data: product } = await fetchProduct(params.slug)
 
   return {
-    metadataBase: new URL('https://lucid.haus'),
+    metadataBase: new URL(config.BASE_URL as string),
     title: `LUCIDHAUS - ${product.name}`,
     description: product.description || 'Timeless, post-genre, Black music.',
     openGraph: {

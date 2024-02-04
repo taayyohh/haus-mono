@@ -2,9 +2,10 @@ import AboutPage from '@/modules/business/components/AboutPage'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import WhatPage from '@/modules/business/components/WhatPage'
+import config from '@/constants/config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lucid.haus'),
+  metadataBase: new URL(config.BASE_URL as string),
   title: 'LUCIDHAUS',
   description: 'BUT LIKE WHAT IS THIS? AND WHY IS THIS? AND HOW DO I USE IT??',
   openGraph: {

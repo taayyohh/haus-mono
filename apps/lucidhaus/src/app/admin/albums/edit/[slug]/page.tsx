@@ -2,6 +2,7 @@ import { fetchAlbum } from '@/modules/albums/utils/fetchAlbum'
 import { onchainAlbumFetch } from '@/modules/albums/utils/onchainAlbumFetch'
 import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
+import config from '@/constants/config'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,7 +25,7 @@ export async function generateMetadata({
   const { collection, tokens, artist } = await onchainAlbumFetch(album)
 
   return {
-    metadataBase: new URL('https://lucid.haus'),
+    metadataBase: new URL(config.BASE_URL as string),
     title: `LUCIDHAUS - ${album.title}`,
     description:
       collection?.metadata?.description || 'Timeless, post-genre, Black music.',

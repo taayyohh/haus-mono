@@ -5,6 +5,7 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
 import { fetchBlogsByArtist } from '@/modules/blog/utils/fetchBlogPostByArtist'
 import { onchainBlogFetch } from '@/modules/blog/utils/onchainBlogFetch'
+import config from '@/constants/config'
 
 export default async function Page(context: any) {
   const { data: artist } = await fetchArtist(context.params.slug)
@@ -32,7 +33,7 @@ export async function generateMetadata({
   const { data: artist } = await fetchArtist(params.slug)
 
   return {
-    metadataBase: new URL('https://lucid.haus'),
+    metadataBase: new URL(config.BASE_URL as string),
     title: `${artist.name} - LUCIDHAUS`,
     description: artist.bio || 'Timeless, post-genre, Black music.',
     openGraph: {

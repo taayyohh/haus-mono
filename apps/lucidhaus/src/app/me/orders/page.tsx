@@ -3,9 +3,10 @@ import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import { fetchUserOrders } from '@/modules/shop/utils/fetchUserOrders'
 import React from 'react'
 import Orders from '@/modules/orders/components/Orders'
+import config from '@/constants/config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lucid.haus'),
+  metadataBase: new URL(config.BASE_URL as string),
   title: 'LUCIDHAUS',
   description: 'Timeless, post-genre, Black music.',
   openGraph: {
