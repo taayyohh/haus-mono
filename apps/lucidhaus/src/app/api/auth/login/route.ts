@@ -13,15 +13,18 @@ export type AuthUser = {
 }
 
 const generateToken = (user: PrivyUser) => {
-  const role =
-    String(user?.wallet?.address) === String(config.adminWallet) ? 'superadmin' : 'user'
+  const adminWallets = process.env.ADMIN_WALLETS?.split(',')
+
+  const role = adminWallets?.includes(String(user?.wallet?.address))
+    ? 'superadmin'
+    : 'user'
 
   const authUser: AuthUser = {
     privyId: user.id,
     role,
   }
 
-  return jwt.sign(authUser, secretKey) // adjust expiry
+  return jwt.sign(authUser, secretKey)
 }
 
 export const POST = connectDb(async (req: NextRequest) => {
