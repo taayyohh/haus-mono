@@ -14,10 +14,13 @@ export type AuthUser = {
 
 const generateToken = (user: PrivyUser) => {
   const adminWallets = process.env.ADMIN_WALLETS?.split(',')
+  console.log('Ad', adminWallets)
 
   const role = adminWallets?.includes(String(user?.wallet?.address))
     ? 'superadmin'
     : 'user'
+
+  console.log('pr', role)
 
   const authUser: AuthUser = {
     privyId: user.id,

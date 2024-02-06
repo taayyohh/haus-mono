@@ -44,7 +44,7 @@ const Me = ({ onramp }: { onramp?: OnrampSessionResult }) => {
   }
 
   useEffect(() => {
-    if (!ready || !authenticated) router.push('/')
+    if (!activeWallet) router.push('/')
   }, [ready, authenticated])
 
   if (!ready || !authenticated) return null
