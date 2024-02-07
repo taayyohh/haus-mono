@@ -15,11 +15,11 @@
     "clean": "turbo run clean"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.2.1",
-    "eslint": "^8.28.0",
+    "dotenv-cli": "^7.3.0",
+    "eslint": "^8.56.0",
     "eslint-config-turbo": "latest",
-    "lint-staged": "^13.0.3",
-    "turbo": "^1.8.3"
+    "lint-staged": "^13.3.0",
+    "turbo": "^1.12.3"
   },
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [

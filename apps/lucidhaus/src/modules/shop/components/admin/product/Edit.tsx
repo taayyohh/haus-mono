@@ -18,7 +18,6 @@ const EditProductForm = ({ slug }: { slug: string }) => {
   if (!initialFields) return <div>Loading...</div>
 
   const handleSubmit = async (fields: IProduct) => {
-    // Prepare product data
     const productToUpdate: IProduct = { ...fields }
 
     try {

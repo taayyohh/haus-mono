@@ -8,15 +8,17 @@ export default function ProductCard({
   quantity,
   size,
   featured,
+  url = `/shop/${product.slug}`,
 }: {
   product: IProduct
   quantity?: number
   size?: string
   featured?: boolean
+  url?: string
 }) {
   return (
     <Link
-      href={`/shop/${product.slug}`}
+      href={url}
       key={product._id}
       className={`flex flex-col items-center justify-center p-8 border border-l-0 border-t-0 border-white-13 h-full ${
         !featured ? 'hover:bg-[#111]' : ''
