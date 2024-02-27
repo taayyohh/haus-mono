@@ -26,7 +26,7 @@ export default function ProductCard({
     >
       <div className={'relative flex h-full w-full'}>
         <Image
-          src={getIpfsGateway(product.imageUri?.[0])}
+          src={`https://ipfs.io/ipfs/${product.imageUri?.[0]}`}
           alt={`Product image of ${product.name}`}
           height={400}
           width={400}
