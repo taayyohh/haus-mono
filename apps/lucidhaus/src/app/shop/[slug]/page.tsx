@@ -5,6 +5,8 @@ import { Metadata } from 'next'
 import { getIpfsGateway } from '@/utils/getIpfsGetway'
 import config from '@/constants/config'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
