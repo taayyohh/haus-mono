@@ -27,13 +27,6 @@ const WhatPage = () => {
         animate="open"
         exit="closed"
       >
-        <div
-          className={
-            'border-t border-b border-solid px-4 sm:px-8 py-4 mb-4 uppercase text-3xl'
-          }
-        >
-          But like what is this? And why is this? and how do i use it??
-        </div>
         <div className={'mt-12 grid grid-cols-1 w-full gap-4'}>
           <div className={'flex flex-col px-4 sm:px-8 items-center gap-8'}>
             <div className={'flex flex-col px-4 sm:px-8 items-center gap-4'}>
