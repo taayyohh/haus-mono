@@ -91,7 +91,7 @@ const AlbumPage = observer(
                 <Link href={`/artists/${artist.slug}`}>{artist?.name}</Link>
               </div>
               <div className={'italic'}>{album.title}</div>
-              <div>LH004</div>
+              {album.catalogNumber && <div>{album.catalogNumber}</div>}
             </div>
             <div className={'flex flex-col gap-2 mt-8'}>
               <DateFormatter date={new Date(album.releaseDate)} />

@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             onSuccess={handlePrivySuccess}
             config={{
               appearance: { theme: 'dark' },
-              additionalChains: [zora],
+              supportedChains: [zora, mainnet],
             }}
           >
             <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>
