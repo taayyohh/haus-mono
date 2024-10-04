@@ -22,20 +22,24 @@ export const CartStockSelector = ({
         <div className={'flex items-center justify-center'}>
           <div>{stock.size}</div>
         </div>
-        <div className={'flex items-center justify-center'}>
-          {!stockInCart ? (
-            <div
-              className={
-                'inline-flex self-start text-xs border border-white-13 py-1 px-3 rounded cursor-pointer bg-[#1b1b1b] hover:bg-[#111]'
-              }
-              onClick={() => addProduct(product, stock.size)}
-            >
-              <ShoppingCart />
-            </div>
-          ) : (
-            <CartStockQuantitySelector cartItem={cartItem} />
-          )}
-        </div>
+        {stock.quantity > 0 ? (
+          <div className={'flex items-center justify-center'}>
+            {!stockInCart ? (
+              <div
+                className={
+                  'inline-flex self-start text-xs border border-white-13 py-1 px-3 rounded cursor-pointer bg-[#1b1b1b] hover:bg-[#111]'
+                }
+                onClick={() => addProduct(product, stock.size)}
+              >
+                <ShoppingCart />
+              </div>
+            ) : (
+              <CartStockQuantitySelector cartItem={cartItem} />
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     )
   }

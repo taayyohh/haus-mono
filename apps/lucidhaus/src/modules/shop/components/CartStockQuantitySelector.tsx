@@ -1,6 +1,5 @@
 import useCartStore, { CartItem } from '@/store/shop'
 import { useCallback } from 'react'
-import { ShoppingCart } from '@phosphor-icons/react'
 
 export const CartStockQuantitySelector = ({ cartItem }: { cartItem: CartItem }) => {
   const remove = useCartStore((state) => state.removeProduct)

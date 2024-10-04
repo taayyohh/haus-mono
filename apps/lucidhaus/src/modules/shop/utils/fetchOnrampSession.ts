@@ -1,5 +1,6 @@
 import config from '@/constants/config'
 import axios from 'axios'
+import { NULL_ADDRESS } from '@/constants'
 
 export async function fetchOnrampSession() {
   try {
@@ -11,7 +12,7 @@ export async function fetchOnrampSession() {
           source_exchange_amount: '100',
           destination_network: 'ethereum',
         },
-        wallet_addresses: '',
+        wallet_addresses: NULL_ADDRESS,
       },
       {
         headers: {
