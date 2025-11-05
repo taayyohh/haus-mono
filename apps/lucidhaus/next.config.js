@@ -8,7 +8,7 @@ const nextConfig = {
     MERKLE: process.env.MERKLE,
   },
   images: {
-    domains: ['lucidhaus.infura-ipfs.io', 'ipfs.io'],
+    domains: ['lucidhaus.infura-ipfs.io', 'ipfs.io', 'ponder-finance.mypinata.cloud'],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
