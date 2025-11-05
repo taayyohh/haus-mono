@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import mongoose, { ObjectId } from 'mongoose'
+import mongoose from 'mongoose'
 
 const ObjectId = mongoose.Types.ObjectId
 
