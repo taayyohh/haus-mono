@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/monorepo.iml" filepath="$PROJECT_DIR$/.idea/monorepo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../record-industry/.idea/record-industry.iml" filepath="$PROJECT_DIR$/../record-industry/.idea/record-industry.iml" />
     </modules>
   </component>
 </project>
