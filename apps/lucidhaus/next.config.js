@@ -8,7 +8,28 @@ const nextConfig = {
     MERKLE: process.env.MERKLE,
   },
   images: {
-    domains: ['lucidhaus.infura-ipfs.io', 'ipfs.io', 'ponder-finance.mypinata.cloud'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lucidhaus.infura-ipfs.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ponder-finance.mypinata.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.4everland.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.ipfs.4everland.io',
+      },
+    ],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports

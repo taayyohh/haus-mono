@@ -1,25 +1,17 @@
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import { EPK_COOKIE_NAME } from '@/constants'
-import checkEPKAccess from '@/modules/epk/utils/checkEPKAccess'
-import PasswordGate from '@/modules/epk/components/PasswordGate'
 import EPKPage from '@/modules/epk/components/EPKPage'
+import { fetchArtist } from '@/modules/artists/utils/fetchArtist'
+import { fetchBatchAlbums } from '@/modules/albums/utils/fetchAlbums'
 
 export default async function Page(context: any) {
   const slug = context.params.slug
 
-  // Check if user has access
-  const cookieStore = cookies()
-  const epkCookie = cookieStore.get(EPK_COOKIE_NAME)
-  const hasAccess = await checkEPKAccess(epkCookie)
+  // Fetch artist and albums data
+  const { data: artist } = await fetchArtist(slug)
+  const { data: albums } = await fetchBatchAlbums(artist.albums)
 
-  // If no access, show password gate
-  if (!hasAccess) {
-    return <PasswordGate slug={slug} />
-  }
-
-  // If has access, show EPK page
-  return <EPKPage slug={slug} />
+  // Render EPK page directly (no password protection)
+  return <EPKPage slug={slug} artist={artist} albums={albums} />
 }
 
 type Props = {

@@ -11,11 +11,11 @@ interface EPKBioProps {
 
 export default function EPKBio({ bio }: EPKBioProps) {
   return (
-    <div className="w-full sm:w-3/4 mx-auto prose prose-invert prose-lg">
+    <div className="w-full sm:w-3/4 mx-auto prose prose-invert prose-xl">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw, rehypeSanitize]}
         remarkPlugins={[remarkGfm]}
-        className="text-white"
+        className="text-white text-lg sm:text-xl leading-relaxed"
       >
         {bio}
       </ReactMarkdown>

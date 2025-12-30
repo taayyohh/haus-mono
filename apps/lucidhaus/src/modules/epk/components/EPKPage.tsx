@@ -6,10 +6,16 @@ import EPKHero from './EPKHero'
 import EPKBio from './EPKBio'
 import PressLinks from './PressLinks'
 import PressPhotos from './PressPhotos'
+import LiveVideos from './LiveVideos'
+import AlbumCard from '@/modules/albums/components/AlbumCard'
 import { EPKData } from '../types'
+import { IArtist } from '@/models/Artist'
+import { IAlbum } from '@/models/Album'
 
 interface EPKPageProps {
   slug: string
+  artist: IArtist
+  albums: IAlbum[]
 }
 
 // Hardcoded EPK data for Nappy Nina
@@ -59,7 +65,7 @@ const NAPPY_NINA_EPK: EPKData = {
   },
 }
 
-export default function EPKPage({ slug }: EPKPageProps) {
+export default function EPKPage({ slug, artist, albums }: EPKPageProps) {
   // For now, only support nappy-nina
   if (slug !== 'nappy-nina') {
     return (
@@ -97,8 +103,8 @@ export default function EPKPage({ slug }: EPKPageProps) {
 
           {/* Tabbed Content */}
           <div className="mx-auto mb-20 w-11/12">
-            <Tabs defaultTab="RECORDED">
-              <Tab label="RECORDED">
+            <Tabs defaultTab="INFO">
+              <Tab label="INFO">
                 <div className="space-y-12">
                   {/* Bio Section */}
                   <div>
@@ -109,6 +115,38 @@ export default function EPKPage({ slug }: EPKPageProps) {
                   <div>
                     <h3 className="text-xl uppercase mb-6 text-center">Press</h3>
                     <PressLinks links={epkData.pressLinks} />
+                  </div>
+
+                  {/* Live Section */}
+                  <div>
+                    <h3 className="text-xl uppercase mb-6 text-center">Live</h3>
+                    <LiveVideos
+                      videos={[
+                        { youtubeId: 'eAhCTHeL98o', title: 'Nappy Nina - Live Performance' },
+                        { youtubeId: '_GH35tKPQTY', title: 'Nappy Nina - Live Performance 2' },
+                      ]}
+                    />
+                  </div>
+
+                  {/* Discography Section */}
+                  <div>
+                    <h3 className="text-xl uppercase mb-6 text-center">Discography</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-4 border-t border-white-13">
+                      {albums && albums.length > 0 ? (
+                        albums.map((album) => (
+                          <div key={album._id}>
+                            <AlbumCard
+                              album={{ ...album, artist } as IAlbum & { artist: IArtist }}
+                              link={`/discography/${album.slug}`}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-4 text-center py-8 text-white opacity-60">
+                          No discography available
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </Tab>
