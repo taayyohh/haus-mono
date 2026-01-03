@@ -58,6 +58,10 @@ const NAPPY_NINA_EPK: EPKData = {
       src: '/nina-epk-assets/NappyNina_EuroTour_2025_4x5.png',
       title: 'Euro Tour 2025',
     },
+    {
+      src: '/nina-epk-assets/west-coast-tour.jpg',
+      title: 'West Coast Tour',
+    },
   ],
   video: {
     src: '/nina-epk-assets/NINA-n-SWARV-in-PARIS_edit1.mp4',
@@ -128,8 +132,8 @@ export default function EPKPage({ slug, artist, albums }: EPKPageProps) {
                     />
                   </div>
 
-                  {/* Discography Section */}
-                  <div>
+                  {/* Discography Section - Commented out until image issue is fixed */}
+                  {/* <div>
                     <h3 className="text-xl uppercase mb-6 text-center">Discography</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-4 border-t border-white-13">
                       {albums && albums.length > 0 ? (
@@ -147,7 +151,7 @@ export default function EPKPage({ slug, artist, albums }: EPKPageProps) {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </Tab>
 
