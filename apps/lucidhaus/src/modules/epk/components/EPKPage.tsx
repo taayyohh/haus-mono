@@ -20,7 +20,13 @@ interface EPKPageProps {
 
 // Hardcoded EPK data for Nappy Nina
 const NAPPY_NINA_EPK: EPKData = {
-  bio: `Oakland-born writer, emcee, and producer Nappy Nina cut her teeth in the Bay Area scene before uprooting to Brooklyn, where she released her 2019 debut album 'The Tree Act' to much acclaim. She appears on Yaeji, Quelle Chris, and Son Lux's music, she boasts an impressive track record as a feature - and her characteristic breezy flow has led her to conquer stages worldwide in her own right.`,
+  bio: `Nappy Nina doesn't fit neatly into boxes—and that's exactly the point. With precision and a conversational flow that sounds like talking to your most perceptive friend, she's built a career dismantling expectations of what rap can be and who gets to define it.
+
+Raised in Oakland—daughter of jazz radio host Greg Bridges, granddaughter of jazz legend Oliver Johnson—Nina's musical lineage runs deep. Shaped by the Bay Area's poetry and hip-hop scenes, she left home and moved to Brooklyn in 2012 with $500 and a goal: to become one of the few Oakland rappers to break internationally. She co-founded indie label Lucid Haus and quickly became a vital voice in Brooklyn's avant-garde Black music community. Her 2019 debut album *The Tree Act* earned praise from Okayplayer, Bandcamp, and Pitchfork, establishing her as a lyricist with range and bite.
+
+Since then, Nina has released a prolific run of work: *30 Bag*, *Double Down*, *Dumb Doubt*, *Mourning Due*, and most recently *Nothing Is My Favorite Thing* with producer Swarvy, which she toured across Europe this year. Her collaborations read like a who's who of forward-thinking music: Ambrose Akinmusire, Quelle Chris, Yaeji, Pink Siifu, Son Lux, Moor Mother, Anna Wise, and Lucid Haus labelmate Stas Thee Boss (formerly of THEESatisfaction).
+
+What sets Nina apart is her refusal to soften the edges. She raps about financial insecurity, grief, queerness, gentrification, and the knotty parts of being alive with a writer's eye for detail and a poet's instinct for emotion. Her music lives at the intersection of jazz, poetry, and experimental hip-hop—intimate, politically aware, and uncompromising. Whether over boom-bap, electronic beats, or jazz-inflected production, her voice remains unmistakable: vulnerable, incisive, deeply human.`,
   pressLinks: [
     {
       outlet: 'Le Guess Who',
