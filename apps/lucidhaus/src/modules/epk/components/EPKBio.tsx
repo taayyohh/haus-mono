@@ -13,10 +13,10 @@ interface EPKBioProps {
 export default function EPKBio({ bio }: EPKBioProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  // Split bio into paragraphs and get first paragraph as preview
+  // Split bio into paragraphs and get first two paragraphs as preview
   const paragraphs = bio.split('\n\n')
-  const preview = paragraphs[0]
-  const hasMore = paragraphs.length > 1
+  const preview = paragraphs.slice(0, 2).join('\n\n')
+  const hasMore = paragraphs.length > 2
 
   return (
     <div className="w-full sm:w-3/4 mx-auto prose prose-invert prose-xl">
