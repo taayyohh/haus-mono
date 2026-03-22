@@ -1,6 +1,18 @@
 import { PrivyClient } from '@privy-io/server-auth';
 import { UserContext } from '@/graphql/context';
 
+// Singleton PrivyClient
+let privyClient: PrivyClient | null = null;
+function getPrivyClient(): PrivyClient {
+  if (!privyClient) {
+    privyClient = new PrivyClient(
+      process.env.NEXT_PUBLIC_PRIVY_APP_ID!,
+      process.env.PRIVY_APP_SECRET!
+    );
+  }
+  return privyClient;
+}
+
 const userCache = new Map<string, { user: UserContext; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000;
 const MAX_CACHE_SIZE = 1000;
@@ -22,10 +34,7 @@ export async function getUserFromPrivyToken(token: string): Promise<UserContext>
       return cached.user;
     }
 
-    const privy = new PrivyClient(
-      process.env.NEXT_PUBLIC_PRIVY_APP_ID!,
-      process.env.PRIVY_APP_SECRET!
-    );
+    const privy = getPrivyClient();
 
     const verifiedUser = await privy.verifyAuthToken(token);
     const userDetails = await privy.getUser(verifiedUser.userId);
@@ -79,10 +88,7 @@ export async function getUserFromPrivyToken(token: string): Promise<UserContext>
 
 export async function verifyPrivyTokenFast(token: string): Promise<UserContext> {
   try {
-    const privy = new PrivyClient(
-      process.env.NEXT_PUBLIC_PRIVY_APP_ID!,
-      process.env.PRIVY_APP_SECRET!
-    );
+    const privy = getPrivyClient();
 
     const verifiedUser = await privy.verifyAuthToken(token);
 

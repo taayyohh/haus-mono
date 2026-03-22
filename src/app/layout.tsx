@@ -9,8 +9,6 @@ const inter = Inter({
   display: 'swap',
 });
 
-export const dynamic = 'force-dynamic';
-
 const BASE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://lucid.haus';
 
 export const metadata: Metadata = {

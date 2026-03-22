@@ -51,8 +51,17 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   setDuration: (seconds) => set({ duration: formatTime(seconds) }),
 
   play: () => {
-    const { audioElement } = get()
+    const { audioElement, isPlaying } = get()
     if (!audioElement) return
+
+    // Only load() when source changed (not on resume)
+    if (audioElement.paused && audioElement.currentTime > 0 && audioElement.src) {
+      // Resuming — just play without reloading
+      audioElement.play()
+        .then(() => set({ isPlaying: true }))
+        .catch(() => set({ isPlaying: false }))
+      return
+    }
 
     audioElement.load()
 

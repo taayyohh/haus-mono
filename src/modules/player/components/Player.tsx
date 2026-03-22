@@ -49,6 +49,8 @@ export default function Player() {
 
   const current = queue[currentPosition]
 
+  if (!current) return null
+
   return (
     <div className="fixed bottom-2 right-0 flex w-full items-center justify-between px-4 z-50">
       <div className="flex items-center gap-2">
