@@ -2,7 +2,7 @@ export interface EPKPressLink {
   id: string
   outlet: string
   url: string
-  description?: string
+  description?: string | null
   sortOrder: number
 }
 
