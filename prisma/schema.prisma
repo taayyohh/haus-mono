@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// === AUTH & USERS ===
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  firstName     String?
+  lastName      String?
+  role          Role     @default(PUBLIC)
+  privyUserId   String?  @unique
+  walletAddress String?
+  shippingAddress Json?
+  orders        Order[]
+  cart          Cart?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  ARTIST
+  PUBLIC
+}
+
+// === MUSIC DOMAIN ===
+
+model Artist {
+  id              String       @id @default(cuid())
+  name            String
+  slug            String       @unique
+  bio             String       @db.Text
+  heroImage       String
+  socialLinks     Json?        // { twitter, instagram, zora, futureTape, warpcast }
+  walletAddresses String[]
+  ensName         String?
+  albums          Album[]      @relation("PrimaryArtist")
+  featuredAlbums  Album[]      @relation("AlbumArtists")
+  videos          MusicVideo[] @relation("VideoPrimaryArtist")
+  featuredVideos  MusicVideo[] @relation("VideoArtists")
+  epks            EPK[]
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Genre {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  slug   String  @unique
+  albums Album[]
+}
+
+model Album {
+  id                  String   @id @default(cuid())
+  title               String
+  slug                String   @unique
+  releaseDate         DateTime?
+  coverImageUri       String?
+  primaryArtist       Artist   @relation("PrimaryArtist", fields: [primaryArtistId], references: [id])
+  primaryArtistId     String
+  artists             Artist[] @relation("AlbumArtists")
+  genre               Genre?   @relation(fields: [genreId], references: [id])
+  genreId             String?
+  tracks              Track[]
+  label               String?  @default("Lucid Haus")
+  producers           String[]
+  mixers              String[]
+  masteringEngineers  String[]
+  recordingEngineers  String[]
+  studios             String[]
+  additionalMusicians String[]
+  albumNotes          String?  @db.Text
+  catalogNumber       String?
+  collectionAddress   String?
+  videos              MusicVideo[]
+  epks                EPK[]
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([primaryArtistId])
+}
+
+model Track {
+  id              String   @id @default(cuid())
+  title           String
+  duration        Int?
+  trackNumber     Int
+  album           Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  albumId         String
+  featuredArtists String[]
+  writers         String[]
+  producers       String[]
+  tokenId         String?
+  audioUrl        String?
+  createdAt       DateTime @default(now())
+
+  @@index([albumId])
+}
+
+model MusicVideo {
+  id                String   @id @default(cuid())
+  title             String
+  slug              String   @unique
+  releaseDate       DateTime?
+  song              String?
+  primaryArtist     Artist   @relation("VideoPrimaryArtist", fields: [primaryArtistId], references: [id])
+  primaryArtistId   String
+  artists           Artist[] @relation("VideoArtists")
+  album             Album?   @relation(fields: [albumId], references: [id])
+  albumId           String?
+  videoUri          String
+  thumbnailUri      String?
+  director          String?
+  producers         String[]
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([primaryArtistId])
+}
+
+// === EPK ===
+
+enum EPKType {
+  ALBUM
+  TOUR
+}
+
+model EPK {
+  id              String          @id @default(cuid())
+  title           String
+  slug            String          @unique
+  type            EPKType
+  artist          Artist          @relation(fields: [artistId], references: [id])
+  artistId        String
+  album           Album?          @relation(fields: [albumId], references: [id])
+  albumId         String?
+  bio             String          @db.Text
+  heroVideoSrc    String?
+  heroVideoPoster  String?
+  password        String?
+  pressLinks      EPKPressLink[]
+  photos          EPKPhoto[]
+  tourGraphics    EPKTourGraphic[]
+  liveVideos      Json?           // [{ youtubeId, title }]
+  isPublished     Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([artistId])
+}
+
+model EPKPressLink {
+  id          String @id @default(cuid())
+  epk         EPK    @relation(fields: [epkId], references: [id], onDelete: Cascade)
+  epkId       String
+  outlet      String
+  url         String
+  description String?
+  sortOrder   Int    @default(0)
+
+  @@index([epkId])
+}
+
+model EPKPhoto {
+  id        String @id @default(cuid())
+  epk       EPK    @relation(fields: [epkId], references: [id], onDelete: Cascade)
+  epkId     String
+  src       String
+  alt       String
+  sortOrder Int    @default(0)
+
+  @@index([epkId])
+}
+
+model EPKTourGraphic {
+  id        String @id @default(cuid())
+  epk       EPK    @relation(fields: [epkId], references: [id], onDelete: Cascade)
+  epkId     String
+  src       String
+  title     String
+  sortOrder Int    @default(0)
+
+  @@index([epkId])
+}
+
+// === SHOP (PHYSICAL MERCH) ===
+
+model Product {
+  id              String         @id @default(cuid())
+  name            String
+  slug            String         @unique
+  description     String         @db.Text
+  price           Float
+  images          String[]
+  category        String         @default("merch")
+  stock           ProductStock[]
+  quantity        Int            @default(0)
+  stripeProductId String?        @unique
+  stripePriceId   String?
+  isActive        Boolean        @default(true)
+  isArchived      Boolean        @default(false)
+  isFeatured      Boolean        @default(false)
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model ProductStock {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  size      String  // XS, S, M, L, XL, XXL
+  quantity  Int
+
+  @@unique([productId, size])
+  @@index([productId])
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String?    @unique
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestId   String?
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int
+  price     Float
+  size      String?
+
+  @@index([cartId])
+  @@index([productId])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  user            User        @relation(fields: [userId], references: [id])
+  userId          String
+  items           OrderItem[]
+  status          OrderStatus
+  total           Float
+  shippingAmount  Float       @default(0)
+  taxAmount       Float       @default(0)
+  shippingAddress Json?
+  stripeSessionId String?
+  trackingNumber  String?
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId String?
+  name      String
+  quantity  Int
+  price     Float
+  size      String?
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELED
+}
+
+// === INFRASTRUCTURE ===
+
+model WebhookEvent {
+  id            String   @id @default(cuid())
+  stripeEventId String   @unique
+  type          String
+  processedAt   DateTime @default(now())
+
+  @@index([stripeEventId])
+}
