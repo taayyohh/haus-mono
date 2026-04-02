@@ -2,9 +2,11 @@ import { GraphQLContext } from '@/graphql/context';
 import slugify from 'slugify';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-08-16' as Stripe.LatestApiVersion,
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2023-08-16' as Stripe.LatestApiVersion,
+  });
+}
 
 async function requireAdmin(context: GraphQLContext) {
   const user = await context.getFullUser();
@@ -56,13 +58,13 @@ export const productResolvers = {
       let stripePriceId = '';
 
       if (process.env.STRIPE_SECRET_KEY) {
-        const stripeProduct = await stripe.products.create({
+        const stripeProduct = await getStripe().products.create({
           name: input.name,
           description: input.description || undefined,
           metadata: { category: input.category || 'merch' },
           active: true,
         });
-        const stripePrice = await stripe.prices.create({
+        const stripePrice = await getStripe().prices.create({
           product: stripeProduct.id,
           unit_amount: Math.round((input.price || 0) * 100),
           currency: 'usd',
@@ -96,20 +98,20 @@ export const productResolvers = {
 
       // Sync with Stripe
       if (current.stripeProductId && process.env.STRIPE_SECRET_KEY) {
-        await stripe.products.update(current.stripeProductId, {
+        await getStripe().products.update(current.stripeProductId, {
           name: input.name || current.name,
           description: input.description || current.description,
           active: input.isActive !== undefined ? input.isActive : current.isActive,
         });
 
         if (input.price !== undefined && input.price !== current.price) {
-          const newPrice = await stripe.prices.create({
+          const newPrice = await getStripe().prices.create({
             product: current.stripeProductId,
             unit_amount: Math.round(input.price * 100),
             currency: 'usd',
           });
           if (current.stripePriceId) {
-            try { await stripe.prices.update(current.stripePriceId, { active: false }); } catch {}
+            try { await getStripe().prices.update(current.stripePriceId, { active: false }); } catch {}
           }
           data.stripePriceId = newPrice.id;
         }
@@ -133,7 +135,7 @@ export const productResolvers = {
 
       // Sync active status with Stripe
       if (product.stripeProductId && process.env.STRIPE_SECRET_KEY) {
-        await stripe.products.update(product.stripeProductId, {
+        await getStripe().products.update(product.stripeProductId, {
           active: !product.isActive,
         });
       }

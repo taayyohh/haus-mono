@@ -2,17 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-08-16' as Stripe.LatestApiVersion,
-});
-
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2023-08-16' as Stripe.LatestApiVersion,
+  });
+}
 
 export async function POST(req: NextRequest) {
-  if (!endpointSecret) {
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
+  if (!endpointSecret || !process.env.STRIPE_SECRET_KEY) {
     return NextResponse.json({ error: 'Webhook not configured' }, { status: 500 });
   }
 
+  const stripe = getStripe();
   const payload = await req.text();
   const signature = req.headers.get('stripe-signature');
 
