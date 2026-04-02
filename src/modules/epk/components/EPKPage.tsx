@@ -76,17 +76,21 @@ export default function EPKPageComponent({ epk }: EPKPageProps) {
                 </div>
               </Tab>
 
-              {epk.photos.length > 0 && (
-                <Tab label="PRESS PHOTOS">
+              <Tab label="PRESS PHOTOS">
+                {epk.photos.length > 0 ? (
                   <PressPhotos photos={epk.photos} />
-                </Tab>
-              )}
+                ) : (
+                  <p className="text-white/40 text-sm text-center py-8">No press photos available.</p>
+                )}
+              </Tab>
 
-              {epk.tourGraphics.length > 0 && (
-                <Tab label="TOUR">
+              <Tab label="TOUR">
+                {epk.tourGraphics.length > 0 ? (
                   <PressPhotos tourGraphics={epk.tourGraphics} />
-                </Tab>
-              )}
+                ) : (
+                  <p className="text-white/40 text-sm text-center py-8">No tour graphics available.</p>
+                )}
+              </Tab>
             </Tabs>
           </div>
         </div>
